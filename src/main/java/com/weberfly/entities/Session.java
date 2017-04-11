@@ -1,0 +1,139 @@
+package com.weberfly.entities;
+/*******************************************************************************
+ * 2017, All rights reserved.
+ *******************************************************************************/
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.*;
+
+// Start of user code (user defined imports)
+
+// End of user code
+
+/**
+ * Description of Session.
+ * 
+ * @author kamal
+ */
+@Entity
+@Table(name="Session")
+public class Session implements Serializable{
+	/**
+	 * Description of the property id.
+	 */
+	@Id
+	private Long id ;
+
+	/**
+	 * Description of the property ipUser.
+	 */
+	private String ipUser ;
+
+	/**
+	 * Description of the property users.
+	 */
+	@ManyToOne(cascade = CascadeType.ALL)
+	public User user = new RegularUser();
+
+	/**
+	 * Description of the property time_in.
+	 */
+	private Date time_in = new Date();
+
+	/**
+	 * Description of the property time_out.
+	 */
+	private Date time_out = new Date();
+	
+	// Start of user code (user defined attributes for Session)
+	
+	// End of user code
+
+	/**
+	 * The constructor.
+	 */
+	public Session() {
+		// Start of user code constructor for Session)
+		super();
+		// End of user code
+	}
+
+	// Start of user code (user defined methods for Session)
+
+	// End of user code
+	/**
+	 * Returns id.
+	 * @return id 
+	 */
+	public Long getId() {
+		return this.id;
+	}
+
+	/**
+	 * Sets a value to attribute id. 
+	 * @param newId 
+	 */
+	public void setId(Long newId) {
+		this.id = newId;
+	}
+
+	/**
+	 * Returns ipUser.
+	 * @return ipUser 
+	 */
+	public String getIpUser() {
+		return this.ipUser;
+	}
+
+	/**
+	 * Sets a value to attribute ipUser. 
+	 * @param newIpUser 
+	 */
+	public void setIpUser(String newIpUser) {
+		this.ipUser = newIpUser;
+	}
+
+	/**
+	 * Returns users.
+	 * @return users 
+	 */
+	public User getUser() {
+		return this.user;
+	}
+
+
+	/**
+	 * Returns time_in.
+	 * @return time_in 
+	 */
+	public Date getTime_in() {
+		return this.time_in;
+	}
+
+	/**
+	 * Sets a value to attribute time_in. 
+	 * @param newTime_in 
+	 */
+	public void setTime_in(Date newTime_in) {
+		this.time_in = newTime_in;
+	}
+
+	/**
+	 * Returns time_out.
+	 * @return time_out 
+	 */
+	public Object getTime_out() {
+		return this.time_out;
+	}
+
+	/**
+	 * Sets a value to attribute time_out. 
+	 * @param newTime_out 
+	 */
+	public void setTime_out(Date newTime_out) {
+		this.time_out = newTime_out;
+	}
+
+}
