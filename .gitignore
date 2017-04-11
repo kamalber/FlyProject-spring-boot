@@ -8,6 +8,7 @@ target/
 .project
 .settings
 .springBeans
+.mvn
 
 ### IntelliJ IDEA ###
 .idea
@@ -22,3 +23,10 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### application###
+src/main/resources/application.properties
+
+####   #####
+
+
