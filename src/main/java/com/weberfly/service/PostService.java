@@ -1,5 +1,7 @@
 package com.weberfly.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +15,8 @@ public class PostService {
 	
 	public void savePost(Post post) {
 		postRepository.save(post);
+	}
+	public List<Post> getAll(Post post) {
+		return postRepository.findAll();
 	}
 }
