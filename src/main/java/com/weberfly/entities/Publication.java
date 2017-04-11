@@ -129,6 +129,14 @@ public  class Publication implements Serializable {
 	 */
 	
 
+	public List<Category> getCategorys() {
+		return categorys;
+	}
+
+	public void setCategorys(List<Category> categorys) {
+		this.categorys = categorys;
+	}
+
 	/**
 	 * Returns id.
 	 * @return id 

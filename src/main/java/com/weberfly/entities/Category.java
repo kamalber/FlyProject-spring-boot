@@ -38,6 +38,30 @@ public class Category implements Serializable{
 	private Long id ;
 
 	
+	public Type_category getType() {
+		return type;
+	}
+
+	public void setType(Type_category type) {
+		this.type = type;
+	}
+
+	public List<CategoryItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<CategoryItem> items) {
+		this.items = items;
+	}
+
+	public List<RegularUser> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<RegularUser> users) {
+		this.users = users;
+	}
+
 	/**
 	 * Description of the property name.
 	 */
