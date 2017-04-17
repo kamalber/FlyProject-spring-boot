@@ -4,6 +4,8 @@ package com.weberfly.entities;
  *******************************************************************************/
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -20,6 +22,11 @@ import javax.persistence.Table;
 @Table(name="Post")
 @PrimaryKeyJoinColumn(name = "id")
 public class Post extends Publication {
+	public static enum sentiment{
+		positive,
+		negative,
+		neutratl,
+	}
 	/**
 	 * Description of the property title.
 	 */
@@ -29,7 +36,8 @@ public class Post extends Publication {
 	 */
 	private String content ;
 	private String title;
-
+	@Enumerated(EnumType.ORDINAL)
+    private sentiment sentment;
 	// Start of user code (user defined attributes for Post)
 
 	// End of user code
