@@ -1,1 +1,124 @@
+<div class="row">
+<div class="col-lg-12">
+                <h1 class="page-header">Two Column Portfolio
+                    <small>Subheading</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a>
+                    </li>
+                    <li class="active">Two Column Portfolio</li>
+                </ol>
+            </div>
+
+
+            <div class="col-md-4">
+
+                <!-- Blog Search Well -->
+                <div class="well">
+                    <h4>Search</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <!-- /.input-group -->
+                </div>
+
+                <!-- Blog Categories Well -->
+                <div class="well">
+                    <h4>serche by date </h4>
+                    <div class="row">
+                        <!-- /.col-lg-6 -->
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li> <span>start Date</span>
+                                <div class="input-group"
+     moment-picker="ctrl.datepicker"
+     format="YYYY-MM-DD">
+    <span class="input-group-addon">
+        <i class="octicon octicon-calendar"></i>
+    </span>
+    <input class="form-control"
+           placeholder="Select a date"
+           ng-model="ctrl.datepicker"
+           ng-model-options="{ updateOn: 'blur' }">
+</div>
+                                </li>    
+                                
+                                
+                                           <li> <span>end Date</span>
+                                <div class="input-group"
+     moment-picker="ctrl.datepicker"
+     format="YYYY-MM-DD">
+    <span class="input-group-addon">
+        <i class="octicon octicon-calendar"></i>
+    </span>
+    <input class="form-control"
+           placeholder="Select a date"
+           ng-model="ctrl.datepicker"
+           ng-model-options="{ updateOn: 'blur' }">
+</div>
+                                </li>                 
+                            </ul>
+                        </div>
+                        <!-- /.col-lg-6 -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+
+                <!-- Side Widget Well -->
+                <div class="well">
+                    <h4>Side Widget Well</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                </div>
+
+            </div>
+
+
+<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="" data-toggle="tab">Red</a></li>
+        <li><a href="orange" data-toggle="tab">Orange</a></li>
+        <li><a href="" data-toggle="tab">Yellow</a></li>
+        <li><a href="" data-toggle="tab">Green</a></li>
+        <li><a href="" data-toggle="tab">Blue</a></li>
+    </ul>
+        
+
+ <div class="col-md-8">
+<div id="my-tab-content" class="tab-content">
+        <div class="tab-pane active" id="red">
+            <h1>Red</h1>
+            <p>red red red red red red</p>
+        </div>
+        <div class="tab-pane" id="orange">
+            <h1>Orange</h1>
+            <p>orange orange orange orange orange</p>
+        </div>
+        <div class="tab-pane" id="yellow">
+            <h1>Yellow</h1>
+            <p>yellow yellow yellow yellow yellow</p>
+        </div>
+        <div class="tab-pane" id="green">
+            <h1>Green</h1>
+            <p>green green green green green</p>
+        </div>
+        <div class="tab-pane" id="blue">
+            <h1>Blue</h1>
+            <p>blue blue blue blue blue</p>
+        </div>
+    </div>
 <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"> chart-series="series"</canvas>
+
+</div>
+
+<div class="col-lg-6">
+
+<canvas id="pie" class="chart chart-pie"
+  chart-data="dataPie" chart-labels="labelsPie" chart-options="options">
+</canvas> 
+</ul>
+</div>
+</div>
+<div class="row">
+</div>
