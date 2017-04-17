@@ -44,7 +44,7 @@ public  class Publication implements Serializable {
 	 * Description of the property user.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL )
-	public RegularUser user = new RegularUser();
+	private RegularUser user = new RegularUser();
 
 	/**
 	 * Description of the property categorys.
@@ -57,77 +57,39 @@ public  class Publication implements Serializable {
 	 * Description of the property comments.
 	 */
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="publication")
-	public List<Comment> comments = new ArrayList<Comment>();
+	private List<Comment> comments = new ArrayList<Comment>();
 
-	// Start of user code (user defined attributes for Publication)
-
-	// End of user code
-
-	/**
-	 * The constructor.
-	 */
-	public Publication() {
-		// Start of user code constructor for Publication)
-		super();
-		// End of user code
+	public Long getId() {
+		return id;
 	}
 
-	// Start of user code (user defined methods for Publication)
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	// End of user code
-	/**
-	 * Returns commentNumber.
-	 * @return commentNumber 
-	 */
 	public Long getCommentNumber() {
-		return this.commentNumber;
+		return commentNumber;
 	}
 
-	/**
-	 * Sets a value to attribute commentNumber. 
-	 * @param newCommentNumber 
-	 */
-	public void setCommentNumber(Long newCommentNumber) {
-		this.commentNumber = newCommentNumber;
+	public void setCommentNumber(Long commentNumber) {
+		this.commentNumber = commentNumber;
 	}
 
-	/**
-	 * Returns date.
-	 * @return date 
-	 */
 	public Date getDate() {
-		return this.date;
+		return date;
 	}
 
-	/**
-	 * Sets a value to attribute date. 
-	 * @param newDate 
-	 */
-	public void setDate(Date newDate) {
-		this.date = newDate;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	/**
-	 * Returns user.
-	 * @return user 
-	 */
 	public RegularUser getUser() {
-		return this.user;
+		return user;
 	}
 
-	/**
-	 * Sets a value to attribute user. 
-	 * @param newUser 
-	 */
-	public void setUser(RegularUser newUser) {
-		this.user = newUser;
+	public void setUser(RegularUser user) {
+		this.user = user;
 	}
-
-	/**
-	 * Returns categorys.
-	 * @return categorys 
-	 */
-	
 
 	public List<Category> getCategorys() {
 		return categorys;
@@ -137,32 +99,19 @@ public  class Publication implements Serializable {
 		this.categorys = categorys;
 	}
 
-	/**
-	 * Returns id.
-	 * @return id 
-	 */
-	public Long getId() {
-		return this.id;
-	}
-
-
-
-	/**
-	 * Returns comments.
-	 * @return comments 
-	 */
 	public List<Comment> getComments() {
-		return this.comments;
+		return comments;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+
+	
+
+	// Start of user code (user defined attributes for Publication)
+
+	// End of user code
+
 
 }

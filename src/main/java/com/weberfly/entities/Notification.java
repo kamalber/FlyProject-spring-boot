@@ -168,15 +168,6 @@ public class Notification implements Serializable{
 		this.user = newUser;
 	}
 
-	public Notification( Date date, String description, Boolean state, String titre) {
-		super();
-		
-		this.date = date;
-		Description = description;
-		this.state = state;
-		this.titre = titre;
-		
-	}
 
 
 

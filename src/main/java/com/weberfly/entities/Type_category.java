@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Cascade;
+
 // Start of user code (user defined imports)
 
 // End of user code
@@ -36,81 +38,49 @@ public class Type_category implements Serializable{
 	/**
 	 * Description of the property categorys.
 	 */
-	@OneToMany(cascade = CascadeType.ALL,mappedBy="type")
-	private List<Category> categorys= new ArrayList<Category>() ;
+	@OneToMany( mappedBy="type",cascade=CascadeType.ALL)
+	private List<Category> categorys ;
 
-	// Start of user code (user defined attributes for Type_category)
-
-	// End of user code
-
-	/**
-	 * The constructor.
-	 */
-	public Type_category() {
-		// Start of user code constructor for Type_category)
-		super();
-		// End of user code
-	}
-
-	// Start of user code (user defined methods for Type_category)
-
-	// End of user code
-	/**
-	 * Returns LabelType.
-	 * @return LabelType 
-	 */
-	public String getLabelType() {
-		return this.LabelType;
-	}
-
-	/**
-	 * Sets a value to attribute LabelType. 
-	 * @param newLabelType 
-	 */
-	public void setLabelType(String newLabelType) {
-		this.LabelType = newLabelType;
-	}
-
-	/**
-	 * Returns Id.
-	 * @return Id 
-	 */
-	public Long getId() {
-		return this.Id;
-	}
-
-	/**
-	 * Sets a value to attribute Id. 
-	 * @param newId 
-	 */
-	public void setId(Long newId) {
-		this.Id = newId;
-	}
-
-	/**
-	 * Returns categorys.
-	 * @return categorys 
-	 */
-	public List<Category> getCategorys() {
-		return this.categorys;
-	}
-
-	public void setCategorys(List<Category> categorys) {
-		this.categorys = categorys;
-	}
-
-	public Type_category(String labelType) {
-		super();
 	
-		LabelType = labelType;
-		
+	public Long getId() {
+		return Id;
 	}
 
-	@Override
-	public String toString() {
-		return "Type_category [Id=" + Id + ", LabelType=" + LabelType + ", categorys=" + categorys + ", getLabelType()="
-				+ getLabelType() + ", getId()=" + getId() + ", getCategorys()=" + getCategorys() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+
+	public void setId(Long id) {
+		Id = id;
 	}
+
+
+	public String getLabelType() {
+		return LabelType;
+	}
+
+
+	public void setLabelType(String labelType) {
+		LabelType = labelType;
+	}
+
+
+
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+
+ 
+
+
+
 
 }

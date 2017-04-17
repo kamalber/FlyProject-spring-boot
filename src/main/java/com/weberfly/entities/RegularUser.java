@@ -47,93 +47,23 @@ public class RegularUser extends User {
 	 @JoinTable(name = "User_Categories", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
 	private List<Category> categories= new ArrayList<Category>();
 	@ManyToMany(mappedBy="following")
-	public List<RegularUser> users = new ArrayList<RegularUser>();
-
+	private List<RegularUser> users = new ArrayList<RegularUser>();
 	
-
-	
-	// End of user code
-
-	/**
-	 * The constructor.
-	 */
-	public RegularUser() {
-		// Start of user code constructor for RegularUser)
-		super();
-		// End of user code
+	public List<RegularUser> getFollowing() {
+		return following;
 	}
-
-	// Start of user code (user defined methods for RegularUser)
-
-	// End of user code
-	/**
-	 * Returns following.
-	 * @return following 
-	 */
-	
-
-	
-	/**
-	 * Returns publications.
-	 * @return publications 
-	 */
-	public List<Publication> getPublications() {
-		return this.publications;
+	public void setFollowing(List<RegularUser> following) {
+		this.following = following;
 	}
-
-	/**
-	 * Returns notifications.
-	 * @return notifications 
-	 */
-	public List<Notification> getNotifications() {
-		return this.notifications;
+	public List<Category> getCategories() {
+		return categories;
 	}
-
-	/**
-	 * Returns comments.
-	 * @return comments 
-	 */
-	public List<Comment> getComments() {
-		return this.comments;
-	}
-
-//	public List<RegularUser> getFollowers() {
-//		return followers;
-//	}
-//
-//	public void setFollowers(List<RegularUser> followers) {
-//		this.followers = followers;
-//	}
-//
-//	public List<RegularUser> getFollowings() {
-//		return followings;
-//	}
-//
-//	public void setFollowings(List<RegularUser> followings) {
-//		this.followings = followings;
-//	}
-
-	public void setPublications(List<Publication> publications) {
-		this.publications = publications;
-	}
-
-	public void setNotifications(List<Notification> notifications) {
-		this.notifications = notifications;
-	}
-
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	
-	
 
 	
-
-	/**
-	 * Returns user.
-	 * @return user 
-	 */
-
 
 }

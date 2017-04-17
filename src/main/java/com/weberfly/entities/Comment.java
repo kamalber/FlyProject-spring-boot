@@ -35,8 +35,7 @@ public class Comment implements Serializable{
 	@ManyToOne(cascade = CascadeType.ALL)
 	private RegularUser user = new RegularUser();
 	@ManyToOne(cascade = CascadeType.ALL)
-    private Publication publication =new Publication() {
-	};
+    private Publication publication =new Publication();
 
 	/**
 	 * Description of the property date.
@@ -58,26 +57,7 @@ public class Comment implements Serializable{
 	 */
 	private String text ;
 
-	// Start of user code (user defined attributes for Comment)
-
-	// End of user code
-
-	/**
-	 * The constructor.
-	 */
-	public Comment() {
-		// Start of user code constructor for Comment)
-		super();
-		// End of user code
-	}
-
-	// Start of user code (user defined methods for Comment)
-
-	// End of user code
-	/**
-	 * Returns user.
-	 * @return user 
-	 */
+	
 	public RegularUser getUser() {
 		return this.user;
 	}
@@ -170,12 +150,6 @@ public class Comment implements Serializable{
 		this.text = newText;
 	}
 
-	public Publication getPublication() {
-		return publication;
-	}
 
-	public void setPublication(Publication pub) {
-		this.publication = pub;
-	}
 
 }
