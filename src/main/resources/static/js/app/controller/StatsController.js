@@ -12,3 +12,11 @@ monApp.controller('StatsController',
     	  $scope.labelsPie = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
     	  $scope.dataPie = [300, 500, 100];
     }]);
+$('#myTab a').click(function (e) {
+	 e.preventDefault();
+	 $(this).tab('show');
+});
+
+$(function () {
+$('#myTab a:last').tab('show');
+})
