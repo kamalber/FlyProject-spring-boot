@@ -36,6 +36,7 @@ public class Post extends Publication {
 	 */
 	private String content ;
 	private String title;
+
 	@Enumerated(EnumType.ORDINAL)
     private sentiment sentment;
 	// Start of user code (user defined attributes for Post)
@@ -58,20 +59,12 @@ public class Post extends Publication {
 	 * Returns title.
 	 * @return title 
 	 */
-	
 
-	/**
-	 * Returns content.
-	 * @return content 
-	 */
+	
 	public String getContent() {
 		return this.content;
 	}
 
-	/**
-	 * Sets a value to attribute content. 
-	 * @param newContent 
-	 */
 	public void setContent(String newContent) {
 		this.content = newContent;
 	}
@@ -83,5 +76,5 @@ public class Post extends Publication {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
+	
 }

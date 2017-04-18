@@ -6,8 +6,10 @@ monApp.constant('urls', {
 
 monApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider
-     .when('/post', {templateUrl: 'views/post/index.html',
+     .when('/posts', {templateUrl: 'views/post/index.html',
     	 controller  : 'Controller/index'})
+     .when('/post', {templateUrl: 'views/post/show.html',
+    	 controller  : 'Controller/show'})
      .when('/user', {
 	    	 templateUrl: 'views/user/list.html',
 	    	 controller:'UserController',

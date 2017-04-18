@@ -19,6 +19,7 @@ private Long id;
 private String name;
 @ManyToOne(cascade = CascadeType.ALL)
 private Category category = new Category();
+
 public Long getId() {
 	return id;
 }
@@ -37,11 +38,6 @@ public Category getCategory() {
 public void setCategory(Category category) {
 	this.category = category;
 }
-public CategoryItem(Long id, String name, Category category) {
-	super();
-	this.id = id;
-	this.name = name;
-	this.category = category;
-}
+
 
 }

@@ -13,10 +13,11 @@ import com.weberfly.entities.Type_category;
 public class CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
 	public void save(Category category) {
 		categoryRepository.save(category);
 	}
-	public List<Category> getAllByType(Type_category type) {
+	public List<Category> getAll() {
 		return categoryRepository.findAll();
 	}
 	public Category findCategory(Long id) {

@@ -35,7 +35,7 @@ public class Session implements Serializable{
 	 * Description of the property users.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL)
-	public User user = new RegularUser();
+	private User user = new RegularUser();
 
 	/**
 	 * Description of the property time_in.
@@ -134,6 +134,10 @@ public class Session implements Serializable{
 	 */
 	public void setTime_out(Date newTime_out) {
 		this.time_out = newTime_out;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

@@ -47,11 +47,6 @@ public class Event extends Publication {
 	/**
 	 * The constructor.
 	 */
-	public Event() {
-		// Start of user code constructor for Event)
-		super();
-		// End of user code
-	}
 
 	// Start of user code (user defined methods for Event)
 
