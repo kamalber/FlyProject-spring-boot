@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.weberfly.dao.CategoryRepository;
 import com.weberfly.entities.Category;
-import com.weberfly.entities.Type_category;
+
 
 @Service
 public class CategoryService {

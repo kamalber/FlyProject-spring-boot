@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.weberfly.entities.Type_category;
+import com.weberfly.entities.TypeCategory;
 import com.weberfly.service.TypeCatService;
 
 @RestController
@@ -23,15 +23,15 @@ public class TypeCatController {
  private TypeCatService typeCatService;
 	
 @RequestMapping(value="/type",method=RequestMethod.POST)
-	 public void saveType(@RequestBody Type_category type_category) {
+	 public void saveType(@RequestBody TypeCategory type_category) {
 		typeCatService.saveType(type_category);
 		}
  @RequestMapping(value="/types",method=RequestMethod.GET)
- public List<Type_category> getAllType(){
+ public List<TypeCategory> getAllType(){
 	 return typeCatService.getAllType();
  }
  @RequestMapping(value="/types/{id}",method=RequestMethod.GET)
- public Type_category findType(@PathVariable(name="id") Long id) {
+ public TypeCategory findType(@PathVariable(name="id") Long id) {
 		return typeCatService.findType(id);
 	}
  

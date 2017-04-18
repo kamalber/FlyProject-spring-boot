@@ -22,7 +22,7 @@ import org.hibernate.annotations.Cascade;
  */
 @Entity
 @Table(name="type_category")
-public class Type_category implements Serializable{
+public class TypeCategory implements Serializable{
 	/**
 	 * Description of the property Id.
 	 */
