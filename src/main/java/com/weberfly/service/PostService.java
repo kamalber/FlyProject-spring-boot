@@ -18,6 +18,6 @@ public class PostService {
 	}
 	public List<Post> getAll() {
 		return postRepository.findAll();
-	}
-	
+	}  
+
 }
