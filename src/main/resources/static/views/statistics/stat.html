@@ -1,3 +1,4 @@
+
 <div class="row">
 <div class="col-lg-12">
                 <h1 class="page-header">Two Column Portfolio
@@ -76,77 +77,31 @@
             </div>
 
 
-
-
-
-<h1>Bootstrap AngularJS Tabs</h1>
-	<div >
-    	<div ng-init="names = [{name:'one'}, {name:'two'}, {name:'three'}, {name:'four'}, {name:'five'}]">
-    	<ul class="nav nav-tabs">
-    	<li ng-repeat="name in names" ng-class="{active: $index == 0}">
-      		<a href="tab{{$index + 1}}" data-toggle="tab">Tab {{$index + 1}}</a>
-    	</li>
-  		</ul>
-		<div class="tab-content">
-    	<div class="tab-pane fade in" id="tab{{$index + 1}}" ng-repeat="name in names" ng-class="{active: $index == 0}">
-      		<p>{{$index + 1}}</p>
-    	</div>
-  		</div>
-		</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-        <li class="active"><a href="" data-toggle="tab">Red</a></li>
-        <li><a href="orange" data-toggle="tab">Orange</a></li>
-        <li><a href="" data-toggle="tab">Yellow</a></li>
-        <li><a href="" data-toggle="tab">Green</a></li>
-        <li><a href="" data-toggle="tab">Blue</a></li>
+<div class="col-lg-8">
+<ul id="tabs" class="nav nav-tabs"  ng-init="tab = 1">
+        <li class="active" ng-class="{active:tab===1}"><a href  ng-click="tab = 1">bar chart </a></li>
+        <li class="" ng-class="{active:tab===2}"><a href  ng-click="tab = 2">Pie chart</a></li>
+        <li class="" ng-class="{active:tab===3}"><a href  ng-click="tab = 3">maps info</a></li>
+      
     </ul>
-        
+        </br></br>
+               <div ng-show="tab === 1"> 
+               
+ <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"> chart-series="series"</canvas>
 
- <div class="col-md-8">
-<div id="my-tab-content" class="tab-content">
-        <div class="tab-pane active" id="red">
-            <h1>Red</h1>
-            <p>red red red red red red</p>
-        </div>
-        <div class="tab-pane" id="orange">
-            <h1>Orange</h1>
-            <p>orange orange orange orange orange</p>
-        </div>
-        <div class="tab-pane" id="yellow">
-            <h1>Yellow</h1>
-            <p>yellow yellow yellow yellow yellow</p>
-        </div>
-        <div class="tab-pane" id="green">
-            <h1>Green</h1>
-            <p>green green green green green</p>
-        </div>
-        <div class="tab-pane" id="blue">
-            <h1>Blue</h1>
-            <p>blue blue blue blue blue</p>
-        </div>
-    </div>
-<canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"> chart-series="series"</canvas>
+</div>
+           
+			<div ng-show="tab === 2">
+			<canvas id="pie" class="chart chart-pie "
+           chart-data="dataPie" chart-labels="labelsPie" chart-options="options">
+          </canvas> </div>
+			 
+			<div ng-show="tab === 3"> yeah, I sleep at weekend. I am human... :D</p>
+
+
+
+
 
 </div>
 
-<div class="col-lg-6">
-
-<canvas id="pie" class="chart chart-pie"
-  chart-data="dataPie" chart-labels="labelsPie" chart-options="options">
-</canvas> 
-</ul>
-</div>
-</div>
+ </div>
