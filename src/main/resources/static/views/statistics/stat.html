@@ -12,7 +12,7 @@
             </div>
 
 
-            <div class="col-md-4">
+            <div class="col-lg-4">
 
                 <!-- Blog Search Well -->
                 <div class="well">
@@ -31,9 +31,12 @@
                     <h4>serche by date </h4>
                     <div class="row">
                         <!-- /.col-lg-6 -->
-                        <div class="col-md-6">
-                            <ul class="list-unstyled">
-                                <li> <span>start Date</span>
+                       
+                            <div  class="col-md-4">
+                                 <span>start Date</span>
+                                 </div>
+                                  <div class="col-md-6">
+                                  
                                 <div class="input-group"
      moment-picker="ctrl.datepicker"
      format="YYYY-MM-DD">
@@ -45,26 +48,33 @@
            ng-model="ctrl.datepicker"
            ng-model-options="{ updateOn: 'blur' }">
 </div>
-                                </li>    
+                                   </div>
                                 
-                                
-                                           <li> <span>end Date</span>
-                                <div class="input-group"
-     moment-picker="ctrl.datepicker"
-     format="YYYY-MM-DD">
-    <span class="input-group-addon">
-        <i class="octicon octicon-calendar"></i>
-    </span>
-    <input class="form-control"
-           placeholder="Select a date"
-           ng-model="ctrl.datepicker"
-           ng-model-options="{ updateOn: 'blur' }">
-</div>
-                                </li>                 
-                            </ul>
-                        </div>
+                        </div><hr>
+                                <div class="row">
                         <!-- /.col-lg-6 -->
-                    </div>
+                       
+                            <div  class=" col-md-4">
+                                 <span>start Date</span>
+                                 </div>
+                                  <div class="col-md-6">
+                                  
+                                <div class="input-group"
+     moment-picker="ctrl.datepicker"
+     format="YYYY-MM-DD">
+    <span class="input-group-addon">
+        <i class="octicon octicon-calendar"></i>
+    </span>
+    <input class="form-control"
+           placeholder="Select a date"
+           ng-model="ctrl.datepicker"
+           ng-model-options="{ updateOn: 'blur' }">
+</div>
+                                   </div>
+                                
+                        </div>      
+                        <!-- /.col-lg-6 -->
+                    
                     <!-- /.row -->
                 </div>
 
@@ -81,7 +91,7 @@
 <ul id="tabs" class="nav nav-tabs"  ng-init="tab = 1">
         <li class="active" ng-class="{active:tab===1}"><a href  ng-click="tab = 1">bar chart </a></li>
         <li class="" ng-class="{active:tab===2}"><a href  ng-click="tab = 2">Pie chart</a></li>
-        <li class="" ng-class="{active:tab===3}"><a href  ng-click="tab = 3">maps info</a></li>
+        <li class="" ng-class="{active:tab===3}"><a href  ng-click="tab = 3">bubble chart</a></li>
       
     </ul>
         </br></br>
@@ -96,7 +106,10 @@
            chart-data="dataPie" chart-labels="labelsPie" chart-options="options">
           </canvas> </div>
 			 
-			<div ng-show="tab === 3"> yeah, I sleep at weekend. I am human... :D</p>
+			<div ng-show="tab === 3"> 
+			<canvas id="base" class="chart-bubble" chart-data="bubbleData" chart-series="bubbleSeries" >
+            </canvas> 
+			</div>
 
 
 
