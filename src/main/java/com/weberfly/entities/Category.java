@@ -38,14 +38,12 @@ public class Category implements Serializable{
 	private Long id ;
 	private String name ;
 	
-	  @ManyToMany(mappedBy="categorys")
-	private List<Publication> publications = new ArrayList<Publication>();
 	  
 	  @ManyToOne(cascade = CascadeType.ALL)
-	 private Type_category type  ;
+	 private TypeCategory type  ;
 	  
-	  @OneToMany(cascade = CascadeType.ALL)
-		private List<CategoryItem> items = new ArrayList<CategoryItem>();
+	  @OneToMany(cascade = CascadeType.ALL,mappedBy="category")
+		private List<CategoryItem> categoryItems = new ArrayList<CategoryItem>();
 	  
 	  @ManyToMany(mappedBy="categories")
 		private List<RegularUser> users = new ArrayList<RegularUser>();
@@ -66,11 +64,11 @@ public class Category implements Serializable{
 		this.name = name;
 	}
 
-	public Type_category getType() {
+	public TypeCategory getType() {
 		return type;
 	}
 
-	public void setType(Type_category type) {
+	public void setType(TypeCategory type) {
 		this.type = type;
 	}
 

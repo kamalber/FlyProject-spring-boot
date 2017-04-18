@@ -50,8 +50,8 @@ public  class Publication implements Serializable {
 	 * Description of the property categorys.
 	 */
 	@ManyToMany(cascade = CascadeType.ALL)
-	 @JoinTable(name = "Bub_Category", joinColumns = @JoinColumn(name = "pub_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "cat_id", referencedColumnName = "id"))
-	private List<Category> categorys = new ArrayList<Category>();
+	 @JoinTable(name = "Pub_CategoryItem", joinColumns = @JoinColumn(name = "pub_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "catItem_id", referencedColumnName = "id"))
+	private List<CategoryItem> categoryItems = new ArrayList<CategoryItem>();
 
 	/**
 	 * Description of the property comments.
@@ -91,12 +91,13 @@ public  class Publication implements Serializable {
 		this.user = user;
 	}
 
-	public List<Category> getCategorys() {
-		return categorys;
+	
+	public List<CategoryItem> getCategoryItems() {
+		return categoryItems;
 	}
 
-	public void setCategorys(List<Category> categorys) {
-		this.categorys = categorys;
+	public void setCategoryItems(List<CategoryItem> categoryItems) {
+		this.categoryItems = categoryItems;
 	}
 
 	public List<Comment> getComments() {
