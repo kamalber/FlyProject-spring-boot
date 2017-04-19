@@ -1,11 +1,11 @@
-monApp.factory('categoryTypeService',
+monApp.factory('CategoryTypeService',
     ['$localStorage', '$http', '$q', 'urls',
         function ($localStorage, $http, $q, urls) {
 
     	
             var factory = {
-                loadAll: loadAll,
-                getAll: getAll,
+                loadAllTypeCatgory: loadAll,
+                getAllTypeCatgory: getAll,
                 get: get,
                 create: create,
                 update: update,
@@ -17,7 +17,7 @@ monApp.factory('categoryTypeService',
             function loadAll() {
                 console.log('Fetching all categoryTypes');
                 var deferred = $q.defer();
-                $http.get(urls.USER_SERVICE_API)
+                $http.get(urls.TYPECATEGORY_SERVICE_API)
                     .then(
                         function (response) {
                             console.log('Fetched successfully all categoryType');
@@ -39,7 +39,7 @@ monApp.factory('categoryTypeService',
             function get(id) {
                 console.log('Fetching User with id :'+id);
                 var deferred = $q.defer();
-                $http.get(urls.USER_SERVICE_API + id)
+                $http.get(urls.TYPECATEGORY_SERVICE_API + id)
                     .then(
                         function (response) {
                             console.log('Fetched successfully categoryTyp with id :'+id);
@@ -55,11 +55,15 @@ monApp.factory('categoryTypeService',
 
             function create(categoryType) {
                 console.log('Creating User');
+               
                 var deferred = $q.defer();
-                $http.post(urls.USER_SERVICE_API, categoryType)
+                console.log(urls.TYPECATEGORY_SERVICE_API);
+                console.log(categoryType);
+                $http.post(urls.TYPECATEGORY_SERVICE_API, categoryType)
                     .then(
                         function (response) {
                             loadAll();
+                            console.log(response.data.id);
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
@@ -73,7 +77,7 @@ monApp.factory('categoryTypeService',
             function update(categoryType, id) {
                 console.log('Updating User with id '+id);
                 var deferred = $q.defer();
-                $http.put(urls.USER_SERVICE_API + id, categoryType)
+                $http.put(urls.TYPECATEGORY_SERVICE_API + id, categoryType)
                     .then(
                         function (response) {
                             loadAll();
@@ -90,7 +94,7 @@ monApp.factory('categoryTypeService',
             function remove(id) {
                 console.log('Removing User with id '+id);
                 var deferred = $q.defer();
-                $http.delete(urls.USER_SERVICE_API + id)
+                $http.delete(urls.TYPECATEGORY_SERVICE_API + id)
                     .then(
                         function (response) {
                             loadAll();

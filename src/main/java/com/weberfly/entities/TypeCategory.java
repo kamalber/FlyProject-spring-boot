@@ -32,7 +32,7 @@ public class TypeCategory implements Serializable{
 	/**
 	 * Description of the property LabelType.
 	 */
-	private String LabelType ;
+	private String name ;
 
 
 	/**
@@ -53,12 +53,12 @@ public class TypeCategory implements Serializable{
 
 
 	public String getLabelType() {
-		return LabelType;
+		return name;
 	}
 
 
 	public void setLabelType(String labelType) {
-		LabelType = labelType;
+		this.name = labelType;
 	}
 
 
