@@ -15,7 +15,7 @@
 	                    
 	                        <label class="col-md-2 control-lable" for="uname">Name</label>
 	                        <div class="col-md-7">
-	                            <input type="text" ng-model="ctrl.category.name" id="uname" class="username form-control input-sm" placeholder="Enter your name" required ng-minlength="3"/>
+	                            <input type="text" ng-model="ctrl.categoryType.name" id="uname" class="username form-control input-sm" placeholder="Enter your name" required ng-minlength="3"/>
 	                        </div>
 	                    </div>
 	                </div>
@@ -23,7 +23,7 @@
 
 	                <div class="row">
 	                    <div class="form-actions floatRight">
-	                        <input type="submit"  value="{{!ctrl.category.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid || myForm.$pristine">
+	                        <input type="submit"  value="{{!ctrl.categoryType.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid || myForm.$pristine">
 	                        <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
 	                    </div>
 	                </div>
@@ -46,7 +46,7 @@
 		            </tr>
 		            </thead>
 		            <tbody>
-		            <tr ng-repeat="u in ctrl.categoryList">
+		            <tr ng-repeat="u in ctrl.categoryTypeList">
 		                <td>{{u.id}}</td>
 		                <td>{{u.name}}</td>
 		                <td><button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success custom-width">Edit</button></td>

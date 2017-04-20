@@ -16,111 +16,109 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.weberfly.entities.Category;
+import com.weberfly.entities.Category;
 import com.weberfly.entities.User_test;
 import com.weberfly.service.CategoryService;
+import com.weberfly.service.TypeCategoryService;
 import com.weberfly.service.UserTestService;
 import com.weberfly.util.CustomErrorType;
 
 @RestController
+@RequestMapping("/categorys")
 public class CategoryController {
 	
-	public static final Logger logger = LoggerFactory.getLogger(RestApiController.class);
-
+	public static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 	@Autowired
 	private CategoryService categoryService;
-	
-	@Autowired
-	UserTestService userService; //Service which will do all data retrieval/manipulation work
 
-	// -------------------Retrieve All Users---------------------------------------------
+	// -------------------Retrieve All items---------------------------------------------
 
-	@RequestMapping(value = "/user/", method = RequestMethod.GET)
-	public ResponseEntity<List<User_test>> listAllUsers() {
-		List<User_test> users = userService.findAllUsers();
-		if (users.isEmpty()) {
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ResponseEntity<List<Category>> listAll() {
+		List<Category> items = categoryService.findAll();
+		if (items.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			// You many decide to return HttpStatus.NOT_FOUND
 		}
-		return new ResponseEntity<List<User_test>>(users, HttpStatus.OK);
+		return new ResponseEntity<List<Category>>(items, HttpStatus.OK);
 	}
 
-	// -------------------Retrieve Single User------------------------------------------
+	// -------------------Retrieve Single item------------------------------------------
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> getUser(@PathVariable("id") long id) {
-		logger.info("Fetching User with id {}", id);
-		User_test user = userService.findById(id);
-		if (user == null) {
-			logger.error("User with id {} not found.", id);
-			return new ResponseEntity(new CustomErrorType("User with id " + id 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> getItem(@PathVariable("id") long id) {
+		logger.info("Fetching item with id {}", id);
+		Category item = categoryService.find(id);
+		if (item == null) {
+			logger.error("item with id {} not found.", id);
+			return new ResponseEntity(new CustomErrorType("item with id " + id 
 					+ " not found"), HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<User_test>(user, HttpStatus.OK);
+		return new ResponseEntity<Category>(item, HttpStatus.OK);
 	}
 
-	// -------------------Create a User-------------------------------------------
+	// -------------------Create a item-------------------------------------------
 
-	@RequestMapping(value = "/user/", method = RequestMethod.POST)
-	public ResponseEntity<?> createUser(@RequestBody User_test user, UriComponentsBuilder ucBuilder) {
-		logger.info("Creating User : {}", user);
-
-		if (userService.isUserExist(user)) {
-			logger.error("Unable to create. A User with name {} already exist", user.getName());
-			return new ResponseEntity(new CustomErrorType("Unable to create. A User with name " + 
-			user.getName() + " already exist."),HttpStatus.CONFLICT);
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public ResponseEntity<?> create(@RequestBody Category item, UriComponentsBuilder ucBuilder) {
+		logger.info("Creating item : {}", item);
+logger.info("{}",categoryService.isExist(item));
+		if (categoryService.isExist(item)) {
+			logger.error("Unable to create. A item with name {} already exist", item.getName());
+			return new ResponseEntity(new CustomErrorType("Unable to create. A item with name " + 
+			item.getName()+ " already exist."),HttpStatus.CONFLICT);
 		}
-		userService.saveUser(user);
+		categoryService.save(item);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/api/user/{id}").buildAndExpand(user.getId()).toUri());
-		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+		headers.setLocation(ucBuilder.path("/typeCategorys/{id}").buildAndExpand(item.getId()).toUri());
+		return new ResponseEntity<Category>(item, HttpStatus.CREATED);
 	}
 
-	// ------------------- Update a User ------------------------------------------------
+	// ------------------- Update a item ------------------------------------------------
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateUser(@PathVariable("id") long id, @RequestBody User_test user) {
-		logger.info("Updating User with id {}", id);
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Category item) {
+		logger.info("Updating item with id {}", id);
 
-		User_test currentUser = userService.findById(id);
+		Category currentitem = categoryService.find(id);
 
-		if (currentUser == null) {
-			logger.error("Unable to update. User with id {} not found.", id);
-			return new ResponseEntity(new CustomErrorType("Unable to upate. User with id " + id + " not found."),
+		if (currentitem == null) {
+			logger.error("Unable to update. item with id {} not found.", id);
+			return new ResponseEntity(new CustomErrorType("Unable to upate. item with id " + id + " not found."),
 					HttpStatus.NOT_FOUND);
 		}
 
-		currentUser.setName(user.getName());
-		currentUser.setAge(user.getAge());
-		currentUser.setSalary(user.getSalary());
+		currentitem.setName(item.getName());
+		
 
-		userService.updateUser(currentUser);
-		return new ResponseEntity<User_test>(currentUser, HttpStatus.OK);
+		categoryService.save(currentitem);
+		return new ResponseEntity<Category>(currentitem, HttpStatus.OK);
 	}
 
-	// ------------------- Delete a User-----------------------------------------
+	// ------------------- Delete a item-----------------------------------------
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteUser(@PathVariable("id") long id) {
-		logger.info("Fetching & Deleting User with id {}", id);
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> delete(@PathVariable("id") long id) {
+		logger.info("Fetching & Deleting item with id {}", id);
 
-		User_test user = userService.findById(id);
-		if (user == null) {
-			logger.error("Unable to delete. User with id {} not found.", id);
-			return new ResponseEntity(new CustomErrorType("Unable to delete. User with id " + id + " not found."),
+		Category item = categoryService.find(id);
+		if (item == null) {
+			logger.error("Unable to delete. item with id {} not found.", id);
+			return new ResponseEntity(new CustomErrorType("Unable to delete. item with id " + id + " not found."),
 					HttpStatus.NOT_FOUND);
 		}
-		userService.deleteUserById(id);
-		return new ResponseEntity<User_test>(HttpStatus.NO_CONTENT);
+		categoryService.delete(item.getId());
+		return new ResponseEntity<Category>(HttpStatus.NO_CONTENT);
 	}
 
-	// ------------------- Delete All Users-----------------------------
+	// ------------------- Delete All items-----------------------------
 
-	@RequestMapping(value = "/user/", method = RequestMethod.DELETE)
-	public ResponseEntity<User_test> deleteAllUsers() {
-		logger.info("Deleting All Users");
-
-		userService.deleteAllUsers();
-		return new ResponseEntity<User_test>(HttpStatus.NO_CONTENT);
-	}
+//	@RequestMapping(value = "/item/", method = RequestMethod.DELETE)
+//	public ResponseEntity<TypeCategory> deleteAllitems() {
+//		logger.info("Deleting All items");
+//
+//		typeCatService.deleteAllitems();
+//		return new ResponseEntity<TypeCategory>(HttpStatus.NO_CONTENT);
+//	}
 }

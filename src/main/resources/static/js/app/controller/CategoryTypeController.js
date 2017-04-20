@@ -1,10 +1,10 @@
-monApp.controller('CategorysController',
+monApp.controller('CategoryTypeController',
     ['CategoryTypeService', '$scope',  function( CategoryTypeService, $scope) {
 
         var self = this;
 
         self.categoryType = {};
-        self.list=getAll();
+        self.categoryTypeList=getAll();
         
         self.submit = submit;
         self.getAll = getAll;
@@ -41,6 +41,7 @@ monApp.controller('CategorysController',
                         self.successMessage = 'categoryType created successfully';
                         self.errorMessage='';
                         self.done = true;
+                        self.list.push(categoryTypeResult);
                         self.categoryType={};
                         $scope.myForm.$setPristine();
                     },
@@ -73,8 +74,17 @@ monApp.controller('CategorysController',
         }
 
         function getAll(){
-        	
-            return CategoryTypeService.getAllTypeCatgory();
+        	console.log('About to load all categorys');
+             CategoryTypeService.getAll()
+                  .then(
+                     function(categoyrResults){
+                    	self.categoryTypeList=categoyrResults;
+                         console.log('loading all cateory'+categoyrResults);
+                     },
+                     function(errResponse){
+                         console.error('Error while loading category, Error :'+errResponse.data);
+                     }
+                 );
         }
         
         function remove(id){
