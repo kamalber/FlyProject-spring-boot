@@ -1,7 +1,6 @@
 monApp.factory('CategoryTypeService',
     ['$localStorage', '$http', '$q', 'urls',
         function ($localStorage, $http, $q, urls) {
-
     	
             var factory = {
                 loadAllTypeCatgory: loadAll,
@@ -33,11 +32,12 @@ monApp.factory('CategoryTypeService',
             }
 
             function getAll(){
+            	loadAll();
                 return $localStorage.categoryTypes;
             }
 
             function get(id) {
-                console.log('Fetching User with id :'+id);
+                console.log('Fetching CategoryType with id :'+id);
                 var deferred = $q.defer();
                 $http.get(urls.TYPECATEGORY_SERVICE_API + id)
                     .then(
@@ -46,7 +46,7 @@ monApp.factory('CategoryTypeService',
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                            console.error('Error while loading user with id :'+id);
+                            console.error('Error while loading CategoryType with id :'+id);
                             deferred.reject(errResponse);
                         }
                     );
@@ -54,7 +54,7 @@ monApp.factory('CategoryTypeService',
             }
 
             function create(categoryType) {
-                console.log('Creating User');
+                console.log('Creating CategoryType');
                
                 var deferred = $q.defer();
                 console.log(urls.TYPECATEGORY_SERVICE_API);
@@ -62,12 +62,11 @@ monApp.factory('CategoryTypeService',
                 $http.post(urls.TYPECATEGORY_SERVICE_API, categoryType)
                     .then(
                         function (response) {
-                            loadAll();
-                            console.log(response.data.id);
+                        	$localStorage.categoryTypes.push(response.data);
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                           console.error('Error while creating User : '+errResponse.data.errorMessage);
+                           console.error('Error while creating CategoryType : '+errResponse.data.errorMessage);
                            deferred.reject(errResponse);
                         }
                     );
@@ -75,16 +74,16 @@ monApp.factory('CategoryTypeService',
             }
 
             function update(categoryType, id) {
-                console.log('Updating User with id '+id);
+                console.log('Updating CategoryType with id '+id);
                 var deferred = $q.defer();
                 $http.put(urls.TYPECATEGORY_SERVICE_API + id, categoryType)
                     .then(
                         function (response) {
-                            loadAll();
+                           
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                            console.error('Error while updating User with id :'+id);
+                            console.error('Error while updating CategoryType with id :'+id);
                             deferred.reject(errResponse);
                         }
                     );
@@ -92,16 +91,16 @@ monApp.factory('CategoryTypeService',
             }
 
             function remove(id) {
-                console.log('Removing User with id '+id);
+                console.log('Removing CategoryType with id '+id);
                 var deferred = $q.defer();
                 $http.delete(urls.TYPECATEGORY_SERVICE_API + id)
                     .then(
                         function (response) {
-                            loadAll();
+                        	$localStorage.categoryTypes.remove(response.data)
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
-                            console.error('Error while removing User with id :'+id);
+                            console.error('Error while removing CategoryType with id :'+id);
                             deferred.reject(errResponse);
                         }
                     );

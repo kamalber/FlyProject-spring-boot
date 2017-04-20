@@ -1,10 +1,10 @@
 monApp.controller('CategorysController',
-    ['categoryTypeService', '$scope',  function( UserService, $scope) {
+    ['CategoryTypeService', '$scope',  function( CategoryTypeService, $scope) {
 
         var self = this;
 
         self.categoryType = {};
-        self.categoryTypes=[];
+        self.list=getAll();
         
         self.submit = submit;
         self.getAll = getAll;
@@ -34,9 +34,9 @@ monApp.controller('CategorysController',
 
         function create(categoryType) {
             console.log('About to create categoryType');
-            categoryTypeService.create(categoryType)
+            CategoryTypeService.create(categoryType)
                 .then(
-                    function (response) {
+                    function (categoryTypeResult) {
                         console.log('categoryType created successfully');
                         self.successMessage = 'categoryType created successfully';
                         self.errorMessage='';
@@ -55,7 +55,7 @@ monApp.controller('CategorysController',
 
         function update(categoryType, id){
             console.log('About to update user');
-            categoryTypeService.update(user, id)
+            CategoryTypeService.update(user, id)
                 .then(
                     function (response){
                         console.log('categoryType updated successfully');
@@ -73,12 +73,13 @@ monApp.controller('CategorysController',
         }
 
         function getAll(){
-            return categoryTypeService.getAll;
+        	
+            return CategoryTypeService.getAllTypeCatgory();
         }
         
         function remove(id){
             console.log('About to remove User with id '+id);
-            categoryTypeService.remove(id)
+            CategoryTypeService.remove(id)
                 .then(
                     function(){
                         console.log('User '+id + ' removed successfully');
@@ -94,7 +95,7 @@ monApp.controller('CategorysController',
         function edit(id) {
             self.successMessage='';
             self.errorMessage='';
-            categoryTypeService.get(id).then(
+            CategoryTypeService.get(id).then(
                 function (categoryType) {
                     self.categoryType = categoryType;
                 },
@@ -110,14 +111,6 @@ monApp.controller('CategorysController',
             self.user={};
             $scope.myForm.$setPristine(); //reset Form
         }
-        
-        
-//        ----------------------------------------------------------
-        
-
-      
-
-       
 
    
        

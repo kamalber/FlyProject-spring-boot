@@ -52,13 +52,13 @@ public class TypeCategory implements Serializable{
 	}
 
 
-	public String getLabelType() {
+	public String getName() {
 		return name;
 	}
 
 
-	public void setLabelType(String labelType) {
-		this.name = labelType;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 

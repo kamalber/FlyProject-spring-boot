@@ -32,7 +32,7 @@ public void typeCatService(TypeCategory typeCategory) {
 	
 }
 public Boolean isExist(TypeCategory typeCategory){
-	return typeCatRepository.findByName(typeCategory.getLabelType()) != null;
+	return typeCatRepository.findByName(typeCategory.getName()) != null;
 }
 public void delete(Long id){
 	typeCatRepository.delete(id);

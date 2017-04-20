@@ -57,19 +57,19 @@ public class TypeCategoryController {
 	// -------------------Create a item-------------------------------------------
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ResponseEntity<?> create(@RequestBody TypeCategory categoryType, UriComponentsBuilder ucBuilder) {
-		logger.info("Creating item : {}", categoryType);
-logger.info("{}",typeCatService.isExist(categoryType));
-		if (typeCatService.isExist(categoryType)) {
-			logger.error("Unable to create. A item with name {} already exist", categoryType.getLabelType());
+	public ResponseEntity<?> create(@RequestBody TypeCategory item, UriComponentsBuilder ucBuilder) {
+		logger.info("Creating item : {}", item);
+logger.info("{}",typeCatService.isExist(item));
+		if (typeCatService.isExist(item)) {
+			logger.error("Unable to create. A item with name {} already exist", item.getName());
 			return new ResponseEntity(new CustomErrorType("Unable to create. A item with name " + 
-			categoryType.getLabelType() + " already exist."),HttpStatus.CONFLICT);
+			item.getName()+ " already exist."),HttpStatus.CONFLICT);
 		}
-		typeCatService.save(categoryType);
+		typeCatService.save(item);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/typeCategorys/{id}").buildAndExpand(categoryType.getId()).toUri());
-		return new ResponseEntity<TypeCategory>(categoryType, HttpStatus.CREATED);
+		headers.setLocation(ucBuilder.path("/typeCategorys/{id}").buildAndExpand(item.getId()).toUri());
+		return new ResponseEntity<TypeCategory>(item, HttpStatus.CREATED);
 	}
 
 	// ------------------- Update a item ------------------------------------------------
@@ -86,7 +86,7 @@ logger.info("{}",typeCatService.isExist(categoryType));
 					HttpStatus.NOT_FOUND);
 		}
 
-		currentitem.setLabelType(item.getLabelType());
+		currentitem.setName(item.getName());
 		
 
 		typeCatService.save(currentitem);
