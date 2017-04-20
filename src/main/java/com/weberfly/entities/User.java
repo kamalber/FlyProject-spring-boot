@@ -32,7 +32,7 @@ public abstract class User implements Serializable{
 	/**
 	 * Description of the property email.
 	 */
-	private String email ;
+	private String username ;
 	private String password ;
 	/**
 	 * Description of the property sessions.
@@ -68,12 +68,14 @@ public abstract class User implements Serializable{
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+
+
+	public String getUsename() {
+		return username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsename(String usename) {
+		this.username = usename;
 	}
 
 	public String getPassword() {
@@ -90,6 +92,14 @@ public abstract class User implements Serializable{
 
 	public void setProfile(Profile profile) {
 		this.profile = profile;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	/**
