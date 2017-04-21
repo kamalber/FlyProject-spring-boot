@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.weberfly.dao.CategoryRepository;
 import com.weberfly.entities.Category;
+import com.weberfly.entities.TypeCategory;
 
 
 @Service
@@ -17,10 +18,16 @@ public class CategoryService {
 	public void save(Category category) {
 		categoryRepository.save(category);
 	}
-	public List<Category> getAll() {
+	public List<Category> findAll() {
 		return categoryRepository.findAll();
 	}
-	public Category findCategory(Long id) {
+	public Category find(Long id) {
 		return categoryRepository.findOne(id);
+	}
+	public Boolean isExist(Category Category){
+		return categoryRepository.findByName(Category.getName()) != null;
+	}
+	public void delete(Long id){
+		categoryRepository.delete(id);
 	}
 }
