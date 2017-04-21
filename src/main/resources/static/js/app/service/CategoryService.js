@@ -24,16 +24,16 @@ monApp.factory('CategoryService',
             	return CrudEngine.get(id);
             }
 
-            function create(categoryType) {
-            	return CrudEngine.create(categoryType);
+            function create(category) {
+            	return CrudEngine.create(category);
             }
             
             function update(categoryType, id) {
-               return CrudEngine.update(categoryType,id);
+               return CrudEngine.update(category,id);
             }
 
             function remove(id) {
-            	CrudEngine.remove(id);
+            	return CrudEngine.remove(id);
             }
 
         }

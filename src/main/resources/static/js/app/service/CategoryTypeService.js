@@ -33,7 +33,7 @@ monApp.factory('CategoryTypeService',
             }
 
             function remove(id) {
-            	CrudEngine.remove(id);
+            	return CrudEngine.remove(id);
             }
 
         }

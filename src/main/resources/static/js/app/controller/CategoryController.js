@@ -11,6 +11,7 @@ monApp.controller('CategoryController',
         self.create = create;
         self.update = update;
         self.remove = remove;
+        self.addCategorys = addCategorys;
         self.edit = edit;
         self.reset = reset;
 
@@ -41,7 +42,7 @@ monApp.controller('CategoryController',
                         self.successMessage = 'category created successfully';
                         self.errorMessage='';
                         self.done = true;
-                        self.categoryList.push(categoryResult);
+                        self.categoryList.unshift(categoryResult);
                         self.category={};
                         $scope.myForm.$setPristine();
                     },
@@ -55,19 +56,21 @@ monApp.controller('CategoryController',
 
 
         function update(category, id){
-            console.log('About to update user');
-            CategoryService.update(user, id)
+            console.log('About to update category');
+            CategoryService.update(category, id)
                 .then(
                     function (response){
                         console.log('category updated successfully');
                         self.successMessage='category updated successfully';
                         self.errorMessage='';
+                        var index=self.categoryList.findIndex((obj => obj.id == id));
+                        self.categoryList[index]=category;
                         self.done = true;
                         $scope.myForm.$setPristine();
                     },
                     function(errResponse){
-                        console.error('category while updating User');
-                        self.errorMessage='category while updating User '+errResponse.data;
+                        console.error('category while updating category');
+                        self.errorMessage='category while updating category '+errResponse.data;
                         self.successMessage='';
                     }
                 );
@@ -78,8 +81,7 @@ monApp.controller('CategoryController',
              CategoryService.getAll()
                   .then(
                      function(cateroyResults){
-                    	self.categoryList=cateroyResults;
-                         console.log('loading all cateory'+cateroyResults);
+                    	 self.categoryList=self.cateroyResults!=='' ? cateroyResults : new Array();
                      },
                      function(errResponse){
                          console.error('Error while loading category, Error :'+errResponse.data);
@@ -88,14 +90,15 @@ monApp.controller('CategoryController',
         }
         
         function remove(id){
-            console.log('About to remove User with id '+id);
+            console.log('About to remove category with id '+id);
             CategoryService.remove(id)
                 .then(
                     function(){
-                        console.log('User '+id + ' removed successfully');
+                        var index=self.categoryList.map( (el) => el.id ).indexOf(id);
+                        self.categoryList.splice(index,1);
                     },
                     function(errResponse){
-                        console.error('Error while removing user '+id +', Error :'+errResponse.data);
+                        console.error('Error while removing category '+id +', Error :'+errResponse.data);
                     }
                 );
         }
@@ -110,7 +113,7 @@ monApp.controller('CategoryController',
                     self.category = category;
                 },
                 function (errResponse) {
-                    console.error('Error while removing user ' + id + ', Error :' + errResponse.data);
+                    console.error('Error while removing category ' + id + ', Error :' + errResponse.data);
                 }
             );
         }
@@ -118,11 +121,13 @@ monApp.controller('CategoryController',
         function reset(){
             self.successMessage='';
             self.errorMessage='';
-            self.user={};
+            self.category={};
             $scope.myForm.$setPristine(); //reset Form
         }
 
-   
+        function addCategorys(id){
+        	
+        }
        
     }
 

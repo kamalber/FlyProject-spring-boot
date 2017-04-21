@@ -92,6 +92,7 @@ monApp.factory('CrudEngine',
                 $http.delete(factory.url + id)
                     .then(
                         function (response) {
+                        	console.log('Item deleted from service :'+id);
                             deferred.resolve(response.data);
                         },
                         function (errResponse) {
