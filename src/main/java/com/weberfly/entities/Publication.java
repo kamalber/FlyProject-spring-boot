@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 // End of user code
 
@@ -75,7 +77,9 @@ public  class Publication implements Serializable {
 		this.commentNumber = commentNumber;
 	}
 
-	public Date getDate() {
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE, d MMM yyyy 'at' hh:mm aaa",timezone = "GMT+1")
+		public Date getDate() {
 		return date;
 	}
 

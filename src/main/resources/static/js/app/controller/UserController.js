@@ -87,6 +87,7 @@ monApp.controller('UserController',
 
 
         function getAllUsers(){
+        	
             return UserService.getAllUsers();
         }
 

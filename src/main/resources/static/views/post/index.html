@@ -1,21 +1,35 @@
+           <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Blog Home One
+                    <small>Subheading</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a>
+                    </li>
+                    <li class="active">Blog Home One</li>
+                </ol>
+            </div>
+        </div>
         <div class="row">
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
-
-                <!-- First Blog Post -->
+<div ng-repeat="p in ctrl.getAllPosts()">
+                
                 <h2>
-                    <a href="#">Blog Post Title</a>
+                    <a href="#">{{p.title}}</a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php">Start Bootstrap</a>
+                    by <a href="index.php">{{p.user.username}}</a>
                 </p>
-                <p><i class="fa fa-clock-o"></i> Posted on August 28, 2013 at 10:00 PM</p>
-                
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
-                <a class="btn btn-primary" href="#">Read More <i class="fa fa-angle-right"></i></a>
-
+                <p><i class="fa fa-clock-o"></i> Posted on  {{p.date}}</p>
                 <hr>
+                <p>{{p.content}}</p>
+                <a class="btn btn-primary" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                <hr>
+ </div>
+ 
+                
 
             
                 <!-- Pager -->
@@ -93,5 +107,5 @@
         <hr>
 
 
-    </div>
+
 
