@@ -41,7 +41,7 @@ monApp.controller('CategoryTypeController',
                         self.successMessage = 'categoryType created successfully';
                         self.errorMessage='';
                         self.done = true;
-                        self.list.push(categoryTypeResult);
+                        self.categoryTypeList.unshift(categoryTypeResult);
                         self.categoryType={};
                         $scope.myForm.$setPristine();
                     },
@@ -55,31 +55,33 @@ monApp.controller('CategoryTypeController',
 
 
         function update(categoryType, id){
-            console.log('About to update user');
-            CategoryTypeService.update(user, id)
+            console.log('About to update CategoryType');
+            CategoryTypeService.update(categoryType, id)
                 .then(
                     function (response){
                         console.log('categoryType updated successfully');
                         self.successMessage='categoryType updated successfully';
                         self.errorMessage='';
+                        var index=self.categoryTypeList.findIndex((obj => obj.id == id));
+                        self.categoryTypeList[index]=categoryType;
                         self.done = true;
                         $scope.myForm.$setPristine();
                     },
                     function(errResponse){
-                        console.error('categoryType while updating User');
-                        self.errorMessage='categoryType while updating User '+errResponse.data;
+                        console.error('categoryType while updating CategoryType');
+                        self.errorMessage='categoryType while updating CategoryType '+errResponse.data;
                         self.successMessage='';
                     }
                 );
         }
 
         function getAll(){
+        	self.categoryTypeList=new Array();
         	console.log('About to load all categorys');
              CategoryTypeService.getAll()
                   .then(
                      function(categoyrResults){
-                    	self.categoryTypeList=categoyrResults;
-                         console.log('loading all cateory'+categoyrResults);
+                    	self.categoryTypeList=self.categoyrResults!=='' ? categoyrResults : new Array();
                      },
                      function(errResponse){
                          console.error('Error while loading category, Error :'+errResponse.data);
@@ -88,14 +90,15 @@ monApp.controller('CategoryTypeController',
         }
         
         function remove(id){
-            console.log('About to remove User with id '+id);
+            console.log('About to remove CategoryType with id '+id);
             CategoryTypeService.remove(id)
                 .then(
                     function(){
-                        console.log('User '+id + ' removed successfully');
+                    	var index=self.categoryTypeList.map( (el) => el.id ).indexOf(id);
+                        self.categoryTypeList.splice(index,1);
                     },
                     function(errResponse){
-                        console.error('Error while removing user '+id +', Error :'+errResponse.data);
+                        console.error('Error while removing CategoryType '+id +', Error :'+errResponse.data);
                     }
                 );
         }
@@ -110,7 +113,7 @@ monApp.controller('CategoryTypeController',
                     self.categoryType = categoryType;
                 },
                 function (errResponse) {
-                    console.error('Error while removing user ' + id + ', Error :' + errResponse.data);
+                    console.error('Error while removing CategoryType ' + id + ', Error :' + errResponse.data);
                 }
             );
         }
@@ -118,7 +121,7 @@ monApp.controller('CategoryTypeController',
         function reset(){
             self.successMessage='';
             self.errorMessage='';
-            self.user={};
+            self.categoryType={};
             $scope.myForm.$setPristine(); //reset Form
         }
 

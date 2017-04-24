@@ -1,4 +1,4 @@
-monApp.factory('CategoryService',
+monApp.factory('CategoryItemService',
     ['$localStorage', '$http', '$q', 'urls','CrudEngine',
         function ($localStorage, $http, $q, urls,CrudEngine) {
     	
@@ -10,7 +10,7 @@ monApp.factory('CategoryService',
                 remove: remove
             };
          // setting up the specific rest API url to the crud engine
-            CrudEngine.setUrl(urls.CATEGORY_SERVICE_API);
+            CrudEngine.setUrl(urls.CATEGORYITEM_SERVICE_API);
             
             return factory;
 
@@ -28,7 +28,7 @@ monApp.factory('CategoryService',
             	return CrudEngine.create(category);
             }
             
-            function update(categoryType, id) {
+            function update(category, id) {
                return CrudEngine.update(category,id);
             }
 
