@@ -37,11 +37,12 @@ monApp.controller('CategoryController',
             CategoryService.create(category)
                 .then(
                     function (categoryResult) {
-                        console.log('category created successfully');
+                        console.log(categoryResult);
                         self.successMessage = 'category created successfully';
                         self.errorMessage='';
                         self.done = true;
                         self.categoryList.push(categoryResult);
+                        console.log(categoryResult);
                         self.category={};
                         $scope.myForm.$setPristine();
                     },
