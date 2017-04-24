@@ -15,29 +15,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
-import com.weberfly.entities.TypeCategory;
-import com.weberfly.service.TypeCategoryService;
+import com.weberfly.entities.CategoryItem;
+import com.weberfly.service.CategoryItemService;
 import com.weberfly.util.CustomErrorType;
 
 @RestController
-@RequestMapping("/typeCategorys")
-public class TypeCategoryController {
-	public static final Logger logger = LoggerFactory.getLogger(TypeCategoryController.class);
-
+@RequestMapping("/categoryItems")
+public class CategoryItemController {
+	
+	public static final Logger logger = LoggerFactory.getLogger(CategoryItemController.class);
 	@Autowired
-	private TypeCategoryService typeCatService;
+	private CategoryItemService CategoryItemService;
 
 	// -------------------Retrieve All items---------------------------------------------
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ResponseEntity<List<TypeCategory>> listAll() {
-		List<TypeCategory> items = typeCatService.findAll();
+	public ResponseEntity<List<CategoryItem>> listAll() {
+		List<CategoryItem> items = CategoryItemService.findAll();
 		if (items.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			// You many decide to return HttpStatus.NOT_FOUND
 		}
-		return new ResponseEntity<List<TypeCategory>>(items, HttpStatus.OK);
+		return new ResponseEntity<List<CategoryItem>>(items, HttpStatus.OK);
 	}
 
 	// -------------------Retrieve Single item------------------------------------------
@@ -45,40 +44,40 @@ public class TypeCategoryController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getItem(@PathVariable("id") long id) {
 		logger.info("Fetching item with id {}", id);
-		TypeCategory item = typeCatService.find(id);
+		CategoryItem item = CategoryItemService.find(id);
 		if (item == null) {
 			logger.error("item with id {} not found.", id);
 			return new ResponseEntity(new CustomErrorType("item with id " + id 
 					+ " not found"), HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<TypeCategory>(item, HttpStatus.OK);
+		return new ResponseEntity<CategoryItem>(item, HttpStatus.OK);
 	}
 
 	// -------------------Create a item-------------------------------------------
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ResponseEntity<?> create(@RequestBody TypeCategory item, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> create(@RequestBody CategoryItem item, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating item : {}", item);
-logger.info("{}",typeCatService.isExist(item));
-		if (typeCatService.isExist(item)) {
+logger.info("{}",CategoryItemService.isExist(item));
+		if (CategoryItemService.isExist(item)) {
 			logger.error("Unable to create. A item with name {} already exist", item.getName());
 			return new ResponseEntity(new CustomErrorType("Unable to create. A item with name " + 
 			item.getName()+ " already exist."),HttpStatus.CONFLICT);
 		}
-		typeCatService.save(item);
+		CategoryItemService.save(item);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/typeCategorys/{id}").buildAndExpand(item.getId()).toUri());
-		return new ResponseEntity<TypeCategory>(item, HttpStatus.CREATED);
+		headers.setLocation(ucBuilder.path("/typeCategoryItems/{id}").buildAndExpand(item.getId()).toUri());
+		return new ResponseEntity<CategoryItem>(item, HttpStatus.CREATED);
 	}
 
 	// ------------------- Update a item ------------------------------------------------
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody TypeCategory item) {
+	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody CategoryItem item) {
 		logger.info("Updating item with id {}", id);
 
-		TypeCategory currentitem = typeCatService.find(id);
+		CategoryItem currentitem = CategoryItemService.find(id);
 
 		if (currentitem == null) {
 			logger.error("Unable to update. item with id {} not found.", id);
@@ -89,8 +88,8 @@ logger.info("{}",typeCatService.isExist(item));
 		currentitem.setName(item.getName());
 		
 
-		typeCatService.save(currentitem);
-		return new ResponseEntity<TypeCategory>(currentitem, HttpStatus.OK);
+		CategoryItemService.save(currentitem);
+		return new ResponseEntity<CategoryItem>(currentitem, HttpStatus.OK);
 	}
 
 	// ------------------- Delete a item-----------------------------------------
@@ -99,23 +98,23 @@ logger.info("{}",typeCatService.isExist(item));
 	public ResponseEntity<?> delete(@PathVariable("id") long id) {
 		logger.info("Fetching & Deleting item with id {}", id);
 
-		TypeCategory item = typeCatService.find(id);
+		CategoryItem item = CategoryItemService.find(id);
 		if (item == null) {
 			logger.error("Unable to delete. item with id {} not found.", id);
 			return new ResponseEntity(new CustomErrorType("Unable to delete. item with id " + id + " not found."),
 					HttpStatus.NOT_FOUND);
 		}
-		typeCatService.delete(item.getId());
-		return new ResponseEntity<TypeCategory>(HttpStatus.NO_CONTENT);
+		CategoryItemService.delete(item.getId());
+		return new ResponseEntity<CategoryItem>(HttpStatus.NO_CONTENT);
 	}
 
 	// ------------------- Delete All items-----------------------------
 
 //	@RequestMapping(value = "/item/", method = RequestMethod.DELETE)
-//	public ResponseEntity<TypeCategory> deleteAllitems() {
+//	public ResponseEntity<TypeCategoryItem> deleteAllitems() {
 //		logger.info("Deleting All items");
 //
 //		typeCatService.deleteAllitems();
-//		return new ResponseEntity<TypeCategory>(HttpStatus.NO_CONTENT);
+//		return new ResponseEntity<TypeCategoryItem>(HttpStatus.NO_CONTENT);
 //	}
 }

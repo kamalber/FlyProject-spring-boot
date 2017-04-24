@@ -1,16 +1,17 @@
-monApp.controller('CategoryController',
-    ['CategoryService', '$scope',  function(CategoryService, $scope) {
+monApp.controller('CategoryItemController',
+    ['CategoryItemService', '$scope',  function(CategoryItemService, $scope) {
 
         var self = this;
 
-        self.category = {};
-        self.categoryList=getAll();
+        self.categoryItem = {};
+        self.categoryItemList=getAll();
         
         self.submit = submit;
         self.getAll = getAll;
         self.create = create;
         self.update = update;
         self.remove = remove;
+        self.addCategorys = addCategorys;
         self.edit = edit;
         self.reset = reset;
 
@@ -23,25 +24,25 @@ monApp.controller('CategoryController',
 
         function submit() {
             console.log('Submitting');
-            if (self.category.id === undefined || self.category.id === null) {
-                console.log('Saving New category', self.category);
-                create(self.category);
+            if (self.categoryItem.id === undefined || self.categoryItem.id === null) {
+                console.log('Saving New category', self.categoryItem);
+                create(self.categoryItem);
             } else {
-                update(self.category, self.category.id);
-                console.log('category updated with id ', self.category.id);
+                update(self.categoryItem, self.categoryItem.id);
+                console.log('category updated with id ', self.categoryItem.id);
             }
         }
 
-        function create(category) {
+        function create(categoryItem) {
             console.log('About to create category');
-            CategoryService.create(category)
+            CategoryItemService.create(categoryItem)
                 .then(
                     function (categoryResult) {
                         console.log('category created successfully');
                         self.successMessage = 'category created successfully';
                         self.errorMessage='';
                         self.done = true;
-                        self.categoryList.unshift(categoryResult);
+                        self.categoryItemList.unshift(categoryResult);
                         self.category={};
                         $scope.myForm.$setPristine();
                     },
@@ -54,16 +55,16 @@ monApp.controller('CategoryController',
         }
 
 
-        function update(category, id){
+        function update(categoryItem, id){
             console.log('About to update category');
-            CategoryService.update(category, id)
+            CategoryItemService.update(categoryItem, id)
                 .then(
                     function (response){
                         console.log('category updated successfully');
                         self.successMessage='category updated successfully';
                         self.errorMessage='';
-                        var index=self.categoryList.findIndex((obj => obj.id == id));
-                        self.categoryList[index]=category;
+                        var index=self.categoryItemList.findIndex((obj => obj.id == id));
+                        self.categoryItemList[index]=categoryItem;
                         self.done = true;
                         $scope.myForm.$setPristine();
                     },
@@ -77,10 +78,10 @@ monApp.controller('CategoryController',
 
         function getAll(){
         	console.log('About to load all categorys');
-             CategoryService.getAll()
+             CategoryItemService.getAll()
                   .then(
                      function(cateroyResults){
-                    	 self.categoryList=self.cateroyResults!=='' ? cateroyResults : new Array();
+                    	 self.categoryItemList=self.cateroyResults!=='' ? cateroyResults : new Array();
                      },
                      function(errResponse){
                          console.error('Error while loading category, Error :'+errResponse.data);
@@ -90,11 +91,11 @@ monApp.controller('CategoryController',
         
         function remove(id){
             console.log('About to remove category with id '+id);
-            CategoryService.remove(id)
+            CategoryItemService.remove(id)
                 .then(
                     function(){
-                        var index=self.categoryList.map( (el) => el.id ).indexOf(id);
-                        self.categoryList.splice(index,1);
+                        var index=self.categoryItemList.map( (el) => el.id ).indexOf(id);
+                        self.categoryItemList.splice(index,1);
                     },
                     function(errResponse){
                         console.error('Error while removing category '+id +', Error :'+errResponse.data);
@@ -107,9 +108,9 @@ monApp.controller('CategoryController',
         function edit(id) {
             self.successMessage='';
             self.errorMessage='';
-            CategoryService.get(id).then(
-                function (category) {
-                    self.category = category;
+            CategoryItemService.get(id).then(
+                function (categoryItem) {
+                    self.categoryItem = categoryItem;
                 },
                 function (errResponse) {
                     console.error('Error while removing category ' + id + ', Error :' + errResponse.data);
@@ -124,7 +125,9 @@ monApp.controller('CategoryController',
             $scope.myForm.$setPristine(); //reset Form
         }
 
-      
+        function addCategorys(id){
+        	
+        }
        
     }
 

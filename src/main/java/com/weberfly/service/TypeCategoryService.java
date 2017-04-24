@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import com.weberfly.dao.TypeCategoryRepository;
+import com.weberfly.dao.CategoryTypeRepository;
 import com.weberfly.entities.TypeCategory;
 
 @Service
 public class TypeCategoryService {
 	
 @Autowired
-private TypeCategoryRepository typeCatRepository;
+private CategoryTypeRepository typeCatRepository;
 	
 public void save(TypeCategory typeCategory) {
 	typeCatRepository.save(typeCategory);
