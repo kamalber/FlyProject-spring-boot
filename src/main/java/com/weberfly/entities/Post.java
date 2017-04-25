@@ -38,7 +38,13 @@ public class Post extends Publication {
 	private String title;
 
 	@Enumerated(EnumType.ORDINAL)
-    private sentiment sentment;
+    private sentiment nltkSentment;
+	
+
+	@Enumerated(EnumType.ORDINAL)
+    private sentiment dumaxSentment;
+	@Enumerated(EnumType.ORDINAL)
+    private sentiment otherSentment;
 	// Start of user code (user defined attributes for Post)
 
 	// End of user code
@@ -75,6 +81,29 @@ public class Post extends Publication {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public sentiment getNltkSentment() {
+		return nltkSentment;
+	}
+
+	public void setNltkSentment(sentiment nltkSentment) {
+		this.nltkSentment = nltkSentment;
+	}
+
+	public sentiment getDumaxSentment() {
+		return dumaxSentment;
+	}
+
+	public void setDumaxSentment(sentiment dumaxSentment) {
+		this.dumaxSentment = dumaxSentment;
+	}
+
+	public sentiment getOtherSentment() {
+		return otherSentment;
+	}
+
+	public void setOtherSentment(sentiment otherSentment) {
+		this.otherSentment = otherSentment;
 	}
 	
 }

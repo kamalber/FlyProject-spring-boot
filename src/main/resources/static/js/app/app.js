@@ -16,7 +16,7 @@ monApp.config(['$routeProvider', function($routeProvider) {
      .when('/posts', {
     	 templateUrl: 'views/post/index.html',
     	 controller:'PostController',
-    		 controllerAs:'ctrl',
+    	 controllerAs:'ctrl',
     	})
      .when('/post', {
     	 templateUrl: 'views/post/show.html',
