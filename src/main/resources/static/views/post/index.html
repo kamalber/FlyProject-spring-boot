@@ -12,9 +12,41 @@
         </div>
         <div class="row">
 
+
+		
             <!-- Blog Entries Column -->
             <div class="col-md-8">
-<div ng-repeat="p in ctrl.getAllPosts()">
+            <div class="panel-body">
+	        <div class="formcontainer">
+	            <div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
+	            <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
+	            <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
+	                <input type="hidden" ng-model="ctrl.post.id" />
+	             
+	                <div class="row">
+	                 <div class="form-group col-md-12">
+	                        <label class="col-md-2 control-lable" for="uname">What do you post about</label>
+	                        <div class="col-md-7">
+	                            <input type="text" ng-model="ctrl.post.title" id="uname" class="username form-control input-sm" placeholder="Enter a title" required ng-minlength="3"/>
+	                        </div>
+	                    </div>
+	                    <div class="form-group col-md-12">
+	                        <label class="col-md-2 control-lable" for="uname">Post</label>
+	                        <div class="col-md-7">
+	                            <input type="text" ng-model="ctrl.post.content" id="uname" class="username form-control input-sm" placeholder="Enter your post" required ng-minlength="3"/>
+	                        </div>
+	                    </div>
+	                </div>
+
+	                <div class="row">
+	                    <div class="form-actions floatRight">
+	                        <input type="submit"  value="{{!ctrl.post.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid || myForm.$pristine">
+	                          </div>
+	                </div>
+	            </form>
+    	    </div>
+		</div>	
+<div ng-repeat="p in ctrl.postList ">
                 
                 <h2>
                     <a href="#">{{p.title}}</a>
@@ -22,10 +54,10 @@
                 <p class="lead">
                     by <a href="index.php">{{p.user.username}}</a>
                 </p>
-                <p><i class="fa fa-clock-o"></i> Posted on  {{p.date}}</p>
+                <p><i class="fa fa-clock-o"></i> Posted on  {{p.date | date:"EEE, d MMM yyyy 'at' hh:mm a"}}</p>
                 <hr>
                 <p>{{p.content}}</p>
-                <a class="btn btn-primary" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                <a class="btn btn-primary" ng-href="views/post/show.html/{{p.id}}">Read More <i class="fa fa-angle-right"></i></a>
                 <hr>
  </div>
  

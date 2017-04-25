@@ -37,11 +37,16 @@ monApp.controller('CategoryController',
             CategoryService.create(category)
                 .then(
                     function (categoryResult) {
-                        console.log('category created successfully');
+                        console.log(categoryResult);
                         self.successMessage = 'category created successfully';
                         self.errorMessage='';
                         self.done = true;
+<<<<<<< HEAD
+                        self.categoryList.push(categoryResult);
+                        console.log(categoryResult);
+=======
                         self.categoryList.unshift(categoryResult);
+>>>>>>> branch 'master' of https://github.com/kamalber/fly-project.git
                         self.category={};
                         $scope.myForm.$setPristine();
                     },

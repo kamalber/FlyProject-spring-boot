@@ -1,38 +1,33 @@
 monApp.factory('PostService',
-    ['$localStorage', '$http', '$q', 'urls',
-        function ($localStorage, $http, $q, urls) {
-
+    ['$localStorage', '$http', '$q', 'urls','CrudEngine',
+        function ($localStorage, $http, $q, urls,CrudEngine) {
+    	
             var factory = {
-                loadAllPosts: loadAll,
-                getAllPosts: getAll
-               };
-
+                getAll: getAll,
+                get: get,
+                create: create
+                
+            };
+         // setting up the specific rest API url to the crud engine
+            CrudEngine.setUrl(urls.POST_SERVICE_API);
+            
             return factory;
 
-            function loadAll() {
-                console.log('Fetching all posts');
-                var deferred = $q.defer();
-                $http.get(urls.POST_SERVICE_API)
-                    .then(
-                        function (response) {
-                            console.log('Fetched successfully all posts');
-                            $localStorage.posts = response.data;
-                            deferred.resolve(response);
-                        },
-                        function (errResponse) {
-                            console.error('Error while loading posts');
-                            deferred.reject(errResponse);
-                        }
-                    );
-                return response.data;
-            }
+           
 
             function getAll(){
-            	
-            	return $localStorage.posts;
+                return CrudEngine.getAll();
             }
 
-       
+            function get(id) {
+            	return CrudEngine.get(id);
+            }
+
+            function create(post) {
+            	return CrudEngine.create(post);
+            }
+            
+         
 
         }
     ]);

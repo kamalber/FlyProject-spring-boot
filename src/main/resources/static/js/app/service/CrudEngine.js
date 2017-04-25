@@ -55,7 +55,7 @@ monApp.factory('CrudEngine',
             }
 
             function create(item) {
-                console.log('Creating Item');
+                console.log(item);
                 var deferred = $q.defer();
                 $http.post(factory.url, item)
                     .then(
