@@ -38,14 +38,14 @@
                                   <div class="col-md-6">
                                   
                                 <div class="input-group"
-     moment-picker="ctrl.datepicker"
+     moment-picker="ctrl.startDtae"
      format="YYYY-MM-DD">
     <span class="input-group-addon">
         <i class="octicon octicon-calendar"></i>
     </span>
     <input class="form-control"
            placeholder="Select a date"
-           ng-model="ctrl.datepicker"
+           ng-model="ctrl.startDtae"
            ng-model-options="{ updateOn: 'blur' }">
 </div>
                                    </div>
@@ -60,14 +60,14 @@
                                   <div class="col-md-6">
                                   
                                 <div class="input-group"
-     moment-picker="ctrl.datepicker"
+     moment-picker="ctrl.endDate"
      format="YYYY-MM-DD">
     <span class="input-group-addon">
         <i class="octicon octicon-calendar"></i>
     </span>
     <input class="form-control"
            placeholder="Select a date"
-           ng-model="ctrl.datepicker"
+           ng-model="ctrl.endDate"
            ng-model-options="{ updateOn: 'blur' }">
 </div>
                                    </div>
@@ -97,17 +97,17 @@
         </br></br>
                <div ng-show="tab === 1"> 
                
- <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"> chart-series="series"</canvas>
+ <canvas id="bar" class="chart chart-bar" chart-data="ctrl.data" chart-labels="ctrl.labels"> chart-series="series"</canvas>
 
 </div>
            
 			<div ng-show="tab === 2">
 			<canvas id="pie" class="chart chart-pie "
-           chart-data="dataPie" chart-labels="labelsPie" chart-options="options">
+           chart-data="ctrl.dataPie" chart-labels="ctrl.labelsPie" chart-options="options">
           </canvas> </div>
 			 
 			<div ng-show="tab === 3"> 
-			<canvas id="base" class="chart-bubble" chart-data="bubbleData" chart-series="bubbleSeries" >
+			<canvas id="base" class="chart-bubble" chart-data="ctrl.bubbleData" chart-series="ctrl.bubbleSeries" >
             </canvas> 
 			</div>
 
