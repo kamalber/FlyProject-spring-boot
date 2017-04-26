@@ -30,4 +30,7 @@ public class CategoryItemService {
 	public void delete(Long id){
 		categoryItemRepository.delete(id);
 	}
+	public CategoryItem findByNameIgnoreCase(String name){
+		return categoryItemRepository.findByNameIgnoreCase(name);
+	}
 }
