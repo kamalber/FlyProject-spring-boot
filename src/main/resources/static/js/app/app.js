@@ -43,7 +43,8 @@ monApp.config(['$routeProvider', function($routeProvider) {
 	        })   	
 	 .when('/stat', {
 	    	 templateUrl: 'views/statistics/stat.html',
-	    	 controller:'StatsController'
+	    	 controller:'StatsController',
+	    	 controllerAs:'ctrl',
 	    	})   		
      .otherwise({redirectTo: '/'});
 }]);
