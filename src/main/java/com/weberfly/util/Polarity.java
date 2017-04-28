@@ -2,26 +2,40 @@ package com.weberfly.util;
 
 public class Polarity {
 
-	private int positive;
-	private int negative;
-	private int  neutral;
-	public int getPositive() {
-		return positive;
+	private int positiveCount;
+	private int negativeCount;
+	private int  neutralCount;
+	
+	
+	public Polarity() {
+		super();
 	}
-	public void setPositive(int positive) {
-		this.positive = positive;
+	
+	public Polarity(int positiveCount, int negativeCount, int neutralCount) {
+		super();
+		this.positiveCount = positiveCount;
+		this.negativeCount = negativeCount;
+		this.neutralCount = neutralCount;
 	}
-	public int getNegative() {
-		return negative;
+	public int getPositiveCount() {
+		return positiveCount;
 	}
-	public void setNegative(int negative) {
-		this.negative = negative;
+	public void setPositiveCount(int positiveCount) {
+		this.positiveCount = positiveCount;
 	}
-	public int getNeutral() {
-		return neutral;
+	public int getNegativeCount() {
+		return negativeCount;
 	}
-	public void setNeutral(int neutral) {
-		this.neutral = neutral;
+	public void setNegativeCount(int negativeCount) {
+		this.negativeCount = negativeCount;
 	}
+	public int getNeutralCount() {
+		return neutralCount;
+	}
+	public void setNeutralCount(int neutralCount) {
+		this.neutralCount = neutralCount;
+	};
+	
+	
 	
 }
