@@ -1,25 +1,25 @@
-monApp.factory('UserService',
+monApp.factory('StatsService',
     ['$localStorage', '$http', '$q', 'urls',
         function ($localStorage, $http, $q, urls) {
 
             var factory = {
-               getPosts: getPosts,
+            		getAnalysedPosts: getAnalysedPosts,
               
             };
 
             return factory;
 
-            function getPosts(query){
-            	 console.log('Fetching Item with id :'+id);
+            function getAnalysedPosts(query,startDate,endDate){
+            	 console.log('Fetching Items with query :'+query);
                  var deferred = $q.defer();
-                 $http.get(urls.POST_SERVICE_API + id)
+                 $http.get(urls.POST_SERVICE_API +"/statistics/"+query+"/"+startDate+"/"+endDate)
                      .then(
                          function (response) {
-                             console.log('Fetched successfully categoryTyp with id :'+id);
+                             console.log('Fetched successfully posts' );
                              deferred.resolve(response.data);
                          },
                          function (errResponse) {
-                             console.error('Error while loading Item with id :'+id);
+                             console.error('Error while loading posts');
                              deferred.reject(errResponse);
                          }
                      );

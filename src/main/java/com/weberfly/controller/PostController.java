@@ -23,6 +23,8 @@ import com.weberfly.entities.CategoryItem;
 import com.weberfly.entities.Post;
 import com.weberfly.service.PostService;
 import com.weberfly.util.CustomErrorType;
+import com.weberfly.util.CustomSatatsParams;
+import com.weberfly.util.SentimentStats;
 @RestController
 public class PostController {
 	@Autowired
@@ -60,5 +62,29 @@ public class PostController {
 		logger.info("nothing happen ");
 		return new ResponseEntity<List<Post>>(items, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/posts/statistics", method = RequestMethod.POST)
+	public ResponseEntity<?> getStatisctics(@RequestBody CustomSatatsParams params, UriComponentsBuilder ucBuilder) {
+		logger.info("Creating item : {}", params);
+       
+		SentimentStats stats=postservice.getStats(params);
+		if(stats==null){
+			logger.error("list is empty ");
+			return new ResponseEntity(new CustomErrorType("empty list for query " +  params.getQuerySearche()), HttpStatus.NOT_FOUND);
+
+		}
+		return new ResponseEntity<SentimentStats>(stats, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/posts/params",method=RequestMethod.GET)
+	public ResponseEntity<?> getParams( UriComponentsBuilder ucBuilder) {
+	 CustomSatatsParams cs=new CustomSatatsParams();
+	cs.setEndYear(2019);
+	cs.setStartYear(2010);
+	cs.setQuerySearche("java");
+	cs.setSentimentMethode(1);
+	return new ResponseEntity<>(cs, HttpStatus.OK);
+		}
+	
 }
 

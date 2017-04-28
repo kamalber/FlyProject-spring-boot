@@ -1,7 +1,11 @@
 monApp.controller('StatsController',
-    ['$scope',  function($scope) {
+    ['StatsService','$scope',  function($scope) {
 
     	var self=this;
+    	self.getAnalysedPost=getAnalysedPost;
+    	self.startDate=null;
+    	self.endDate=null;
+    	self.querySearch=null;
     	
 //  data ofr  	bar chart
     	  self.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
@@ -19,17 +23,14 @@ monApp.controller('StatsController',
     	//   data for bubble chart
     
 
+    function getAnalysedPost(){
+    	
+    	StatsService.getAnalysedPosts()
+    }	  
+    	  
     }]);
 
 
 
 
 
-$('#myTab a').click(function (e) {
-	 e.preventDefault();
-	 $(this).tab('show');
-});
-
-$(function () {
-$('#myTab a:last').tab('show');
-})
