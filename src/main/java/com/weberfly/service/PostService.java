@@ -72,11 +72,9 @@ public class PostService {
 		return null;
 	}
 
-	public SentimentStats getStats(CustomSatatsParams params){
-		 
+	public SentimentStats getStats(CustomSatatsParams params){ 
 		SentimentStats stats=null;
-		
-		CategoryItem item =categoryItemRepository.findByNameIgnoreCase(params.getQuerySearche());
+		CategoryItem item =categoryItemRepository.findByNameIgnoreCase(params.getQuery());
 		if(item==null){
 			// the word that we are looking for doesn't exist
 			return null;
@@ -85,13 +83,11 @@ public class PostService {
 		if(params.getStartYear()!=0){
 			if(params.getEndYear()!=0){
 				// search between many years 
-            	stats= this.getSentimentStatsByYear(item, params);
-            	
+				return this.getSentimentStatsByYear(item, params);
 			}else if(params.getEndYear()==0){
 				if(params.getMonth()==0){
 					// search by  months of year
                return this.getSentimentStatsByMonthOfYear(item,params);
-
 				}else{
               //	search by days of month
 				}
@@ -104,27 +100,11 @@ public class PostService {
 
 	private SentimentStats getSentimentStatsByMonthOfYear(CategoryItem item, CustomSatatsParams params) {
 		System.out.println("sentiments by month");
-		SentimentStats stats=new SentimentStats();
-		List<CategoryItem> items=new ArrayList<>();
-		items.add(item);
-		Date dateStart=getStartDateFromYear(params.getStartYear());
-	    Date dateEnd=getEndDateFromYear(params.getStartYear());
-	    List<Post> posts= postRepository.findByCategoryItemsAndDateBetween(items,dateStart,dateEnd);
-	    if(posts.isEmpty()){
-	    	return null;
-	    	}
-	    	
-		for(Post p:posts){
-			if(p.getDumaxSentment()==Post.sentiment.positive){
-				stats.getPositivePosts().add(p);
-			}else if(p.getDumaxSentment()==Post.sentiment.neutratl){
-				stats.getNeutralPost().add(p);
-			}else if(p.getDumaxSentment()==Post.sentiment.negative){
-		    	stats.getNegativePosts().add(p);
-		     }
-
-	     }
-	    
+		SentimentStats stats=this.getAnalysedPostStatsTemplate(params, item);
+		if(stats==null){
+			return null;
+		}
+		
 	    String[] months = new DateFormatSymbols(Locale.ENGLISH).getShortMonths();
 	    int monthNumber=12;
 		// the real statistics calcul is in this chappter
@@ -138,23 +118,11 @@ public class PostService {
 	}
 	
 	private SentimentStats getSentimentStatsByYear(CategoryItem item,CustomSatatsParams params){
-		SentimentStats stats=new SentimentStats();
-		List<CategoryItem> items=new ArrayList<>();
-		items.add(item);
-	    Date dateStart=getStartDateFromYear(params.getStartYear());
-	    Date dateEnd=getEndDateFromYear(params.getStartYear());
-	   List<Post> posts= postRepository.findByCategoryItemsAndDateBetween(items,dateStart,dateEnd);
-	  
-		for(Post p:posts){
-			if(p.getDumaxSentment()==Post.sentiment.positive){
-				stats.getPositivePosts().add(p);
-			}else if(p.getDumaxSentment()==Post.sentiment.neutratl){
-				stats.getNeutralPost().add(p);
-			}else if(p.getDumaxSentment()==Post.sentiment.negative){
-		    	stats.getNegativePosts().add(p);
-		     }
-
-	     }
+		System.out.println("sentiments by month");
+		SentimentStats stats=this.getAnalysedPostStatsTemplate(params, item);
+		if(stats==null){
+			return null;
+		}
 		int yearNumber=params.getEndYear()-params.getStartYear();
 		// the real statistics calcul is in this chappter
 		while(yearNumber >=0){
@@ -166,7 +134,48 @@ public class PostService {
 		return stats;
 		
 	}
+	private SentimentStats getAnalysedPostStatsTemplate(CustomSatatsParams params,CategoryItem item){
+		SentimentStats stats=new SentimentStats();
+		List<CategoryItem> items=new ArrayList<>();
+		items.add(item);
+		Date dateStart=getStartDateFromYear(params.getStartYear());
+	    Date dateEnd=params.getEndYear()!=0 ?getEndDateFromYear(params.getEndYear()) :getEndDateFromYear(params.getStartYear()) ;
+	   
+	    List<Post> posts= postRepository.findByCategoryItemsAndDateBetween(items,dateStart,dateEnd);
+	    if(posts.isEmpty()){
+	    	return null;
+	    	}
+	    
+		String sentimentMethode=""; 
+		if(params.getSentimentMethode()==0){
+			sentimentMethode="getDumaxSentment";
+		}else if(params.getSentimentMethode()==1){
+			sentimentMethode="getNltkSentment";
+		}else{
+			sentimentMethode="getOtherSentment";
+		}
+		for(Post p:posts){
+			Post.sentiment senti = null;
+			java.lang.reflect.Method getSentimentMethode;
+			try {
+				getSentimentMethode = p.getClass().getMethod(sentimentMethode);
+				senti=(Post.sentiment) getSentimentMethode.invoke(p);	
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			if(senti==Post.sentiment.positive){
+				stats.getPositivePosts().add(p);
+			}else if(senti==Post.sentiment.neutratl){
+				stats.getNeutralPost().add(p);
+			}else if(senti==Post.sentiment.negative){
+		    	stats.getNegativePosts().add(p);
+		     }
+
+	     }
+		return stats;
+	}
 	
+	        /*********************** helper functions     *************************/
 	
 	// this method return the plolarity for the onths of a year  included in the statistics calcul 
 	private Polarity getPolarityPerMonth(int monthNumber, SentimentStats stats) {
@@ -216,9 +225,6 @@ public class PostService {
 		return polarity;
 		
 	}
-	
-	
-	
 	private Date getStartDateFromYear(int year) {
 		    Calendar cal = Calendar.getInstance();
 		    cal.set(Calendar.YEAR, year);
