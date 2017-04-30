@@ -1,11 +1,12 @@
 monApp.controller('PostController',
-    ['PostService', '$scope',  function(PostService, $scope) {
-
+    ['PostService','CommentService','$scope','$sessionStorage',  function(PostService, CommentService,$scope,$sessionStorage) {
+    	
         var self = this;
-
-        self.post = {};
+     	
+        $scope.post=  $sessionStorage.currentPost;
         self.postList=getAll();
-        self.submit = submit;
+        self.submitPost = submitPost;
+        self.submitComment = submitComment;
         self.getAll = getAll;
         self.create = create;
         self.update = update;
@@ -20,7 +21,7 @@ monApp.controller('PostController',
         self.onlyIntegers = /^\d+$/;
         self.onlyNumbers = /^\d+([,.]\d+)?$/;
 
-        function submit() {
+        function submitPost() {
             console.log('Submitting');
             if (self.post.id === undefined || self.post.id === null) {
                 console.log('Saving New post', self.post);
@@ -29,6 +30,34 @@ monApp.controller('PostController',
                 update(self.post, self.post.id);
                 console.log('post updated with id ', self.post.id);
             }
+        }
+        function submitComment() {
+            console.log('Submitting');
+          
+                console.log('Saving New Comment', self.comment);
+                createComment(self.comment);
+           
+        }
+        
+        function createComment(comment) {
+            console.log('About to create comment');
+            comment.publication=$scope.post;
+            console.log(comment.publication);
+            CommentService.create(comment)
+                .then(
+                    function (commentResult) {
+                        
+                        self.done = true;                     
+                        $scope.post.comments.unshift(commentResult);
+                        console.log(commentResult);
+                        self.comment={};
+                        $scope.myForm.$setPristine();
+                    },
+                    function (errResponse) {
+                        console.error('Error while creating comment');
+                      
+                    }
+                );
         }
      
         function create(post) {
@@ -101,18 +130,18 @@ monApp.controller('PostController',
         }
 
         
-        
-        function edit(id) {
+        function getCurrent(){
+        	 console.log('Koooooooooooo ----'+ $sessionStorage.currentPost.id);
+             
+        	return $sessionStorage.currentPost;
+        }
+        function edit(Post){
+//        delete $sessionStorage.currentPost
             self.successMessage='';
             self.errorMessage='';
-            PostService.get(id).then(
-                function (post) {
-                    self.post = post;
-                },
-                function (errResponse) {
-                    console.error('Error while removing user ' + id + ', Error :' + errResponse.data);
-                }
-            );
+            console.log('hiiiiiiiiiiiiiiii');
+            $sessionStorage.currentPost =Post;
+            
         }
         
         function reset(){

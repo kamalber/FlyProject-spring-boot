@@ -9,6 +9,7 @@ monApp.factory('CrudEngine',
                 getAll: getAll,
                 get: get,
                 create: create,
+                create2: create2,
                 update: update,
                 remove: remove,
                 setUrl:setUrl// this method put the url for every specific bean (user,category, ...)
@@ -18,12 +19,15 @@ monApp.factory('CrudEngine',
 
             function setUrl(url){
             	factory.url=url;
+            	 console.log(factory.url);
             }
             
             function getAll() {
                 console.log('Fetching all items');
                 var deferred = $q.defer();
+                console.log(factory.url)
                 $http.get(factory.url)
+                
                     .then(
                         function (response) {
                             console.log('Fetched successfully all Item');
@@ -70,6 +74,21 @@ monApp.factory('CrudEngine',
                 return deferred.promise;
             }
 
+            function create2(item,id) {
+                console.log(item);
+                var deferred = $q.defer();
+                $http.post(factory.url + id, item)
+                    .then(
+                        function (response) {
+                            deferred.resolve(response.data);
+                        },
+                        function (errResponse) {
+                           console.error('Error while creating Item : '+errResponse.data.errorMessage);
+                           deferred.reject(errResponse);
+                        }
+                    );
+                return deferred.promise;
+            }
             function update(item, id) {
                 console.log('Updating Item with id '+id);
                 var deferred = $q.defer();

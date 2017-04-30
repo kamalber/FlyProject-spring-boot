@@ -23,7 +23,7 @@ private Long id;
 private String name;
 
 @ManyToOne(cascade = CascadeType.ALL)
-private Category category = new Category();
+private Category category ;
 
 @ManyToMany(mappedBy="categoryItems")
 private List<Publication> publications = new ArrayList<Publication>();
@@ -42,9 +42,6 @@ public void setName(String name) {
 }
 public Category getCategory() {
 	return category;
-}
-public void setCategory(Category category) {
-	this.category = category;
 }
 
 

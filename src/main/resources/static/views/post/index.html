@@ -1,15 +1,4 @@
-           <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Blog Home One
-                    <small>Subheading</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a>
-                    </li>
-                    <li class="active">Blog Home One</li>
-                </ol>
-            </div>
-        </div>
+       
         <div class="row">
 
 
@@ -20,29 +9,33 @@
 	        <div class="formcontainer">
 	            <div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
 	            <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
-	            <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
+	            <form ng-submit="ctrl.submitPost()" name="myForm" class="form-horizontal">
 	                <input type="hidden" ng-model="ctrl.post.id" />
 	             
 	                <div class="row">
-	                 <div class="form-group col-md-12">
-	                        <label class="col-md-2 control-lable" for="uname">What do you post about</label>
+	                
+	                     <div class="well">
+                 
+                    <form role="form">
+                        <div class="form-group col-md-12">
+	                        <label class="col-md-2 control-lable" for="uname">What do you post about ?</label>
 	                        <div class="col-md-7">
 	                            <input type="text" ng-model="ctrl.post.title" id="uname" class="username form-control input-sm" placeholder="Enter a title" required ng-minlength="3"/>
 	                        </div>
 	                    </div>
 	                    <div class="form-group col-md-12">
-	                        <label class="col-md-2 control-lable" for="uname">Post</label>
+	                        <label class="col-md-2 control-lable" for="uname">Enter your Post :</label>
 	                        <div class="col-md-7">
-	                            <input type="text" ng-model="ctrl.post.content" id="uname" class="username form-control input-sm" placeholder="Enter your post" required ng-minlength="3"/>
+
+	                            <textarea  ng-model="ctrl.post.content" placeholder="Express yourself " class="form-control" rows="3"></textarea>
 	                        </div>
 	                    </div>
+                        <button type="submit"  class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid || myForm.$pristine">Submit</button>
+                    </form>
+                </div>
 	                </div>
 
-	                <div class="row">
-	                    <div class="form-actions floatRight">
-	                        <input type="submit"  value="{{!ctrl.post.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid || myForm.$pristine">
-	                          </div>
-	                </div>
+	             
 	            </form>
     	    </div>
 		</div>	
@@ -57,7 +50,7 @@
                 <p><i class="fa fa-clock-o"></i> Posted on  {{p.date | date:"EEE, d MMM yyyy 'at' hh:mm a"}}</p>
                 <hr>
                 <p>{{p.content}}</p>
-                <a class="btn btn-primary" ng-href="views/post/show.html/{{p.id}}">Read More <i class="fa fa-angle-right"></i></a>
+                <a class="btn btn-primary" ng-click="ctrl.edit(p)" href="/layout.html#!/posts/{{p.id}}">Read More <i class="fa fa-angle-right"></i></a>
                 <hr>
  </div>
  

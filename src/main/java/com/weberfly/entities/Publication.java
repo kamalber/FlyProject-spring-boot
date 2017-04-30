@@ -24,7 +24,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name="publication")
 @Inheritance(strategy = InheritanceType.JOINED)
-public  class Publication implements Serializable {
+@DiscriminatorColumn(name = "pubs", discriminatorType = DiscriminatorType.STRING)
+
+
+public   class Publication implements Serializable {
 	/**
 	 * Description of the property id.
 	 */
@@ -46,7 +49,7 @@ public  class Publication implements Serializable {
 	 * Description of the property user.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL )
-	private RegularUser user = new RegularUser();
+	private RegularUser user ;
 
 	/**
 	 * Description of the property categorys.
@@ -59,7 +62,7 @@ public  class Publication implements Serializable {
 	 * Description of the property comments.
 	 */
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="publication")
-	private List<Comment> comments = new ArrayList<Comment>();
+	private List<Comment> comments ;
 
 	public Long getId() {
 		return id;

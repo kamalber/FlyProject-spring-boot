@@ -8,14 +8,18 @@ import org.springframework.stereotype.Service;
 
 import com.weberfly.dao.CategoryItemRepository;
 import com.weberfly.dao.PostRepository;
+import com.weberfly.dao.PublicationRepository;
 import com.weberfly.entities.Category;
 import com.weberfly.entities.CategoryItem;
 import com.weberfly.entities.Post;
+import com.weberfly.entities.Publication;
 
 @Service
 public class PostService {
 	@Autowired
 	private PostRepository postRepository;
+	@Autowired
+	private PublicationRepository publicationRepository;
 	@Autowired
 	private CategoryItemRepository categoryItemRepository;
 	
@@ -35,5 +39,12 @@ public class PostService {
 	public List<Post> getAll() {
 		return postRepository.findAll();
 	}  
-
+	
+	public Post findPost(Long id) {
+		return postRepository.findOne(id);
+	} 
+	
+	public Publication find(Long id) {
+		return publicationRepository.findOne(id);
+	}
 }

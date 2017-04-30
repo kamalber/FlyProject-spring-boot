@@ -3,11 +3,11 @@ monApp.constant('urls', {
     BASE: 'http://localhost:8080/',
     USER_SERVICE_API : 'http://localhost:8080/api/user/',
 
-    POST_SERVICE_API : 'http://localhost:8080/posts',
+    POST_SERVICE_API : 'http://localhost:8080/posts/',
     TYPECATEGORY_SERVICE_API : 'http://localhost:8080/typeCategorys/',
     CATEGORY_SERVICE_API:   'http://localhost:8080/categorys/',
-    CATEGORYITEM_SERVICE_API:   'http://localhost:8080/categoryItems/'
-
+    CATEGORYITEM_SERVICE_API:   'http://localhost:8080/categoryItems/',
+    COMMENT_SERVICE_API: 'http://localhost:8080/comments/'
 });
 
 monApp.config(['$routeProvider', function($routeProvider) {
@@ -18,9 +18,12 @@ monApp.config(['$routeProvider', function($routeProvider) {
     	 controller:'PostController',
     		 controllerAs:'ctrl',
     	})
-     .when('/post', {
+     .when('/posts/:id', {
     	 templateUrl: 'views/post/show.html',
-    	 controller  : 'Controller/show'})
+    	 controller  : 'PostController',
+    	 controllerAs:'ctrl',})
+    	 
+
      .when('/user', {
 	    	 templateUrl: 'views/user/list.html',
 	    	 controller:'UserController',

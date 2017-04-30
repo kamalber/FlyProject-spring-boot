@@ -9,6 +9,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 
 // End of user code
@@ -33,13 +35,14 @@ public class Comment implements Serializable{
 	 * Description of the property user.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL)
-	private RegularUser user = new RegularUser();
-	@ManyToOne(cascade = CascadeType.ALL)
-    private Publication publication =new Publication();
+	private RegularUser user ;
+	@ManyToOne
+    private Publication publication ;
 
 	/**
 	 * Description of the property date.
 	 */
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE, d MMM yyyy 'at' hh:mm aaa",timezone = "GMT+1")	
 	private Date date = new Date();
 
 	/**
@@ -148,6 +151,14 @@ public class Comment implements Serializable{
 	 */
 	public void setText(String newText) {
 		this.text = newText;
+	}
+
+//	public Publication getPublication() {
+//		return publication;
+//	}
+
+	public void setPublication(Publication publication) {
+		this.publication = publication;
 	}
 
 

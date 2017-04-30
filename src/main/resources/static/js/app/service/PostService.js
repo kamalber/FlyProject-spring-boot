@@ -16,10 +16,13 @@ monApp.factory('PostService',
            
 
             function getAll(){
+            	console.log('About to load all posts2');
+            	
                 return CrudEngine.getAll();
             }
 
             function get(id) {
+            	CrudEngine.setUrl(urls.POST_SERVICE_API);
             	return CrudEngine.get(id);
             }
 

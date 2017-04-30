@@ -18,4 +18,7 @@ private PublicationRepository publicationRepository;
 	 public List<Publication> getAllPubs(){
 			return publicationRepository.findAll();
 			}
+	 public Publication find(Long id){
+			return publicationRepository.findOne(id);
+			}
 }

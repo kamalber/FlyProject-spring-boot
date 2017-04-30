@@ -3,6 +3,7 @@ package com.weberfly.entities;
  * 2017, All rights reserved.
  *******************************************************************************/
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,6 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Post")
 @PrimaryKeyJoinColumn(name = "id")
+@DiscriminatorValue("post")
 public class Post extends Publication {
 	public static enum sentiment{
 		positive,
