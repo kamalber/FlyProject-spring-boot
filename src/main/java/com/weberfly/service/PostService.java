@@ -20,7 +20,7 @@ import com.weberfly.dao.PostRepository;
 import com.weberfly.entities.Category;
 import com.weberfly.entities.CategoryItem;
 import com.weberfly.entities.Post;
-import com.weberfly.util.CustomSatatsParams;
+import com.weberfly.util.CustomStatsParams;
 import com.weberfly.util.Polarity;
 import com.weberfly.util.SentimentStats;
 
@@ -65,14 +65,13 @@ public class PostService {
 				 dateEnd = formatter.parse(endDate);
 				 return postRepository.findByCategoryItemsAndDateBetween(items,dateStart,dateEnd);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return null;
 	}
 
-	public SentimentStats getStats(CustomSatatsParams params){ 
+	public SentimentStats getStats(CustomStatsParams params){ 
 		SentimentStats stats=null;
 		CategoryItem item =categoryItemRepository.findByNameIgnoreCase(params.getQuery());
 		if(item==null){
@@ -98,7 +97,7 @@ public class PostService {
 		
 	}
 
-	private SentimentStats getSentimentStatsByMonthOfYear(CategoryItem item, CustomSatatsParams params) {
+	private SentimentStats getSentimentStatsByMonthOfYear(CategoryItem item, CustomStatsParams params) {
 		System.out.println("sentiments by month");
 		SentimentStats stats=this.getAnalysedPostStatsTemplate(params, item);
 		if(stats==null){
@@ -117,7 +116,7 @@ public class PostService {
 		return stats;
 	}
 	
-	private SentimentStats getSentimentStatsByYear(CategoryItem item,CustomSatatsParams params){
+	private SentimentStats getSentimentStatsByYear(CategoryItem item,CustomStatsParams params){
 		System.out.println("sentiments by month");
 		SentimentStats stats=this.getAnalysedPostStatsTemplate(params, item);
 		if(stats==null){
@@ -134,7 +133,7 @@ public class PostService {
 		return stats;
 		
 	}
-	private SentimentStats getAnalysedPostStatsTemplate(CustomSatatsParams params,CategoryItem item){
+	private SentimentStats getAnalysedPostStatsTemplate(CustomStatsParams params,CategoryItem item){
 		SentimentStats stats=new SentimentStats();
 		List<CategoryItem> items=new ArrayList<>();
 		items.add(item);

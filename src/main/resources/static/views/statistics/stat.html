@@ -1,123 +1,129 @@
 
 <div class="row">
-<div class="col-lg-12">
-                <h1 class="page-header">Two Column Portfolio
-                    <small>Subheading</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a>
-                    </li>
-                    <li class="active">Two Column Portfolio</li>
-                </ol>
-            </div>
+	<div class="col-lg-12">
+		<h1 class="page-header">
+			Two Column Portfolio <small>Subheading</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="index.html">Home</a></li>
+			<li class="active">Two Column Portfolio</li>
+		</ol>
+	</div>
 
 
-            <div class="col-lg-4">
+	<div class="col-lg-3">
 
-                <!-- Blog Search Well -->
-                <div class="well">
-                    <h4>Search</h4>
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-                        </span>
-                    </div>
-                    <!-- /.input-group -->
-                </div>
+		<!-- Blog Search Well -->
+		<div class="well">
+			<h4>Search</h4>
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="ctrl.params.query"> <span
+					class="input-group-btn">
+					<button class="btn btn-default" type="button" ng-click="ctrl.search()">
+						<i class="fa fa-search" ></i>
+					</button>
+				</span>
+			</div>
+			<!-- /.input-group -->
+		</div>
 
-                <!-- Blog Categories Well -->
-                <div class="well">
-                    <h4>serche by date </h4>
-                    <div class="row">
-                        <!-- /.col-lg-6 -->
-                       
-                            <div  class="col-md-4">
-                                 <span>start Date</span>
-                                 </div>
-                                  <div class="col-md-6">
-                                  
-                                <div class="input-group"
-     moment-picker="ctrl.startDtae"
-     format="YYYY-MM-DD">
-    <span class="input-group-addon">
-        <i class="octicon octicon-calendar"></i>
-    </span>
-    <input class="form-control"
-           placeholder="Select a date"
-           ng-model="ctrl.startDtae"
-           ng-model-options="{ updateOn: 'blur' }">
-</div>
-                                   </div>
-                                
-                        </div><hr>
-                                <div class="row">
-                        <!-- /.col-lg-6 -->
-                       
-                            <div  class=" col-md-4">
-                                 <span>start Date</span>
-                                 </div>
-                                  <div class="col-md-6">
-                                  
-                                <div class="input-group"
-     moment-picker="ctrl.endDate"
-     format="YYYY-MM-DD">
-    <span class="input-group-addon">
-        <i class="octicon octicon-calendar"></i>
-    </span>
-    <input class="form-control"
-           placeholder="Select a date"
-           ng-model="ctrl.endDate"
-           ng-model-options="{ updateOn: 'blur' }">
-</div>
-                                   </div>
-                                
-                        </div>      
-                    <div class="row">
-                    
-                    </div>    
-                        <!-- /.col-lg-6 -->
-                    
-                    <!-- /.row -->
-                </div>
+		<!-- Blog Categories Well -->
+		<div class="well">
+			<h4 class="">serche by date</h4>
 
-                <!-- Side Widget Well -->
-                <div class="well">
-                    <h4>Side Widget Well</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
-                </div>
+			<div class="row">
+				<div class="col-md-6">Start Year</div>
+				<div class="col-md-6">
 
-            </div>
+					<div class="input-group" moment-picker="ctrl.params.startYear"
+						format="YYYY">
+						<span class="input-group-addon"> <i
+							class="octicon octicon-calendar"></i>
+						</span> <input class="form-control" placeholder="Select a date"
+							ng-model="ctrl.params.startYear"
+							ng-model-options="{ updateOn: 'blur' }">
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-6">End Year</div>
+				<div class="col-md-6">
 
+					<div class="input-group" moment-picker="ctrl.params.endYear"
+						format="YYYY">
+						<span class="input-group-addon"> <i
+							class="octicon octicon-calendar"></i>
+						</span> <input class="form-control" placeholder="Select a date"
+							ng-model="ctrl.params.endYear"
+							ng-model-options="{ updateOn: 'blur' }">
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-6">month selection</div>
+				<div class="col-md-6">
 
-<div class="col-lg-8">
-<ul id="tabs" class="nav nav-tabs"  ng-init="tab = 1">
-        <li class="active" ng-class="{active:tab===1}"><a href  ng-click="tab = 1">bar chart </a></li>
-        <li class="" ng-class="{active:tab===2}"><a href  ng-click="tab = 2">Pie chart</a></li>
-        <li class="" ng-class="{active:tab===3}"><a href  ng-click="tab = 3">bubble chart</a></li>
-      
-    </ul>
-        </br></br>
-               <div ng-show="tab === 1"> 
-               
- <canvas id="bar" class="chart chart-bar" chart-data="ctrl.data" chart-labels="ctrl.labels"> chart-series="series"</canvas>
-
-</div>
-           
-			<div ng-show="tab === 2">
-			<canvas id="pie" class="chart chart-pie "
-           chart-data="ctrl.dataPie" chart-labels="ctrl.labelsPie" chart-options="options">
-          </canvas> </div>
-			 
-			<div ng-show="tab === 3"> 
-			<canvas id="base" class="chart-bubble" chart-data="ctrl.bubbleData" chart-series="ctrl.bubbleSeries" >
-            </canvas> 
+					<div class="input-group" moment-picker="ctrl.params.month"
+						format="MM">
+						<span class="input-group-addon"> <i
+							class="octicon octicon-calendar"></i>
+						</span> <input class="form-control" placeholder="Select a date"
+							ng-model="ctrl.params.month"
+							ng-model-options="{ updateOn: 'blur' }">
+					</div>
+				</div>
 			</div>
 
+			<!-- /.row -->
+		</div>
+
+		<!-- Side Widget Well -->
+		<div class="well">
+			<h4>Side Widget Well</h4>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+				Inventore, perspiciatis adipisci accusamus laudantium odit aliquam
+				repellat tempore quos aspernatur vero.</p>
+		</div>
+
+	</div>
+
+
+	<div class="col-lg-8">
+		<ul id="tabs" class="nav nav-tabs" ng-init="tab = 1">
+			<li class="active" ng-class="{active:tab===1}"><a href
+				ng-click="tab = 1">bar chart </a></li>
+			<li class="" ng-class="{active:tab===2}"><a href
+				ng-click="tab = 2">Pie chart</a></li>
+			<li class="" ng-class="{active:tab===3}"><a href
+				ng-click="tab = 3">bubble chart</a></li>
+
+		</ul>
+		</br> </br>
+		<div ng-show="tab === 1">
+
+			<canvas id="bar" class="chart chart-bar" chart-data="ctrl.data"
+				chart-labels="ctrl.labels"> chart-series="series"</canvas>
+
+		</div>
+
+		<div ng-show="tab === 2">
+			<canvas id="pie" class="chart chart-pie " chart-data="ctrl.dataPie"
+				chart-labels="ctrl.labelsPie" chart-options="options">
+          </canvas>
+		</div>
+
+		<div ng-show="tab === 3">
+			<canvas id="base" class="chart-bubble" chart-data="ctrl.bubbleData"
+				chart-series="ctrl.bubbleSeries">
+            </canvas>
+		</div>
 
 
 
+
+
+	</div>
 
 </div>
-
- </div>

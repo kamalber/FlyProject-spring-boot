@@ -1,7 +1,5 @@
 package com.weberfly.controller;
 
-
-
 import java.util.Date;
 import java.util.List;
 
@@ -23,68 +21,69 @@ import com.weberfly.entities.CategoryItem;
 import com.weberfly.entities.Post;
 import com.weberfly.service.PostService;
 import com.weberfly.util.CustomErrorType;
-import com.weberfly.util.CustomSatatsParams;
+import com.weberfly.util.CustomStatsParams;
 import com.weberfly.util.SentimentStats;
+
 @RestController
 public class PostController {
 	@Autowired
 	private PostService postservice;
-	
-	
+
 	public static final Logger logger = LoggerFactory.getLogger(PostController.class);
-	
-	
+
 	@RequestMapping(value = "/posts", method = RequestMethod.POST)
 	public ResponseEntity<?> create(@RequestBody Post item, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating item : {}", item);
-       
+
 		postservice.savePost(item);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/posts/{id}").buildAndExpand(item.getId()).toUri());
 		return new ResponseEntity<Post>(item, HttpStatus.CREATED);
 	}
-	
-	@RequestMapping(value="/posts",method=RequestMethod.GET)
-	 public List<Post> getAllPosts(){
+
+	@RequestMapping(value = "/posts", method = RequestMethod.GET)
+	public List<Post> getAllPosts() {
 		return postservice.getAll();
-		}
-	
+	}
+
 	@RequestMapping(value = "/posts/statistics/{query}/{startDate}/{endDate}", method = RequestMethod.GET)
-	public ResponseEntity<?> getItem(@PathVariable("startDate") String startDate,@PathVariable("endDate") String endDate,@PathVariable("query")String querySearche) {
-		logger.info("date 1 {} , date 2{} , querySearche", startDate,endDate,querySearche);
-		List<Post> items=postservice.getAnalysedPosts(querySearche, startDate , endDate);
-		if(items==null||items.isEmpty()){
+	public ResponseEntity<?> getItem(@PathVariable("startDate") String startDate,
+			@PathVariable("endDate") String endDate, @PathVariable("query") String querySearche) {
+		logger.info("date 1 {} , date 2{} , querySearche", startDate, endDate, querySearche);
+		List<Post> items = postservice.getAnalysedPosts(querySearche, startDate, endDate);
+		if (items == null || items.isEmpty()) {
 			logger.error("list is empty ");
-			return new ResponseEntity(new CustomErrorType("empty list for query " +  querySearche), HttpStatus.NOT_FOUND);
+			return new ResponseEntity(new CustomErrorType("empty list for query " + querySearche),
+					HttpStatus.NOT_FOUND);
 		}
-		
+
 		logger.info("nothing happen ");
 		return new ResponseEntity<List<Post>>(items, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/posts/statistics", method = RequestMethod.POST)
-	public ResponseEntity<?> getStatisctics(@RequestBody CustomSatatsParams params, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> getStatisctics(@RequestBody CustomStatsParams params, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating item : {}", params);
-       
-		SentimentStats stats=postservice.getStats(params);
-		if(stats==null){
+
+		SentimentStats stats = postservice.getStats(params);
+		if (stats == null) {
 			logger.error("list is empty ");
-			return new ResponseEntity(new CustomErrorType("empty list for query " +  params.getQuerySearche()), HttpStatus.NOT_FOUND);
+			return new ResponseEntity(new CustomErrorType("empty list for query " + params.getQuery()),
+					HttpStatus.NOT_FOUND);
 
 		}
 		return new ResponseEntity<SentimentStats>(stats, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/posts/params",method=RequestMethod.GET)
-	public ResponseEntity<?> getParams( UriComponentsBuilder ucBuilder) {
-	 CustomSatatsParams cs=new CustomSatatsParams();
-	cs.setEndYear(2019);
-	cs.setStartYear(2010);
-	cs.setQuerySearche("java");
-	cs.setSentimentMethode(1);
-	return new ResponseEntity<>(cs, HttpStatus.OK);
-		}
-	
-}
 
+	@RequestMapping(value = "/posts/params", method = RequestMethod.GET)
+	public ResponseEntity<?> getParams(UriComponentsBuilder ucBuilder) {
+		CustomStatsParams cs = new CustomStatsParams();
+		cs.setEndYear(2019);
+		cs.setStartYear(2010);
+		cs.setQuery("java");
+		cs.setSentimentMethode(1);
+		return new ResponseEntity<>(cs, HttpStatus.OK);
+	}
+
+}
