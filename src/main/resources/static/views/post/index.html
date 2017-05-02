@@ -1,4 +1,16 @@
-       
+       <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Blog Home One
+                    <small>Subheading</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Home</a>
+                    </li>
+                    <li class="active">Blog Home One</li>
+                </ol>
+            </div>
+        </div>
+        
         <div class="row">
 
 
@@ -9,7 +21,7 @@
 	        <div class="formcontainer">
 	            <div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
 	            <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
-	            <form ng-submit="ctrl.submitPost()" name="myForm" class="form-horizontal">
+	            <form ng-submit="ctrl.submitPost()" name="myForm" class="form-group">
 	                <input type="hidden" ng-model="ctrl.post.id" />
 	             
 	                <div class="row">

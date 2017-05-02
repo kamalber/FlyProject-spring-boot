@@ -29,6 +29,17 @@ monApp.config(['$routeProvider', function($routeProvider) {
 	    	 controller:'UserController',
 	    	 controllerAs:'ctrl',
 	    	})
+	    	
+	  .when('/toregister', {
+		    	 templateUrl: 'views/user/index.html',
+		    	 controller:'UserController',
+		    	 controllerAs:'ctrl',
+		    	})
+	 .when('/login', {
+	    	 templateUrl: 'views/user/index.html',
+	    	 controller:'UserController',
+	    	 controllerAs:'ctrl',
+	    	})   	
 	  .when('/typeCategorys', {
 	    	 templateUrl: 'views/categoryType/index.html',
 	    	 controller:'CategoryTypeController',
