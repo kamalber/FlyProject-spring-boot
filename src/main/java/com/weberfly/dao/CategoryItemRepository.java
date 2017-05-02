@@ -11,4 +11,5 @@ public interface CategoryItemRepository extends JpaRepository<CategoryItem, Long
 //	    public CategoryItem findByType(String type);
 	 
 		public CategoryItem findByName(String Name);
+		public CategoryItem findByNameIgnoreCase(String name);
 }

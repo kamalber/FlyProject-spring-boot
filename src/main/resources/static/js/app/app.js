@@ -16,7 +16,7 @@ monApp.config(['$routeProvider', function($routeProvider) {
      .when('/posts', {
     	 templateUrl: 'views/post/index.html',
     	 controller:'PostController',
-    		 controllerAs:'ctrl',
+    	 controllerAs:'ctrl',
     	})
      .when('/posts/:id', {
     	 templateUrl: 'views/post/show.html',
@@ -57,7 +57,8 @@ monApp.config(['$routeProvider', function($routeProvider) {
 	        })   	
 	 .when('/stat', {
 	    	 templateUrl: 'views/statistics/stat.html',
-	    	 controller:'StatsController'
+	    	 controller:'StatsController',
+	    	 controllerAs:'ctrl',
 	    	})   		
      .otherwise({redirectTo: '/'});
 }]);
