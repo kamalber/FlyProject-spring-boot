@@ -22,12 +22,51 @@ private Map<String ,Polarity> statistics =  new HashMap<String ,Polarity>();
 
 private Map<String ,ArrayList<Integer>> data =  new HashMap<String ,ArrayList<Integer>>();
 
+private ArrayList<Integer> positiveDataCount=new ArrayList<>();
+private ArrayList<Integer> negativeDataCount=new ArrayList<>();
+private ArrayList<Integer> neutralDataCount=new ArrayList<>();
+private ArrayList<Integer> splineDataCount=new ArrayList<>();
+
+
+
 public Map<String, ArrayList<Integer>> getData() {
 	return data;
 }
 
 public void setData(Map<String, ArrayList<Integer>> data) {
 	this.data = data;
+}
+
+public ArrayList<Integer> getPositiveDataCount() {
+	return positiveDataCount;
+}
+
+public void setPositiveDataCount(ArrayList<Integer> positiveDataCount) {
+	this.positiveDataCount = positiveDataCount;
+}
+
+public ArrayList<Integer> getNegativeDataCount() {
+	return negativeDataCount;
+}
+
+public void setNegativeDataCount(ArrayList<Integer> negativeDataCount) {
+	this.negativeDataCount = negativeDataCount;
+}
+
+public ArrayList<Integer> getNeutralDataCount() {
+	return neutralDataCount;
+}
+
+public void setNeutralDataCount(ArrayList<Integer> neutralDataCount) {
+	this.neutralDataCount = neutralDataCount;
+}
+
+public ArrayList<Integer> getSplineDataCount() {
+	return splineDataCount;
+}
+
+public void setSplineDataCount(ArrayList<Integer> splineDataCount) {
+	this.splineDataCount = splineDataCount;
 }
 
 public List<Post> getPositivePosts() {
