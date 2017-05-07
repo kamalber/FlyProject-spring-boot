@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Modern Business - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    
+<!--     <link rel="shortcut icon" href="../favicon.ico">  -->
+<!--         <link rel="stylesheet" type="text/css" href="css/css2/demo.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="css/css2/style.css" /> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="css/css2/animate-custom.css" /> -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/modern-business.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+       <link href="node_modules/angular-moment-picker/dist/angular-moment-picker.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body ng-app="monApp">
+
+    <!-- <header> -->
+     <ng-include src="'template/header.html'"></ng-include>
+   <!-- </header> -->
+   
+    <!-- Page Content -->
+    <div class="container ">    
+    
+        <!-- Marketing Icons Section -->
+        <div class="row">
+         
+         
+          <p id="loc"></p>
+
+
+       
+         
+            
+<!--      <ng-include src="'template/naveleft.html'"></ng-include>         -->
+        <div id="main">
+     
+               <div ng-view>
+ 
+          
+ 
+                 </div>
+        </div>
+        
+           
+        </div>
+        <!-- /.row -->
+
+        <!-- Portfolio Section -->
+        
+        <!-- /.row -->
+
+        <!-- Features Section -->
+
+        <!-- /.row -->
+
+       
+
+        <!-- Call to Action Section -->
+ 
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; weberfly 2017</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/lib/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/lib/bootstrap.min.js"></script>
+    <!-- librarys including-->
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/angular-route.min.js"></script>
+    <script src="js/lib/localforage.min.js" ></script>
+    <script src="js/lib/ngStorage.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+    <script src="node_modules/angular-moment-picker/dist/angular-moment-picker.min.js"></script>
+    <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+    <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+    
+<!--      application configuration  -->
+   <script src="js/app/app.js"></script>
+   
+<!--           controllers      -->
+   <script src="js/app/controller/UserController.js"></script>
+   <script src="js/app/controller/StatsController.js"></script>
+   <script src="js/app/controller/CategoryTypeController.js"></script>
+   <script src="js/app/controller/CategoryController.js"></script>
+   <script src="js/app/controller/CategoryItemController.js"></script>
+   <script src="js/app/controller/StatsController.js"></script>
+   <script src="js/app/controller/PostController.js"></script>
+      <script src="js/app/service/PostService.js"></script>
+      <script src="js/app/service/CategoryTypeService.js"></script>
+   <script src="js/app/service/CategoryService.js"></script>
+      <script src="js/app/service/CategoryItemService.js"></script>
+       <script src="js/app/service/CommentService.js"></script>   
+<!--            services       -->
+   <script src="js/app/service/CrudEngine.js"></script>
+   <script src="js/app/service/UserService.js"></script>
+   <script src="js/app/service/PostService.js"></script>
+   <script src="js/app/service/CategoryTypeService.js"></script>
+   <script src="js/app/service/CategoryService.js"></script>
+   <script src="js/app/service/CategoryItemService.js"></script>
+   <script src="js/app/service/StatsService.js"></script>
+   
+
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+
+</body>
+
+</html>
