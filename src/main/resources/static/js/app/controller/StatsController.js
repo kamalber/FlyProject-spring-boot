@@ -37,16 +37,16 @@ monApp.controller('StatsController',
 	 Highcharts.chart('lineChartContainer', {
 
 		    title: {
-		        text: 'Solar Employment Growth by Sector, 2010-2016'
+		        text: 'sentiments analyses of the query (java)'
 		    },
 
 		    subtitle: {
-		        text: 'Source: thesolarfoundation.com'
+		        text: 'Source: platforme'
 		    },
 
 		    yAxis: {
 		        title: {
-		            text: 'Number of Employees'
+		            text: 'Number of posts'
 		        }
 		    },
 		    legend: {
@@ -77,14 +77,14 @@ monApp.controller('StatsController',
   function setDataToBarChart(data){
 	  Highcharts.chart('barChartContainer', {
   	    title: {
-  	        text: 'Combination chart'
+  	        text: 'sentiments analysis for the query (java)'
   	    },
   	    xAxis: {
   	        categories: Object.values(data.labelSeries)
   	    },
   	    labels: {
   	        items: [{
-  	            html: 'Total fruit consumption',
+  	            html: 'Total',
   	            style: {
   	                left: '50px',
   	                top: '18px',
@@ -98,11 +98,11 @@ monApp.controller('StatsController',
   	        data: Object.values(data.positiveDataCount)
   	    }, {
   	        type: 'column',
-  	        name: 'neutral',
+  	        name: 'negative',
   	        data: Object.values(data.negativeDataCount)
   	    }, {
   	        type: 'column',
-  	        name: 'negative',
+  	        name: 'neutral',
   	        data: Object.values(data.neutralDataCount)
   	    }, {
   	        type: 'spline',
@@ -115,18 +115,18 @@ monApp.controller('StatsController',
   	        }
   	    }, {
   	        type: 'pie',
-  	        name: 'Total consumption',
+  	        name: 'Total ',
   	        data: [{
   	            name: 'positive',
-  	            y: 13,
+  	            y: Object.keys(data.positivePosts).length,
   	            color: Highcharts.getOptions().colors[0] // Jane's color
   	        }, {
   	            name: 'negative',
-  	            y: 23,
+  	            y: Object.keys(data.negativePosts).length,
   	            color: Highcharts.getOptions().colors[1] // John's color
   	        }, {
   	            name: 'neutral',
-  	            y: 19,
+  	            y: Object.keys(data.neutralPost).length,
   	            color: Highcharts.getOptions().colors[2] // Joe's color
   	        }],
   	        center: [100, 80],

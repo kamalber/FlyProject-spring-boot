@@ -229,7 +229,7 @@ public class PostService {
 			}
 		}
 		// spline est la valeur moyenne 
-		polarity.setAverage((polarity.getNeutralCount()+polarity.getNegativeCount()+polarity.getPositiveCount())/3);
+		polarity.setAverage((float)(polarity.getNeutralCount()+polarity.getNegativeCount()+polarity.getPositiveCount())/3);
 		
 		return polarity;
 	}
@@ -254,7 +254,7 @@ public class PostService {
 			}
 		}
 		// spline est la valeur moyenne 
-		polarity.setAverage((polarity.getNeutralCount()+polarity.getNegativeCount()+polarity.getPositiveCount())/3);
+		polarity.setAverage((float)(polarity.getNeutralCount()+polarity.getNegativeCount()+polarity.getPositiveCount())/3);
 		return polarity;
 		
 	}

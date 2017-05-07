@@ -1,147 +1,154 @@
-       <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Blog Home One
-                    <small>Subheading</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a>
-                    </li>
-                    <li class="active">Blog Home One</li>
-                </ol>
-            </div>
-        </div>
-        
-        <div class="row">
+<ng-include src="'naveBarleft.html'"></ng-include>
+<!-- Blog Entries Column -->
+<div class="col-md-6 col-sm-6 col-xs-6 ">
 
 
-		
-            <!-- Blog Entries Column -->
-            <div class="col-md-8">
-            <div class="panel-body">
-	        <div class="formcontainer">
-	            <div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
-	            <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
-	            <form ng-submit="ctrl.submitPost()" name="myForm" class="form-group">
-	                <input type="hidden" ng-model="ctrl.post.id" />
-	             
-	                <div class="row">
-	                
-	                     <div class="well">
-                 
-                    <form role="form">
-                        <div class="form-group col-md-12">
-	                        <label class="col-md-2 control-lable" for="uname">What do you post about ?</label>
-	                        <div class="col-md-7">
-	                            <input type="text" ng-model="ctrl.post.title" id="uname" class="username form-control input-sm" placeholder="Enter a title" required ng-minlength="3"/>
-	                        </div>
-	                    </div>
-	                    <div class="form-group col-md-12">
-	                        <label class="col-md-2 control-lable" for="uname">Enter your Post :</label>
-	                        <div class="col-md-7">
 
-	                            <textarea  ng-model="ctrl.post.content" placeholder="Express yourself " class="form-control" rows="3"></textarea>
-	                        </div>
-	                    </div>
-                        <button type="submit"  class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid || myForm.$pristine">Submit</button>
-                    </form>
-                </div>
-	                </div>
+	<div class="row">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Plain Page</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
 
-	             
-	            </form>
-    	    </div>
-		</div>	
-<div ng-repeat="p in ctrl.postList ">
-                
-                <h2>
-                    <a href="#">{{p.title}}</a>
-                </h2>
-                <p class="lead">
-                    by <a href="index.php">{{p.user.username}}</a>
-                </p>
-                <p><i class="fa fa-clock-o"></i> Posted on  {{p.date | date:"EEE, d MMM yyyy 'at' hh:mm a"}}</p>
-                <hr>
-                <p>{{p.content}}</p>
-                <a class="btn btn-primary" ng-click="ctrl.edit(p)" href="/layout.html#!/posts/{{p.id}}">Read More <i class="fa fa-angle-right"></i></a>
-                <hr>
- </div>
- 
-                
 
-            
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="previous">
-                        <a href="#">&larr; Older</a>
-                    </li>
-                    <li class="next">
-                        <a href="#">Newer &rarr;</a>
-                    </li>
-                </ul>
+				<div class="formcontainer">
+					<div class="alert alert-success" role="alert"
+						ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
+					<div class="alert alert-danger" role="alert"
+						ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
+					<form ng-submit="ctrl.submitPost()" name="myForm"
+						class="form-group">
+						<input type="hidden" ng-model="ctrl.post.id" />
 
-            </div>
+						<div class="row">
+							<form role="form">
+								<div class="form-group col-md-12">
+									<label class="col-md-3 control-lable" for="uname">post title ?</label>
+									<div class="col-md-9">
+										<input type="text" ng-model="ctrl.post.title" id="uname"
+											class="username form-control input-sm"
+											placeholder="Enter a title" required ng-minlength="3" />
+									</div>
+								</div>
+								<div class="form-group col-md-12">
+									<label class="col-md-3 control-lable" for="uname">Enter
+										your Post :</label>
+									<div class="col-md-9">
+										<textarea ng-model="ctrl.post.content"
+											placeholder="Express yourself " class="form-control" rows="3"></textarea>
+									</div>
+								</div>
+								<div class="row">
+								<div class="col-md-4">
+								<button type="submit" class="btn btn-primary btn-sm"
+									ng-disabled="myForm.$invalid || myForm.$pristine">Submit</button>
+									</div></div>
+							</form>
 
-            <!-- Blog Sidebar Widgets Column -->
-            <div class="col-md-4">
+						</div>
 
-                <!-- Blog Search Well -->
-                <div class="well">
-                    <h4>Blog Search</h4>
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-                        </span>
-                    </div>
-                    <!-- /.input-group -->
-                </div>
 
-                <!-- Blog Categories Well -->
-                <div class="well">
-                    <h4>Blog Categories</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.col-lg-6 -->
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.col-lg-6 -->
-                    </div>
-                    <!-- /.row -->
-                </div>
+					</form>
+				</div>
 
-                <!-- Side Widget Well -->
-                <div class="well">
-                    <h4>Side Widget Well</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
-                </div>
 
-            </div>
+<!-- 				<label for="message">New POst :</label> -->
+<!-- 				<textarea id="message" required="required" class="form-control" -->
+<!-- 					name="message" data-parsley-trigger="keyup" -->
+<!-- 					data-parsley-minlength="20" data-parsley-maxlength="100" -->
+<!-- 					data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.." -->
+<!-- 					data-parsley-validation-threshold="10"></textarea> -->
 
-        </div>
-        <!-- /.row -->
+<!-- 				<br> <span class="btn btn-primary">Create</span> -->
 
-        <hr>
+
+
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div ng-repeat="p in ctrl.postList ">
+
+		<div class="row">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>{{p.title}}</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false"><i
+								class="fa fa-wrench"></i></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Settings 1</a></li>
+								<li><a href="#">Settings 2</a></li>
+							</ul></li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<p class="h4" >{{p.content}}</p>
+
+					<hr>
+					<div class="row">
+						<div class="col-md-6 ">
+							<i class="fa fa-clock-o"></i> Posted on {{p.date | date:"EEE, d
+							MMM yyyy 'at' hh:mm a"}}
+						</div>
+						<div class="col-md-3 col-md-offset-3">
+							<a class="btn btn-info" ng-click="ctrl.edit(p)"
+								href="/layout.html#!/posts/{{p.id}}">Read More <i
+								class="fa fa-angle-right"></i></a>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+
+
+	<!-- /.row -->
+
+	<hr>
+
+
+	<!-- Pager -->
+	<ul class="pager">
+		<li class="previous"><a href="#">&larr; Older</a></li>
+		<li class="next"><a href="#">Newer &rarr;</a></li>
+	</ul>
+</div>
+
+
+
+<!-- 	end colonne for content post -->
+<!--  	colonne for nave right -->
+<ng-include src="'naveBarRight.html'"></ng-include>
+<!-- 	endNaveBar left -->
+
+
 
 
 
