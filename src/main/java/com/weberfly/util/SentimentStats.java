@@ -22,10 +22,10 @@ private Map<String ,Polarity> statistics =  new HashMap<String ,Polarity>();
 
 private Map<String ,ArrayList<Integer>> data =  new HashMap<String ,ArrayList<Integer>>();
 
-private ArrayList<Integer> positiveDataCount=new ArrayList<>();
-private ArrayList<Integer> negativeDataCount=new ArrayList<>();
-private ArrayList<Integer> neutralDataCount=new ArrayList<>();
-private ArrayList<Integer> splineDataCount=new ArrayList<>();
+private List<Integer> positiveDataCount=new ArrayList<>();
+private List<Integer> negativeDataCount=new ArrayList<>();
+private List<Integer> neutralDataCount=new ArrayList<>();
+private List<Float> averageDataCount=new ArrayList<>();
 
 
 
@@ -37,36 +37,38 @@ public void setData(Map<String, ArrayList<Integer>> data) {
 	this.data = data;
 }
 
-public ArrayList<Integer> getPositiveDataCount() {
+
+
+public List<Integer> getPositiveDataCount() {
 	return positiveDataCount;
 }
 
-public void setPositiveDataCount(ArrayList<Integer> positiveDataCount) {
+public void setPositiveDataCount(List<Integer> positiveDataCount) {
 	this.positiveDataCount = positiveDataCount;
 }
 
-public ArrayList<Integer> getNegativeDataCount() {
+public List<Integer> getNegativeDataCount() {
 	return negativeDataCount;
 }
 
-public void setNegativeDataCount(ArrayList<Integer> negativeDataCount) {
+public void setNegativeDataCount(List<Integer> negativeDataCount) {
 	this.negativeDataCount = negativeDataCount;
 }
 
-public ArrayList<Integer> getNeutralDataCount() {
+public List<Integer> getNeutralDataCount() {
 	return neutralDataCount;
 }
 
-public void setNeutralDataCount(ArrayList<Integer> neutralDataCount) {
+public void setNeutralDataCount(List<Integer> neutralDataCount) {
 	this.neutralDataCount = neutralDataCount;
 }
 
-public ArrayList<Integer> getSplineDataCount() {
-	return splineDataCount;
+public List<Float> getAverageDataCount() {
+	return averageDataCount;
 }
 
-public void setSplineDataCount(ArrayList<Integer> splineDataCount) {
-	this.splineDataCount = splineDataCount;
+public void setAverageDataCount(List<Float> splineDataCount) {
+	this.averageDataCount = splineDataCount;
 }
 
 public List<Post> getPositivePosts() {
