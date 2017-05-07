@@ -13,7 +13,7 @@ monApp.factory('StatsService',
 				console.log('Fetching Items with query :' + query);
 				var deferred = $q.defer();
 				$http.get(
-						urls.POST_SERVICE_API + "/statistics/" + query + "/"
+						urls.POST_SERVICE_API + "statistics/" + query + "/"
 								+ startDate + "/" + endDate).then(
 						function(response) {
 							console.log('Fetched successfully posts');
@@ -28,7 +28,7 @@ monApp.factory('StatsService',
 			function getAnalysedPostsWithStats(params) {
 				console.log('Fetching Items with query :' + params.query);
 				var deferred = $q.defer();
-				$http.post(urls.POST_SERVICE_API + "/statistics", params)
+				$http.post(urls.POST_SERVICE_API + "statistics", params)
 						.then(function(response) {
 							console.log('Fetched successfully posts stats ');
 							deferred.resolve(response.data);

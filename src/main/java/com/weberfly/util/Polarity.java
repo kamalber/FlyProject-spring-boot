@@ -5,8 +5,17 @@ public class Polarity {
 	private int positiveCount;
 	private int negativeCount;
 	private int  neutralCount;
+	private float average;
 	
 	
+	public float getAverage() {
+		return average;
+	}
+
+	public void setAverage(float spline) {
+		this.average = spline;
+	}
+
 	public Polarity() {
 		super();
 	}

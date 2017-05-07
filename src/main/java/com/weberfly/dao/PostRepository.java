@@ -16,6 +16,4 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	
 	public List<Post> findByCategoryItemsAndDateBetween(List<CategoryItem> items,Date startDate,Date endDate);
 	
-
-	
 }
