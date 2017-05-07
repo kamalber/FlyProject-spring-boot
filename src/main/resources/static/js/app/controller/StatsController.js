@@ -2,6 +2,7 @@ monApp.controller('StatsController',
     ['StatsService','$scope',  function(StatsService,$scope) {
     	var self=this;
     	self.searchShow=false;
+    	self.barChartShow=false;
     	self.search=getAnalysedPostStatsWithStats;
 		self.params={// this is the parameters object that contain the search criteria
     			'query':'',
@@ -22,11 +23,8 @@ monApp.controller('StatsController',
 	      function(data){
 	    	  console.log(data);
 	      setDataToBarChart(data); 
-	      
-			
-
-	      
-	      
+	      setDataToLineChart(data);
+	      self.barChartShow=true;
 	      
      	 },function(erroResponse){
 		 console.error('the llist is empty');
@@ -35,8 +33,49 @@ monApp.controller('StatsController',
 	 });
  }
  
+ function setDataToLineChart(data){
+	 Highcharts.chart('lineChartContainer', {
+
+		    title: {
+		        text: 'Solar Employment Growth by Sector, 2010-2016'
+		    },
+
+		    subtitle: {
+		        text: 'Source: thesolarfoundation.com'
+		    },
+
+		    yAxis: {
+		        title: {
+		            text: 'Number of Employees'
+		        }
+		    },
+		    legend: {
+		        layout: 'vertical',
+		        align: 'right',
+		        verticalAlign: 'middle'
+		    },
+
+		    xAxis: {
+	  	        categories: Object.values(data.labelSeries)
+	  	    },
+		    series: [{
+		        name: 'positive',
+		        data: Object.values(data.positiveDataCount)
+		    }, {
+		        name: 'neutral',
+		        data: Object.values(data.neutralDataCount)
+		    }, {
+		        name: 'netagive',
+		        data: Object.values(data.negativeDataCount)
+		    }
+		
+		    ]
+
+		});
+ }
+ 
   function setDataToBarChart(data){
-	  Highcharts.chart('containeryy', {
+	  Highcharts.chart('barChartContainer', {
   	    title: {
   	        text: 'Combination chart'
   	    },
