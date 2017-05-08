@@ -120,13 +120,19 @@ public class PostService {
 		}
 		
 	    String[] months = new DateFormatSymbols(Locale.ENGLISH).getShortMonths();
-	    int monthNumber=12;
+	    int monthNumber=1;
 		// the real statistics calcul is in this chappter
 		while(monthNumber <= 12 && monthNumber > 0){
 			System.out.println("month "+monthNumber);
 			Polarity postPolarity=this.getPolarityPerMonth(monthNumber, stats);
+			stats.getLabelSeries().add(String.valueOf(monthNumber));
 			stats.getStatistics().put(String.valueOf(monthNumber),postPolarity);
-			monthNumber--;
+			stats.getPositiveDataCount().add(postPolarity.getPositiveCount());
+			stats.getNegativeDataCount().add(postPolarity.getNegativeCount());
+			stats.getNeutralDataCount().add(postPolarity.getNeutralCount());
+			stats.getAverageDataCount().add(postPolarity.getAverage());
+
+			monthNumber++;
 		}
 		return stats;
 	}
@@ -137,14 +143,22 @@ public class PostService {
 		if(stats==null){
 			return null;
 		}
+		
 		int yearNumber=params.getEndYear()-params.getStartYear();
 		// the real statistics calcul is in this chappter
 		while(yearNumber >=0){
+			
 			int year=params.getEndYear()-yearNumber;
+			stats.getLabelSeries().add(String.valueOf(year));
 			Polarity postPolarity=this.getPolarityPerYear(year, stats);
 			stats.getStatistics().put(String.valueOf(year),postPolarity);
+			stats.getPositiveDataCount().add(postPolarity.getPositiveCount());
+			stats.getNegativeDataCount().add(postPolarity.getNegativeCount());
+			stats.getNeutralDataCount().add(postPolarity.getNeutralCount());
+			stats.getAverageDataCount().add(postPolarity.getAverage());
 			yearNumber--;
 		}
+		System.out.println("statisticsss  "+stats.getPositiveDataCount());
 		return stats;
 		
 	}
@@ -214,6 +228,9 @@ public class PostService {
 				System.out.println(" post neutral id  "+p.getId());
 			}
 		}
+		// spline est la valeur moyenne 
+		polarity.setAverage((float)(polarity.getNeutralCount()+polarity.getNegativeCount()+polarity.getPositiveCount())/3);
+		
 		return polarity;
 	}
 	
@@ -236,6 +253,8 @@ public class PostService {
 				polarity.setNeutralCount(polarity.getNeutralCount()+1);
 			}
 		}
+		// spline est la valeur moyenne 
+		polarity.setAverage((float)(polarity.getNeutralCount()+polarity.getNegativeCount()+polarity.getPositiveCount())/3);
 		return polarity;
 		
 	}

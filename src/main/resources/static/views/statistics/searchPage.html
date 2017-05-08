@@ -1,0 +1,111 @@
+<!-- Custom Theme Style --> 
+<link href="../../build/css/search.css" rel="stylesheet">
+<div class="container" id="search-view" ng-hide="ctrl.searchShow">
+	<div class="row" style='padding: 140px 100px 0;'>
+		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+			<h2 align="center">GET SENTIMENT ANALYSYS ON A WORD USING
+				DIFFRENTS METHODES</h2>
+			<div class="input-group buscador-principal">
+				<input name="search_param" value="all" id="search_param"
+					type="hidden"> <input class="form-control"
+					style='height: 52px;' name="x" placeholder="¿word key?" type="text" ng-model="ctrl.params.query">
+				<div class="input-group-btn search-panel">
+					<button type="button" class="btns btn-default dropdown-toggle"
+						data-toggle="dropdown">
+						<span id="search_concept">DATE</span> <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="http://placesforlove.com">Placesforlove</a></li>
+						<li><a href="http://placesforlove.com">It's Placesforlove</a></li>
+						<li><a href="http://placesforlove.com">Greather than
+								Placesforlove</a></li>
+						<li><a href="http://placesforlove.com">Placesforlove </a></li>
+						<li class="divider"></li>
+						<li><a href="http://trovacamporella.com">trovacamporella</a></li>
+					</ul>
+				</div>
+				<span class="input-group-btn">
+					<button class="btns btn-primary" type="button" ng-click="ctrl.search()">
+						<span class="glyphicon glyphicon-search" ></span> SEARCH
+					</button>
+				</span>
+			</div>
+
+			<div class="input-group buscador-principal col-md-12">
+				<div class="x_panel">
+
+					<div class="x_content">
+						<div class="row">
+							<input name="search_param" value="all" id="search_param"
+								type="hidden">
+							<div class="col-md-4">
+								<input class="magic-radio" type="radio" checked="checked"
+									name="radio" id="3" value="option" /> <label for="3"
+									class="radio-inline"> platform source</label>
+							</div>
+							<div class="col-md-4">
+								<input class="magic-radio" type="radio" name="radio" id="2"
+									value="option" /> <label for="2" class="radio-inline">Twitter
+									source </label>
+							</div>
+							!
+							<div class="col-md-3">
+								<div class="btn-group open">
+									<button data-toggle="dropdown"
+										class="btn btn-default dropdown-toggle" type="button"
+										aria-expanded="true">
+										Sentiment methode <span class="caret"></span>
+									</button>
+									<ul role="menu" class="dropdown-menu">
+										<li><a href="#">NTLTK</a></li>
+										<li><a href="#">java</a></li>
+										<li class="divider"></li>
+										<li><a href="#">Other sentiment</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="divider-dashed"></div>
+						<div class="row">
+        
+							<div class="">
+								<label for="start-year" class="control-label col-md-2 col-sm-2 ">Start Year</label>
+								<div class="col-md-3 col-sm-3 ">
+
+									<div class="input-group" moment-picker="ctrl.params.startYear"
+										format="YYYY">
+										<span class="input-group-addon"> <i
+											class="octicon octicon-calendar"></i>
+										</span> <input class="form-control" placeholder="Select a date"
+											ng-model="ctrl.params.startYear"
+											ng-model-options="{ updateOn: 'blur' }">
+									</div>
+								</div>
+							</div>
+
+							<div class="">
+								<label for="end-year" class="control-label col-md-2 col-sm-2">End Year</label>
+								<div class="col-md-3 col-sm-3 ">
+
+									<div class="input-group" moment-picker="ctrl.params.endYear"
+										format="YYYY">
+										<span class="input-group-addon"> <i
+											class="octicon octicon-calendar"></i>
+										</span> <input class="form-control" placeholder="Select a date"
+											ng-model="ctrl.params.endYear"
+											ng-model-options="{ updateOn: 'blur' }">
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
