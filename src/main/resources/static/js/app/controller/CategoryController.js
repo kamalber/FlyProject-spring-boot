@@ -40,19 +40,19 @@ monApp.controller('CategoryController',
                         console.log(categoryResult);
                         self.successMessage = 'category created successfully';
                         self.errorMessage='';
-<<<<<<< HEAD
+
                         self.done = true;
 
-=======
+
                         self.done = true;
->>>>>>> branch 'master' of https://github.com/kamalber/fly-project.git
+
                         self.categoryList.push(categoryResult);
-<<<<<<< HEAD
+
                         console.log(categoryResult);
 
-=======
+
                         console.log(categoryResult);
->>>>>>> branch 'master' of https://github.com/kamalber/fly-project.git
+
                         self.categoryList.unshift(categoryResult);
 
                         self.category={};

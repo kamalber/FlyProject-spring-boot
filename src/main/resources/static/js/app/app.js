@@ -10,9 +10,14 @@ monApp.constant('urls', {
     COMMENT_SERVICE_API: 'http://localhost:8080/comments/'
 });
 
-monApp.config(['$routeProvider', function($routeProvider) {
+monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpProvider) {
   $routeProvider
-
+  .when('/login', {
+		templateUrl : 'views/user/login.html',
+		controller : 'navigation',
+		controllerAs: 'controller'
+	})
+	
      .when('/posts', {
     	 templateUrl: 'views/post/index.html',
     	 controller:'PostController',
@@ -30,16 +35,7 @@ monApp.config(['$routeProvider', function($routeProvider) {
 	    	 controllerAs:'ctrl',
 	    	})
 	    	
-	  .when('/toregister', {
-		    	 templateUrl: 'views/user/index.html',
-		    	 controller:'UserController',
-		    	 controllerAs:'ctrl',
-		    	})
-	 .when('/login', {
-	    	 templateUrl: 'views/user/index.html',
-	    	 controller:'UserController',
-	    	 controllerAs:'ctrl',
-	    	})   	
+	  	
 	  .when('/typeCategorys', {
 	    	 templateUrl: 'views/categoryType/index.html',
 	    	 controller:'CategoryTypeController',
@@ -61,5 +57,23 @@ monApp.config(['$routeProvider', function($routeProvider) {
 	    	 controllerAs:'ctrl',
 	    	})   		
      .otherwise({redirectTo: '/'});
+  $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
 
+//var angular = require('angular');
+//var LoginController = require("./LoginController");
+//
+//var login = angular.module('login', ['ngRoute']);
+//login.controller("LoginController", LoginController);
+//login.service("login", require("./LoginApi"));
+//
+//module.exports = login;
+//login.config(['$routeProvider', function($routeProvider) {
+//	  $routeProvider
+//	  
+//	     .when('/login', {
+//	    	 templateUrl: '/views/user/login.html',
+//	    	 controller:'LoginController',
+//	    	 controllerAs:'ctrl',
+//	    	})
+//}]);
