@@ -15,7 +15,6 @@ monApp.controller('StatsController',
     	/*           bar and pie chart               */  
 		
     	// data for bubble chart
-    
  function getAnalysedPostStatsWithStats(){
 	 self.searchShow=true;
 	 StatsService.getAnalysedPostsWithStats(self.params)
@@ -138,8 +137,8 @@ monApp.controller('StatsController',
   	    }]
   	});	
  }
- 
-    }]);
+  
+}]);
 
 
 
