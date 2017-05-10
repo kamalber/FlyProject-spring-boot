@@ -1,4 +1,4 @@
-var monApp=angular.module('monApp', ['ngRoute','ngStorage','chart.js','moment-picker',]);
+var monApp=angular.module('monApp', ['ngRoute','ngStorage','chart.js','moment-picker']);
 monApp.constant('urls', {
     BASE: 'http://localhost:8080/',
     USER_SERVICE_API : 'http://localhost:8080/api/user/',
