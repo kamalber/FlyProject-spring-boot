@@ -21,16 +21,10 @@ import javax.persistence.*;
 @Entity
 @Table(name="Country")
 public class Country implements Serializable{
-	
-	
 	/**
 	 * Description of the property id.
 	 */
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private Long id ;
-	
-	
 	private String hcKey;
 	/**
 	 * Description of the property name.
@@ -90,14 +84,6 @@ public class Country implements Serializable{
 	}
 
 
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 
 	

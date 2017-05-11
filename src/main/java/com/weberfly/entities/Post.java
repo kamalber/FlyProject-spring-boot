@@ -49,9 +49,7 @@ public class Post extends Publication {
     private sentiment otherSentment;
 	// Start of user code (user defined attributes for Post)
 
-	private int latitude;
 
-	private int longitude;
 	// End of user code
 
 	/**
@@ -70,22 +68,6 @@ public class Post extends Publication {
 	 * Returns title.
 	 * @return title 
 	 */
-	public int getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(int latitude) {
-		this.latitude = latitude;
-	}
-
-	public int getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(int longitude) {
-		this.longitude = longitude;
-	}
-
 	
 	public String getContent() {
 		return this.content;
