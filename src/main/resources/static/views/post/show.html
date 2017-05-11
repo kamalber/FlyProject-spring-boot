@@ -1,41 +1,42 @@
-       <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Blog Post
-                    <small>by <a href="#">{{post.user.username}}</a>
-                    </small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a>
-                    </li>
-                    <li class="active">Blog Post</li>
-                </ol>
-            </div>
-        </div>
-  
+<ng-include src="'naveBarleft.html'"></ng-include>
+ 
+  <div class="col-md-6 col-sm-6 col-xs-6 ">
   <div class="row">
-
+<div class="x_panel">
             <!-- Blog Post Content Column -->
-            <div class="col-lg-8">
+            <div class="col-lg-12">
 
                 <!-- Blog Post -->
 
+	
+  <div class="media" >
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{post.user.username}}
+                            <small>{{post.date}}</small>
+                        </h4>
+                      {{post.content}}                        
+                    </div>
+                </div>
                 <hr>
 
-                <!-- Date/Time -->
-                <p><i class="fa fa-clock-o"></i> Posted on {{post.date}}</p>
+<!--                 Date/Time -->
+<!--                 <p><i class="fa fa-clock-o"></i> Posted on {{post.date}}</p> -->
                 
 
-                <hr>
+<!--                 <hr> -->
 
-                <!-- Preview Image -->
-                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+<!--                 Preview Image -->
+<!--                 <img class="img-responsive" src="http://placehold.it/900x300" alt=""> -->
 
-                <hr>
+<!--                 <hr> -->
 
-                <!-- Post Content -->
-                <p data-ng-blur>{{post.content}}</p>
+<!--                 Post Content -->
+<!--                 <p data-ng-blur>{{post.content}}</p> -->
                 
-                <hr>
+<!--                 <hr> -->
 
                 <!-- Blog Comments -->
 
@@ -77,59 +78,9 @@
            
  </div>
             <!-- Blog Sidebar Widgets Column -->
-            <div class="col-md-4">
-
-                <!-- Blog Search Well -->
-                <div class="well">
-                    <h4>Blog Search</h4>
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-                        </span>
-                    </div>
-                    <!-- /.input-group -->
-                </div>
-
-                <!-- Blog Categories Well -->
-                <div class="well">
-                    <h4>Blog Categories</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
-
-                <!-- Side Widget Well -->
-                <div class="well">
-                    <h4>Side Widget Well</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
-                </div>
-
-            </div>
-
+          
+</div>
+        </div>
         </div>
         <!-- /.row -->
+        <ng-include src="'naveBarRight.html'"></ng-include>
