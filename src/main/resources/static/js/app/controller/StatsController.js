@@ -221,6 +221,16 @@ monApp.controller('StatsController',
 		        e.preventDefault();
 		        google.maps.event.trigger(selectedMarker, 'click');
 		    }
+		    StatsService.getCoordonateFromIp("202.88.237.138")
+		      .then(
+		          function(response){
+		        	  var lats = response.loc.split(',')[0]; 
+		              var lngs = response.loc.split(',')[1];
+		          },
+		          function(errResponse){
+		              console.error('Error while removing user Error :'+errResponse.data);
+		          }
+		      );
            }
   
   
@@ -243,8 +253,3 @@ monApp.controller('StatsController',
         });
   }
 }]);
-
-
-
-
-
