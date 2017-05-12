@@ -52,7 +52,7 @@ public   class Publication implements Serializable {
 	private RegularUser user =new RegularUser();
 
 	@OneToOne(cascade= CascadeType.ALL)
-	private Location location=new Location();
+	private Location location;
 	/**
 	 * Description of the property categorys.
 	 */
@@ -115,6 +115,14 @@ public   class Publication implements Serializable {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 	

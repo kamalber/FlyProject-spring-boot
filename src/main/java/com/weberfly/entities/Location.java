@@ -13,8 +13,8 @@ public class Location {
 	
 	@Id
 	private String ip;
-	private double latitude;
-	private double langitude;
+	private double latitude=0.0;
+	private double langitude=0.0;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Country country =new Country();
