@@ -1,3 +1,4 @@
+  
 <ng-include src="'naveBarleft.html'"></ng-include>
 <!-- Blog Entries Column -->
 <div class="col-md-6 col-sm-6 col-xs-6 ">
@@ -88,8 +89,21 @@
 		<div class="row">
 			<div class="x_panel">
 				<div class="x_title">
-					<h2>{{p.title}}</h2>
+					
+				
+         <a href="javascript:;"
+								class="user-profile dropdown-toggle" data-toggle="dropdown"
+								aria-expanded="false"> <img src="production/images/img.jpg"
+									alt="">{{p.user.username}} 
+							
+							</a>
+								
+             
+					<a ng-if="p.dumaxSentment == 'positive'"  class="label label-success  col-md-offset-5">{{p.dumaxSentment}}</a>
+					<a ng-if="p.dumaxSentment == 'negative'"  class="label label-danger   col-md-offset-5">{{p.dumaxSentment}}</a>
+					<a ng-if="p.dumaxSentment == 'neutratl'"  class="label label-default  col-md-offset-5">{{p.dumaxSentment}}</a>
 					<ul class="nav navbar-right panel_toolbox">
+				
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-expanded="false"><i
@@ -103,11 +117,16 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<p class="h4" >{{p.content}}</p>
+				
+				<div class="row">
+    <h2 class="col-md-2 col-md-offset-5">{{p.title}}</h2>
+</div>
+
+					<p>{{p.content}}</p>
 
 					<hr>
 					<div class="row">
-						<div class="col-md-6 ">
+						<div class="col-md-6 " >
 							<i class="fa fa-clock-o"></i> Posted on {{p.date | date:"EEE, d
 							MMM yyyy 'at' hh:mm a"}}
 						</div>

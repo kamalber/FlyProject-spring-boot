@@ -1,5 +1,6 @@
 package com.weberfly.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class PostController {
 	public static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
 	@RequestMapping(value = "/posts", method = RequestMethod.POST)
-	public ResponseEntity<?> create(@RequestBody Post item, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> create(@RequestBody Post item, UriComponentsBuilder ucBuilder) throws IOException {
 		logger.info("Creating item : {}", item);
 
 		postservice.savePost(item);

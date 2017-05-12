@@ -1,7 +1,12 @@
 package com.weberfly.service;
-
 import static org.assertj.core.api.Assertions.shouldHaveThrown;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -9,10 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.facebook.api.Post.PostType;
 import org.springframework.stereotype.Service;
 
 import com.weberfly.dao.CategoryItemRepository;
@@ -27,6 +35,9 @@ import com.weberfly.entities.Publication;
 import com.weberfly.util.CustomStatsParams;
 import com.weberfly.util.Polarity;
 import com.weberfly.util.SentimentStats;
+import com.weberfly.util.opensource.classifiers.NaiveBayes;
+import com.weberfly.util.opensource.dataobjects.NaiveBayesKnowledgeBase;
+
 
 import scala.collection.parallel.ParIterableLike.Foreach;
 
@@ -40,7 +51,72 @@ public class PostService {
 	@Autowired
 	private CategoryItemRepository categoryItemRepository;
 	
-	public void savePost(Post post) {
+	  public static String[] readLines(URL url) throws IOException {
+
+	        Reader fileReader = new InputStreamReader(url.openStream(), Charset.forName("UTF-8"));
+	        List<String> lines;
+	        try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+	            lines = new ArrayList<>();
+	            String line;
+	            while ((line = bufferedReader.readLine()) != null) {
+	                lines.add(line);
+	            }
+	        }
+
+	        return lines.toArray(new String[lines.size()]);
+	    }
+	   
+	  public static String getAnalyseByDumax(String content) throws IOException {
+	        //map of dataset files
+	        Map<String, URL> trainingFiles = new HashMap<>();
+
+//	      trainingFiles.put("Positive", RunMyApplication.class.getResource("/datasets/twetter/training.positive.tokinazed.txt"));
+//	      trainingFiles.put("Negative", RunMyApplication.class.getResource("/datasets/twetter/training.negative.tokinazed.txt"));
+//	      trainingFiles.put("Neutral", RunMyApplication.class.getResource("/datasets/neutral_training_dataset.txt"));
+	        trainingFiles.put("Positive", PostService.class.getResource("/datasets/DabbabiData/positive1.csv"));
+	        trainingFiles.put("Negative", PostService.class.getResource("/datasets/DabbabiData/negative1.csv"));
+	        trainingFiles.put("Neutral", PostService.class.getResource("/datasets/DabbabiData/neutral1.csv"));
+
+	        Map<String, String[]> trainingExamples = new HashMap<>();
+	        for (Map.Entry<String, URL> entry : trainingFiles.entrySet()) {
+	            trainingExamples.put(entry.getKey(), readLines(entry.getValue()));
+	        }
+
+	        //train classifier
+	        NaiveBayes nb = new NaiveBayes();
+	        nb.setChisquareCriticalValue(6.63); //0.01 pvalue
+	        nb.train(trainingExamples);
+
+	        //get trained classifier knowledgeBase
+	        NaiveBayesKnowledgeBase knowledgeBase = nb.getKnowledgeBase();
+
+	        nb = null;
+	        trainingExamples = null;
+
+
+	        //Use classifier
+	        nb = new NaiveBayes(knowledgeBase);
+//	        String exampleEn = "i don't like this book";
+	        String outputEn = nb.predict(content);
+	        return outputEn;
+//	        System.out.format("The sentense \"%s\" was classified as \"%s\".%n", exampleEn, outputEn);
+
+	       
+	    }
+	  
+	  
+	public void savePost(Post post) throws IOException {
+//		GatewayServer server = DefaultServerActivator.getDefault().getServer();
+		
+		String sentiment = getAnalyseByDumax(post.getContent());
+		System.out.println("----------------------"+sentiment);
+		if(sentiment.equalsIgnoreCase("Positive"))
+		    post.setDumaxSentment(Post.sentiment.positive);
+		if(sentiment.equalsIgnoreCase("Negative"))
+			post.setDumaxSentment(Post.sentiment.negative);
+		if(sentiment.equalsIgnoreCase("Neutral"))
+			post.setDumaxSentment(Post.sentiment.neutratl);
+		
 		String pos =post.getContent();
 		List<CategoryItem> categoryItems =categoryItemRepository.findAll();
 		List<CategoryItem> pubcategoryItems =new ArrayList<>();
