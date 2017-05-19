@@ -51,6 +51,8 @@ public class Session implements Serializable{
 	
 	// End of user code
 
+	private double latitude;
+	private double langitude;
 	/**
 	 * The constructor.
 	 */
@@ -138,6 +140,22 @@ public class Session implements Serializable{
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLangitude() {
+		return langitude;
+	}
+
+	public void setLangitude(double langitude) {
+		this.langitude = langitude;
 	}
 
 }

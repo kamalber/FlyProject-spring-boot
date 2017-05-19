@@ -1,5 +1,5 @@
 package com.weberfly.service;
-import static org.assertj.core.api.Assertions.shouldHaveThrown;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +20,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.facebook.api.Post.PostType;
 import org.springframework.stereotype.Service;
 
 import com.weberfly.dao.CategoryItemRepository;

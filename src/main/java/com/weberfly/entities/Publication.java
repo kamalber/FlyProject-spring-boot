@@ -51,7 +51,7 @@ public   class Publication implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL )
 	private RegularUser user =new RegularUser();
 
-	@OneToOne(cascade= CascadeType.ALL)
+	@ManyToOne(cascade= CascadeType.ALL)
 	private Location location;
 	/**
 	 * Description of the property categorys.
