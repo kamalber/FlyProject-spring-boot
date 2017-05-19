@@ -1,8 +1,12 @@
 package com.weberfly.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -14,7 +18,10 @@ public class Location {
 	@Id
 	private String ip;
 	private double latitude=0.0;
-	private double langitude=0.0;
+	private double longitude=0.0;
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="location")
+	private List<Publication> publications = new ArrayList<Publication>();
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Country country =new Country();
@@ -35,12 +42,12 @@ public class Location {
 		this.latitude = latitude;
 	}
 
-	public double getLangitude() {
-		return langitude;
+	public double getLongitude() {
+		return longitude;
 	}
 
-	public void setLangitude(double langitude) {
-		this.langitude = langitude;
+	public void setLongitude(double langitude) {
+		this.longitude = langitude;
 	}
 
 	public Country getCountry() {
