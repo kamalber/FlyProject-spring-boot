@@ -3,8 +3,7 @@ monApp.controller('StatsController',
     	var self=this;
     	// directvies to hide/show
     	self.searchShow=false;
-    	self.barChartShow=false;
-    	self.mapShow=false;
+    	self.hightchart=false;
     	
     	// the principale function 
     	self.search=getAnalysedPostStatsWithStats;
@@ -21,13 +20,15 @@ monApp.controller('StatsController',
 		
     	// data for bubble chart
  function getAnalysedPostStatsWithStats(){
-	 self.searchShow=true;
+	 self.hightchart=true;
+	 
 	 StatsService.getAnalysedPostsWithStats(self.params)
 	 .then(
 	      function(data){
 	    	  console.log(data);
 	      setDataToBarChart(data); 
 	      setDataToLineChart(data);
+	      mappy(data);
 	      self.barChartShow=true;
 	      
      	 },function(erroResponse){
@@ -145,7 +146,7 @@ monApp.controller('StatsController',
   
   
   
-  function mappy(){
+  function mappy(data){
 
 	//Data
 	  var cities = [
@@ -194,15 +195,14 @@ monApp.controller('StatsController',
 		    var infoWindow = new google.maps.InfoWindow();
 		    
 		    var createMarker = function (info){
-	
 		        var marker = new google.maps.Marker({
 		            map: $scope.map,
 		            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
 		        //    http://maps.google.com/mapfiles/ms/icons/red-dot.png__ http://maps.google.com/mapfiles/ms/icons/blue-dot.png
-		            position: new google.maps.LatLng(info.lat, info.long),
-		            title: info.city
+		            position: new google.maps.LatLng(info.latitude, info.longitude),
+		           // title: info.city
 		        });
-		        marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
+		     //   marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
 		        
 		        google.maps.event.addListener(marker, 'click', function(){
 		            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
@@ -213,24 +213,25 @@ monApp.controller('StatsController',
 		        
 		    }  
 		    
-		    for (i = 0; i < cities.length; i++){
-		        createMarker(cities[i]);
+		    for (i = 0; i < data.negativePosts.length; i++){
+		    	console.log(data.negativePosts[i].location);
+		        createMarker(data.negativePosts[i].location);
 		    }
 
 		    $scope.openInfoWindow = function(e, selectedMarker){
 		        e.preventDefault();
 		        google.maps.event.trigger(selectedMarker, 'click');
 		    }
-		    StatsService.getCoordonateFromIp("202.88.237.138")
-		      .then(
-		          function(response){
-		        	  var lats = response.loc.split(',')[0]; 
-		              var lngs = response.loc.split(',')[1];
-		          },
-		          function(errResponse){
-		              console.error('Error while removing user Error :'+errResponse.data);
-		          }
-		      );
+//		    StatsService.getCoordonateFromIp("202.88.237.138")
+//		      .then(
+//		          function(response){
+//		        	  var lats = response.loc.split(',')[0]; 
+//		              var lngs = response.loc.split(',')[1];
+//		          },
+//		          function(errResponse){
+//		              console.error('Error while removing user Error :'+errResponse.data);
+//		          }
+//		      );
            }
   
   

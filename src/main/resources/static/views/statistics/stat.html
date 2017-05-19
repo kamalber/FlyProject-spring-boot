@@ -2,7 +2,7 @@
 <!-- <ng-include src="'views/statistics/searchPage.html'"></ng-include> -->
 <!-- </> search page -->
 
-<ng-include src="'views/statistics/statsOnMap.html'"></ng-include>
+
 
 
 
@@ -147,7 +147,7 @@
 
 
 
-<div class="col-md-8 col-sm-9 col-xs-12" ng-show="ctrl.barChartShow">
+<div class="col-md-8 col-sm-9 col-xs-12" ng-show="ctrl.hightchart">
 	<div class="x_panel">
 		<div class="x_title">
 			<h2>Bar Graph</h2>
@@ -174,10 +174,16 @@
 </div> <!-- end div for nave and barchart -->
 
 
-<!--  div for line chart -->
+<!--  div for line chart and map -->
 <div class="row">
 
-<div class="col-md-12 col-sm-12 col-xs-12" ng-show="ctrl.barChartShow">
+
+<ng-include src="'views/statistics/statsOnMap.html'"></ng-include>
+
+
+
+
+<div class="col-md-12 col-sm-12 col-xs-12" ng-show="ctrl.hightchart">
 	<div class="x_panel">
 		<div class="x_title">
 			<h2>line chart</h2>
