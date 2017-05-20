@@ -158,7 +158,44 @@ public class PostService {
 	
 			
 
+public String  getAnalyseByGateApi(String content) throws ClientProtocolException, IOException, Exception{
+	
+	    JSONObject json = new JSONObject();
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		HttpPost postRequest = new HttpPost(
+			"https://cloud-api.gate.ac.uk/process-document/generic-opinion-mining-english?annotations=Sentiment:SentenceSet");
+		json.put("text", content);
+		StringEntity input = new StringEntity(json.toString());
+		input.setContentType("application/json");
+		postRequest.setEntity(input);
 
+		HttpResponse response = httpClient.execute(postRequest);
+
+		if (response.getStatusLine().getStatusCode() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : "
+				+ response.getStatusLine().getStatusCode());
+		}
+
+		BufferedReader br = new BufferedReader(
+                        new InputStreamReader((response.getEntity().getContent())));
+		
+		String output;
+		System.out.println("Output from Server .... \n");
+		output = br.readLine();
+		System.out.println(output);
+		JSONObject fulljson = new JSONObject(output);
+		System.out.println(fulljson);
+		 JSONObject obj1 = fulljson.getJSONObject("entities");
+		JSONArray dataJsonArray = obj1.getJSONArray("SentenceSet");
+		 JSONObject objsent = dataJsonArray.getJSONObject(0);
+		 String sentiment = objsent.getString("polarity");
+		System.out.println("******"+objsent);
+		
+		
+		httpClient.getConnectionManager().shutdown();
+		
+  return sentiment;
+	  } 
 
 
 		
@@ -166,7 +203,17 @@ public class PostService {
 	public void savePost(Post post) throws Exception {
 //		String url = "http://localhost:5000/";
 		String content =post.getContent();
-       
+        String gatesentiment =getAnalyseByGateApi(content);
+        System.out.println(gatesentiment);
+        if(gatesentiment.equalsIgnoreCase("positive"))
+		    post.setOtherSentment(Post.sentiment.positive);
+		if(gatesentiment.equalsIgnoreCase("negative"))
+			post.setOtherSentment(Post.sentiment.negative);
+		if(gatesentiment.equalsIgnoreCase("neutral"))
+			post.setOtherSentment(Post.sentiment.neutratl);		
+		
+		
+		
 		content = content.replace(" ","%20");
 		String nltkSentiment = sendGet(content);
 		if(nltkSentiment.equalsIgnoreCase("positive"))
