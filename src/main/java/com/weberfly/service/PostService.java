@@ -23,11 +23,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -42,6 +46,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.facebook.api.Post.PostType;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.classmate.util.ResolvedTypeCache.Key;
 import com.weberfly.dao.CategoryItemRepository;
 import com.weberfly.dao.PostRepository;
 import com.weberfly.dao.PublicationRepository;
@@ -201,43 +206,62 @@ public String  getAnalyseByGateApi(String content) throws ClientProtocolExceptio
 		
 		
 	public void savePost(Post post) throws Exception {
-//		String url = "http://localhost:5000/";
 		String content =post.getContent();
+		
+		//GateSentiment
         String gatesentiment =getAnalyseByGateApi(content);
-        System.out.println(gatesentiment);
+//        System.out.println(gatesentiment);
         if(gatesentiment.equalsIgnoreCase("positive"))
-		    post.setOtherSentment(Post.sentiment.positive);
+		    post.setGateSentment(Post.sentiment.positive);
 		if(gatesentiment.equalsIgnoreCase("negative"))
-			post.setOtherSentment(Post.sentiment.negative);
+			post.setGateSentment(Post.sentiment.negative);
 		if(gatesentiment.equalsIgnoreCase("neutral"))
-			post.setOtherSentment(Post.sentiment.neutratl);		
+			post.setGateSentment(Post.sentiment.neutratl);		
 		
 		
-		
+		//NLTK Sentiment
 		content = content.replace(" ","%20");
 		String nltkSentiment = sendGet(content);
 		if(nltkSentiment.equalsIgnoreCase("positive"))
 		    post.setNltkSentment(Post.sentiment.positive);
 		if(nltkSentiment.equalsIgnoreCase("negative"))
 			post.setNltkSentment(Post.sentiment.negative);
-		if(nltkSentiment.equalsIgnoreCase("neutre"))
+		if(nltkSentiment.equalsIgnoreCase("neutral"))
 			post.setNltkSentment(Post.sentiment.neutratl);
 	   
-
-		String sentiment = getAnalyseByDumax(post.getContent());
-		System.out.println("----------------------"+sentiment);
-		if(sentiment.equalsIgnoreCase("Positive"))
+        //DumaxSentiement
+		String dumaxsentiment = getAnalyseByDumax(post.getContent());
+//		System.out.println("----------------------"+dumaxsentiment);
+		if(dumaxsentiment.equalsIgnoreCase("Positive"))
 		    post.setDumaxSentment(Post.sentiment.positive);
-		if(sentiment.equalsIgnoreCase("Negative"))
+		if(dumaxsentiment.equalsIgnoreCase("Negative"))
 			post.setDumaxSentment(Post.sentiment.negative);
-		if(sentiment.equalsIgnoreCase("Neutral"))
+		if(dumaxsentiment.equalsIgnoreCase("Neutral"))
 			post.setDumaxSentment(Post.sentiment.neutratl);
 		
-		String pos =post.getContent();
+		// General sentiment
+		List<String> sentiments =new ArrayList<String>();
+		sentiments.add(gatesentiment.toLowerCase());
+		sentiments.add(dumaxsentiment.toLowerCase());
+		sentiments.add(nltkSentiment.toLowerCase());
+		Map<String, Long> counts = sentiments.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));		   	
+		String key = Collections.max(counts.entrySet(), Map.Entry.comparingByValue()).getKey();
+		
+//			 System.out.println("<<<<<<<<<<<<<<<<<<<"+counts);
+//			 System.out.println("<<<<<<<<<<<<<<<<<<<"+key);
+				if(key.equalsIgnoreCase("Positive"))
+				    post.setGeneralSentiment(Post.sentiment.positive);
+				if(key.equalsIgnoreCase("Negative"))
+					post.setGeneralSentiment(Post.sentiment.negative);
+				if(key.equalsIgnoreCase("Neutral"))
+					post.setGeneralSentiment(Post.sentiment.neutratl);
+			 
+			 
+			 
 		List<CategoryItem> categoryItems =categoryItemRepository.findAll();
 		List<CategoryItem> pubcategoryItems =new ArrayList<>();
 		for (CategoryItem item : categoryItems) {		
-			if (pos.toLowerCase().contains(item.getName().toLowerCase())){		
+			if (content.toLowerCase().contains(item.getName().toLowerCase())){		
 				pubcategoryItems.add(item);	
 		}
 		}
