@@ -136,12 +136,12 @@ logger.info("{}",categoryService.isExist(item));
 		JSONParser parser = new JSONParser();
 		JSONArray jsonarray=null;
 		
-//			try {
-////				jsonarray = (JSONArray) parser.parse(new FileReader("C://Users//kamal//Desktop//countrysProperty.json"));
-//			} catch (IOException | ParseException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
+			try {
+				jsonarray = (JSONArray) parser.parse(new FileReader("C://Users//kamal//Desktop//countrysProperty.json"));
+			} catch (IOException | ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		
 
 		for (int i = 0; i < jsonarray.size(); i++) {
