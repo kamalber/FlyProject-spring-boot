@@ -21,31 +21,59 @@ import javax.persistence.*;
 @Entity
 @Table(name="Country")
 public class Country implements Serializable{
-	
 	/**
 	 * Description of the property id.
 	 */
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private Long id ;
+	private String hcKey;
 	/**
 	 * Description of the property name.
 	 */
 	private String name ;
+	
+	private double latitude;
+	private double longitude;
 
 	/**
 	 * Description of the property citys.
 	 */
+	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="country")
 	private List<City> citys ;
 
-	public Long getId() {
-		return id;
+	public String getHcKey() {
+		return hcKey;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setHcKey(String hcKey) {
+		this.hcKey = hcKey;
 	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public List<City> getCitys() {
+		return citys;
+	}
+
+	public void setCitys(List<City> citys) {
+		this.citys = citys;
+	}
+
+	
 
 	public String getName() {
 		return name;
@@ -57,7 +85,6 @@ public class Country implements Serializable{
 
 
 
-	
 
 	
 }

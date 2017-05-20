@@ -49,6 +49,7 @@ public class Post extends Publication {
 	private sentiment generalSentiment;
 	// Start of user code (user defined attributes for Post)
 
+
 	// End of user code
 
 	/**
@@ -67,7 +68,6 @@ public class Post extends Publication {
 	 * Returns title.
 	 * @return title 
 	 */
-
 	
 	public String getContent() {
 		return this.content;

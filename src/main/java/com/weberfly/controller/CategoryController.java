@@ -1,7 +1,8 @@
 package com.weberfly.controller;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.weberfly.entities.Category;
-import com.weberfly.entities.Category;
-import com.weberfly.entities.User_test;
+import com.weberfly.entities.Country;
 import com.weberfly.service.CategoryService;
-import com.weberfly.service.TypeCategoryService;
-import com.weberfly.service.UserTestService;
+import com.weberfly.service.CountryService;
 import com.weberfly.util.CustomErrorType;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 
 @RestController
 @RequestMapping("/categorys")
@@ -30,12 +35,16 @@ public class CategoryController {
 	public static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private CountryService countryService;
 
 	// -------------------Retrieve All items---------------------------------------------
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> listAll() {
 		List<Category> items = categoryService.findAll();
+		
+		
 		if (items.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			// You many decide to return HttpStatus.NOT_FOUND
@@ -121,4 +130,40 @@ logger.info("{}",categoryService.isExist(item));
 //		typeCatService.deleteAllitems();
 //		return new ResponseEntity<TypeCategory>(HttpStatus.NO_CONTENT);
 //	}
+	public void getCountryFromJsonList(){
+
+
+		JSONParser parser = new JSONParser();
+		JSONArray jsonarray=null;
+		
+//			try {
+////				jsonarray = (JSONArray) parser.parse(new FileReader("C://Users//kamal//Desktop//countrysProperty.json"));
+//			} catch (IOException | ParseException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+		
+
+		for (int i = 0; i < jsonarray.size(); i++) {
+		    JSONObject jsonobject=null;
+		    Country cntry=new Country();
+			try {
+				jsonobject = (JSONObject)jsonarray.get(i);
+				cntry.setHcKey((String) jsonobject.get("hc-key"));
+				cntry.setName((String) jsonobject.get("name"));
+				cntry.setLatitude((Double) jsonobject.get("latitude"));
+				cntry.setLongitude((Double) jsonobject.get("longitude"));
+				countryService.save(cntry);
+			
+			    String name = (String) jsonobject.get("hc-key");
+			    System.out.println(name);
+			    
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		}
+		
+	}
 }

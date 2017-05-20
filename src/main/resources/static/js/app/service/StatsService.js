@@ -4,6 +4,7 @@ monApp.factory('StatsService',
 			var factory = {
 				getAnalysedPosts : getAnalysedPosts,
 				getAnalysedPostsWithStats : getAnalysedPostsWithStats,
+				getCoordonateFromIp : getLatitudeAndLongitudeFromIp,
 
 			};
 
@@ -34,6 +35,19 @@ monApp.factory('StatsService',
 							deferred.resolve(response.data);
 						}, function(errResponse) {
 							console.error('Error while loading posts stats');
+							deferred.reject(errResponse);
+						});
+				return deferred.promise;
+			}
+			function getLatitudeAndLongitudeFromIp(ip){
+				var deferred = $q.defer();
+				$http.get("http://ipinfo.io/"+ip)
+						.then(function(response) {
+							console.log('lang/long  successfully from ip adress');
+							console.log(response);
+							deferred.resolve(response.data);
+						}, function(errResponse) {
+							console.error('Error while loading cordonate from ip adress');
 							deferred.reject(errResponse);
 						});
 				return deferred.promise;
