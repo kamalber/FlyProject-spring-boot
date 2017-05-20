@@ -34,7 +34,7 @@ public class PostController {
 	public static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
 	@RequestMapping(value = "/posts", method = RequestMethod.POST)
-	public ResponseEntity<?> create(@RequestBody Post item, UriComponentsBuilder ucBuilder) throws IOException {
+	public ResponseEntity<?> create(@RequestBody Post item, UriComponentsBuilder ucBuilder) throws Exception {
 		logger.info("Creating item : {}", item);
 
 		postservice.savePost(item);

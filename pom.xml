@@ -38,7 +38,26 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 
- 
+ <dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>3.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>3.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-core</artifactId>
+			<version>3.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>3.0.4</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -96,6 +115,25 @@
 			<artifactId>codegen</artifactId>
 			<version>0.6.8</version>
 		</dependency>
+		
+		<dependency>  
+  <groupId>uk.ac.gate</groupId>  
+  <artifactId>gate-core</artifactId>  
+  <version>6.0</version>  
+  </dependency>
+		
+<dependency>
+   <groupId>org.json</groupId>
+   <artifactId>json</artifactId>
+   <version>20080701</version>
+</dependency>
+	
+		
+		<dependency>
+	<groupId>org.apache.httpcomponents</groupId>
+	<artifactId>httpclient</artifactId>
+	<version>4.1.1</version>
+</dependency>
 	</dependencies>
 
 	<build>

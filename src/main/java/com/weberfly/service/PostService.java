@@ -1,10 +1,20 @@
 package com.weberfly.service;
 import static org.assertj.core.api.Assertions.shouldHaveThrown;
-
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.io.BufferedReader;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
@@ -19,6 +29,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.facebook.api.Post.PostType;
 import org.springframework.stereotype.Service;
@@ -29,7 +48,7 @@ import com.weberfly.dao.PublicationRepository;
 import com.weberfly.entities.Category;
 import com.weberfly.entities.CategoryItem;
 import com.weberfly.entities.Post;
-
+import com.weberfly.entities.Post.sentiment;
 import com.weberfly.entities.Publication;
 
 import com.weberfly.util.CustomStatsParams;
@@ -38,7 +57,7 @@ import com.weberfly.util.SentimentStats;
 import com.weberfly.util.opensource.classifiers.NaiveBayes;
 import com.weberfly.util.opensource.dataobjects.NaiveBayesKnowledgeBase;
 
-
+import net.minidev.json.parser.JSONParser;
 import scala.collection.parallel.ParIterableLike.Foreach;
 
 
@@ -50,7 +69,7 @@ public class PostService {
 	private PublicationRepository publicationRepository;
 	@Autowired
 	private CategoryItemRepository categoryItemRepository;
-	
+	   public static final String USER_AGENT = "Mozilla/5.0";
 	  public static String[] readLines(URL url) throws IOException {
 
 	        Reader fileReader = new InputStreamReader(url.openStream(), Charset.forName("UTF-8"));
@@ -104,10 +123,60 @@ public class PostService {
 	       
 	    }
 	  
-	  
-	public void savePost(Post post) throws IOException {
-//		GatewayServer server = DefaultServerActivator.getDefault().getServer();
+		private String sendGet(String content) throws Exception {
+
+			String url = "http://localhost:5000/"+content;
+
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+			// optional default is GET
+			con.setRequestMethod("GET");
+
+			//add request header
+			con.setRequestProperty("User-Agent", USER_AGENT);
+
+			int responseCode = con.getResponseCode();
+			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("Response Code : " + responseCode);
+
+			BufferedReader in = new BufferedReader(
+			        new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+
+			//print result
+			System.out.println(response.toString());
+            return response.toString();
+		}
+
+	
+			
+
+
+
+
 		
+		
+	public void savePost(Post post) throws Exception {
+//		String url = "http://localhost:5000/";
+		String content =post.getContent();
+       
+		content = content.replace(" ","%20");
+		String nltkSentiment = sendGet(content);
+		if(nltkSentiment.equalsIgnoreCase("positive"))
+		    post.setNltkSentment(Post.sentiment.positive);
+		if(nltkSentiment.equalsIgnoreCase("negative"))
+			post.setNltkSentment(Post.sentiment.negative);
+		if(nltkSentiment.equalsIgnoreCase("neutre"))
+			post.setNltkSentment(Post.sentiment.neutratl);
+	   
+
 		String sentiment = getAnalyseByDumax(post.getContent());
 		System.out.println("----------------------"+sentiment);
 		if(sentiment.equalsIgnoreCase("Positive"))
