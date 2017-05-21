@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.weberfly.entities.Post.sentiment;
+
 
 // Start of user code (user defined imports)
 
@@ -21,7 +23,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="User")
-public abstract class User implements Serializable{
+public  class User implements Serializable{
 	/**
 	 * Description of the property id.
 	 */
@@ -29,11 +31,17 @@ public abstract class User implements Serializable{
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id ;
 
+	public static enum Role{
+		ADMIN,
+		USER
+	}
 	/**
 	 * Description of the property email.
 	 */
 	private String username ;
 	private String password ;
+	@Enumerated(EnumType.STRING)
+    private Role role;
 	/**
 	 * Description of the property sessions.
 	 */
@@ -59,6 +67,35 @@ public abstract class User implements Serializable{
 	 */
 	@OneToOne(cascade = CascadeType.ALL)
 	private Profile profile = new Profile() ;
+	
+	/*
+	 * Description of the property publications.
+	 */
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="user")
+	private List<Publication> publications = new ArrayList<Publication>();
+
+	/**
+	 * Description of the property notifications.
+	 */
+	
+	@OneToMany(mappedBy="user")
+	private List<Notification> notifications = new ArrayList<Notification>();
+
+	/**
+	 * Description of the property comments.
+	 */
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="user")
+	private List<Comment> comments = new ArrayList<Comment>();
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	 @JoinTable(name = "User_Folowers", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "folowing_id", referencedColumnName = "id"))
+	private List<User> following=new ArrayList<User>();
+	@ManyToMany(cascade = CascadeType.ALL)
+	 @JoinTable(name = "User_Categories", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+	private List<Category> categories= new ArrayList<Category>();
+	@ManyToMany(mappedBy="following")
+	private List<User> users = new ArrayList<User>();
+	
 
 	public Long getId() {
 		return id;
@@ -102,14 +139,86 @@ public abstract class User implements Serializable{
 		this.username = username;
 	}
 
-	/**
-	 * Description of the property password.
-	 */
-	
+	public List<Session> getSessions() {
+		return sessions;
+	}
 
-	// Start of user code (user defined attributes for User)
+	public void setSessions(List<Session> sessions) {
+		this.sessions = sessions;
+	}
 
-	// End of user code
+	public List<Message> getRecivedMessages() {
+		return recivedMessages;
+	}
+
+	public void setRecivedMessages(List<Message> recivedMessages) {
+		this.recivedMessages = recivedMessages;
+	}
+
+	public List<Message> getSendedMessages() {
+		return sendedMessages;
+	}
+
+	public void setSendedMessages(List<Message> sendedMessages) {
+		this.sendedMessages = sendedMessages;
+	}
+
+	public List<Publication> getPublications() {
+		return publications;
+	}
+
+	public void setPublications(List<Publication> publications) {
+		this.publications = publications;
+	}
+
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public List<User> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(List<User> following) {
+		this.following = following;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 
 	
 
