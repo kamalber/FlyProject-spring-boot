@@ -35,7 +35,7 @@ public class Session implements Serializable{
 	 * Description of the property users.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL)
-	private User user = new RegularUser();
+	private User user = new User();
 
 	/**
 	 * Description of the property time_in.
