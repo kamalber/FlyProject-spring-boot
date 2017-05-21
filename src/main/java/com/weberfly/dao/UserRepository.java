@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.weberfly.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+public User findOneByUsername(String username);
 	 
 
  
