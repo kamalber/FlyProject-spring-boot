@@ -1,10 +1,20 @@
 package com.weberfly.service;
-
-
+import static org.assertj.core.api.Assertions.shouldHaveThrown;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.io.BufferedReader;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
@@ -13,22 +23,37 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
+import javax.net.ssl.HttpsURLConnection;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.facebook.api.Post.PostType;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.classmate.util.ResolvedTypeCache.Key;
 import com.weberfly.dao.CategoryItemRepository;
 import com.weberfly.dao.PostRepository;
 import com.weberfly.dao.PublicationRepository;
 import com.weberfly.entities.Category;
 import com.weberfly.entities.CategoryItem;
 import com.weberfly.entities.Post;
-
+import com.weberfly.entities.Post.sentiment;
 import com.weberfly.entities.Publication;
 
 import com.weberfly.util.CustomStatsParams;
@@ -37,7 +62,7 @@ import com.weberfly.util.SentimentStats;
 import com.weberfly.util.opensource.classifiers.NaiveBayes;
 import com.weberfly.util.opensource.dataobjects.NaiveBayesKnowledgeBase;
 
-
+import net.minidev.json.parser.JSONParser;
 import scala.collection.parallel.ParIterableLike.Foreach;
 
 
@@ -49,7 +74,7 @@ public class PostService {
 	private PublicationRepository publicationRepository;
 	@Autowired
 	private CategoryItemRepository categoryItemRepository;
-	
+	   public static final String USER_AGENT = "Mozilla/5.0";
 	  public static String[] readLines(URL url) throws IOException {
 
 	        Reader fileReader = new InputStreamReader(url.openStream(), Charset.forName("UTF-8"));
@@ -103,24 +128,140 @@ public class PostService {
 	       
 	    }
 	  
-	  
-	public void savePost(Post post) throws IOException {
-//		GatewayServer server = DefaultServerActivator.getDefault().getServer();
+		private String sendGet(String content) throws Exception {
+
+			String url = "http://localhost:5000/"+content;
+
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+			// optional default is GET
+			con.setRequestMethod("GET");
+
+			//add request header
+			con.setRequestProperty("User-Agent", USER_AGENT);
+
+			int responseCode = con.getResponseCode();
+			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("Response Code : " + responseCode);
+
+			BufferedReader in = new BufferedReader(
+			        new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+
+			//print result
+			System.out.println(response.toString());
+            return response.toString();
+		}
+
+	
+			
+
+public String  getAnalyseByGateApi(String content) throws ClientProtocolException, IOException, Exception{
+	
+	    JSONObject json = new JSONObject();
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		HttpPost postRequest = new HttpPost(
+			"https://cloud-api.gate.ac.uk/process-document/generic-opinion-mining-english?annotations=Sentiment:SentenceSet");
+		json.put("text", content);
+		StringEntity input = new StringEntity(json.toString());
+		input.setContentType("application/json");
+		postRequest.setEntity(input);
+
+		HttpResponse response = httpClient.execute(postRequest);
+
+		if (response.getStatusLine().getStatusCode() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : "
+				+ response.getStatusLine().getStatusCode());
+		}
+
+		BufferedReader br = new BufferedReader(
+                        new InputStreamReader((response.getEntity().getContent())));
 		
-		String sentiment = getAnalyseByDumax(post.getContent());
-		System.out.println("----------------------"+sentiment);
-		if(sentiment.equalsIgnoreCase("Positive"))
+		String output;
+		System.out.println("Output from Server .... \n");
+		output = br.readLine();
+		System.out.println(output);
+		JSONObject fulljson = new JSONObject(output);
+		System.out.println(fulljson);
+		 JSONObject obj1 = fulljson.getJSONObject("entities");
+		JSONArray dataJsonArray = obj1.getJSONArray("SentenceSet");
+		 JSONObject objsent = dataJsonArray.getJSONObject(0);
+		 String sentiment = objsent.getString("polarity");
+		System.out.println("******"+objsent);
+		
+		
+		httpClient.getConnectionManager().shutdown();
+		
+  return sentiment;
+	  } 
+
+
+		
+		
+	public void savePost(Post post) throws Exception {
+		String content =post.getContent();
+		
+		//GateSentiment
+        String gatesentiment =getAnalyseByGateApi(content);
+//        System.out.println(gatesentiment);
+        if(gatesentiment.equalsIgnoreCase("positive"))
+		    post.setGateSentment(Post.sentiment.positive);
+		if(gatesentiment.equalsIgnoreCase("negative"))
+			post.setGateSentment(Post.sentiment.negative);
+		if(gatesentiment.equalsIgnoreCase("neutral"))
+			post.setGateSentment(Post.sentiment.neutratl);		
+		
+		
+		//NLTK Sentiment
+		content = content.replace(" ","%20");
+		String nltkSentiment = sendGet(content);
+		if(nltkSentiment.equalsIgnoreCase("positive"))
+		    post.setNltkSentment(Post.sentiment.positive);
+		if(nltkSentiment.equalsIgnoreCase("negative"))
+			post.setNltkSentment(Post.sentiment.negative);
+		if(nltkSentiment.equalsIgnoreCase("neutral"))
+			post.setNltkSentment(Post.sentiment.neutratl);
+	   
+        //DumaxSentiement
+		String dumaxsentiment = getAnalyseByDumax(post.getContent());
+//		System.out.println("----------------------"+dumaxsentiment);
+		if(dumaxsentiment.equalsIgnoreCase("Positive"))
 		    post.setDumaxSentment(Post.sentiment.positive);
-		if(sentiment.equalsIgnoreCase("Negative"))
+		if(dumaxsentiment.equalsIgnoreCase("Negative"))
 			post.setDumaxSentment(Post.sentiment.negative);
-		if(sentiment.equalsIgnoreCase("Neutral"))
+		if(dumaxsentiment.equalsIgnoreCase("Neutral"))
 			post.setDumaxSentment(Post.sentiment.neutratl);
 		
-		String pos =post.getContent();
+		// General sentiment
+		List<String> sentiments =new ArrayList<String>();
+		sentiments.add(gatesentiment.toLowerCase());
+		sentiments.add(dumaxsentiment.toLowerCase());
+		sentiments.add(nltkSentiment.toLowerCase());
+		Map<String, Long> counts = sentiments.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));		   	
+		String key = Collections.max(counts.entrySet(), Map.Entry.comparingByValue()).getKey();
+		
+//			 System.out.println("<<<<<<<<<<<<<<<<<<<"+counts);
+//			 System.out.println("<<<<<<<<<<<<<<<<<<<"+key);
+				if(key.equalsIgnoreCase("Positive"))
+				    post.setGeneralSentiment(Post.sentiment.positive);
+				if(key.equalsIgnoreCase("Negative"))
+					post.setGeneralSentiment(Post.sentiment.negative);
+				if(key.equalsIgnoreCase("Neutral"))
+					post.setGeneralSentiment(Post.sentiment.neutratl);
+			 
+			 
+			 
 		List<CategoryItem> categoryItems =categoryItemRepository.findAll();
 		List<CategoryItem> pubcategoryItems =new ArrayList<>();
 		for (CategoryItem item : categoryItems) {		
-			if (pos.toLowerCase().contains(item.getName().toLowerCase())){		
+			if (content.toLowerCase().contains(item.getName().toLowerCase())){		
 				pubcategoryItems.add(item);	
 		}
 		}

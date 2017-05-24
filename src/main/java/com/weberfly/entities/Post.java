@@ -41,12 +41,12 @@ public class Post extends Publication {
 
 	@Enumerated(EnumType.ORDINAL)
     private sentiment nltkSentment;
-	
-
 	@Enumerated(EnumType.ORDINAL)
     private sentiment dumaxSentment;
 	@Enumerated(EnumType.ORDINAL)
-    private sentiment otherSentment;
+    private sentiment gateSentment;
+	@Enumerated(EnumType.ORDINAL)
+	private sentiment generalSentiment;
 	// Start of user code (user defined attributes for Post)
 
 
@@ -100,12 +100,26 @@ public class Post extends Publication {
 		this.dumaxSentment = dumaxSentment;
 	}
 
-	public sentiment getOtherSentment() {
-		return otherSentment;
+	public sentiment getGateSentment() {
+		return gateSentment;
 	}
 
-	public void setOtherSentment(sentiment otherSentment) {
-		this.otherSentment = otherSentment;
+	public void setGateSentment(sentiment gateSentment) {
+		this.gateSentment = gateSentment;
 	}
+
+	public sentiment getGeneralSentiment() {
+		return generalSentiment;
+	}
+
+	public void setGeneralSentiment(sentiment generalSentiment) {
+		this.generalSentiment = generalSentiment;
+	}
+
+	
+
+	
+
+
 	
 }
