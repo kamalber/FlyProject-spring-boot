@@ -3,13 +3,21 @@ package com.weberfly.entities;
  * 2017, All rights reserved.
  *******************************************************************************/
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.*;
 
-import com.weberfly.entities.Post.sentiment;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 
 
 // Start of user code (user defined imports)
@@ -23,7 +31,7 @@ import com.weberfly.entities.Post.sentiment;
  */
 @Entity
 @Table(name="User")
-public  class User implements Serializable{
+public  class User implements UserDetails{
 	/**
 	 * Description of the property id.
 	 */
@@ -38,29 +46,32 @@ public  class User implements Serializable{
 	/**
 	 * Description of the property email.
 	 */
+	@Column(unique = true)
 	private String username ;
+
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password ;
-	@Enumerated(EnumType.STRING)
-    private Role role;
+	
+    private String  role;
+    
+    private String fullName;
 	/**
-	 * Description of the property sessions.
+	 * Description of the property session.
 	 */
 	
-	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy="user")
-	private List<Session> sessions = new ArrayList<Session>();
+	@OneToOne(cascade = CascadeType.ALL)
+	private Session session ;
 	
 	/**
 	 * Description of the property recivedMessages.
 	 */
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="sender")
-	private List<Message> recivedMessages = new ArrayList<Message>();
-
+	private List<Message> recivedMessages ;
 	/**
 	 * Description of the property sendedMessages.
 	 */
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="receiver")
-	private List<Message> sendedMessages = new ArrayList<Message>();
+	private List<Message> sendedMessages;
 
 	/**
 	 * Description of the property profiles.
@@ -72,29 +83,29 @@ public  class User implements Serializable{
 	 * Description of the property publications.
 	 */
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="user")
-	private List<Publication> publications = new ArrayList<Publication>();
+	private List<Publication> publications ;
 
 	/**
 	 * Description of the property notifications.
 	 */
 	
 	@OneToMany(mappedBy="user")
-	private List<Notification> notifications = new ArrayList<Notification>();
+	private List<Notification> notifications ;
 
 	/**
 	 * Description of the property comments.
 	 */
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="user")
-	private List<Comment> comments = new ArrayList<Comment>();
+	private List<Comment> comments ;
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	 @JoinTable(name = "User_Folowers", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "folowing_id", referencedColumnName = "id"))
-	private List<User> following=new ArrayList<User>();
+	private List<User> following;
 	@ManyToMany(cascade = CascadeType.ALL)
 	 @JoinTable(name = "User_Categories", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
-	private List<Category> categories= new ArrayList<Category>();
+	private List<Category> categories;
 	@ManyToMany(mappedBy="following")
-	private List<User> users = new ArrayList<User>();
+	private List<User> users;
 	
 
 	public Long getId() {
@@ -139,87 +150,111 @@ public  class User implements Serializable{
 		this.username = username;
 	}
 
-	public List<Session> getSessions() {
-		return sessions;
-	}
+	
 
-	public void setSessions(List<Session> sessions) {
-		this.sessions = sessions;
+	public void setSession(Session session) {
+		this.session = session;
 	}
-
-	public List<Message> getRecivedMessages() {
-		return recivedMessages;
-	}
-
+public Session getSession(){
+	return this.session;
+}
 	public void setRecivedMessages(List<Message> recivedMessages) {
 		this.recivedMessages = recivedMessages;
 	}
 
-	public List<Message> getSendedMessages() {
-		return sendedMessages;
-	}
 
 	public void setSendedMessages(List<Message> sendedMessages) {
 		this.sendedMessages = sendedMessages;
 	}
 
-	public List<Publication> getPublications() {
-		return publications;
-	}
-
+	
 	public void setPublications(List<Publication> publications) {
 		this.publications = publications;
 	}
 
-	public List<Notification> getNotifications() {
-		return notifications;
-	}
+	
 
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
 	}
 
-	public List<Comment> getComments() {
-		return comments;
+
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 
-	public List<User> getFollowing() {
-		return following;
-	}
+	
 
 	public void setFollowing(List<User> following) {
 		this.following = following;
 	}
 
-	public List<Category> getCategories() {
-		return categories;
-	}
+	
 
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
 
-	public List<User> getUsers() {
-		return users;
-	}
+	
 
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 
+	@JsonIgnore
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
+	@JsonIgnore
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Collection<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(role));
+		return authorities;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role +
+				 ", profile=" + profile + "]";
+	}
 	
 
 }

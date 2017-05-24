@@ -32,10 +32,10 @@ public class Session implements Serializable{
 	private String ipUser ;
 
 	/**
-	 * Description of the property users.
+	 * Description of the property user.
 	 */
-	@ManyToOne(cascade = CascadeType.ALL)
-	private User user = new User();
+	@OneToOne(cascade = CascadeType.ALL,mappedBy="session"  )
+	private User user ;
 
 	/**
 	 * Description of the property time_in.

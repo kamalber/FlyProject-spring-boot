@@ -8,7 +8,4 @@ import com.weberfly.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 public User findOneByUsername(String username);
-	 
-
- 
 }

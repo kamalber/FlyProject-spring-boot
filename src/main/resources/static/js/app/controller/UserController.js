@@ -19,7 +19,7 @@ monApp.controller('UserController',
 
         self.onlyIntegers = /^\d+$/;
         self.onlyNumbers = /^\d+([,.]\d+)?$/;
-
+        
         function submit() {
             console.log('Submitting');
             if (self.user.id === undefined || self.user.id === null) {
