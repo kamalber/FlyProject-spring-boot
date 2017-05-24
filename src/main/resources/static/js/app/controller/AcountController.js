@@ -1,5 +1,5 @@
 monApp.controller('AcountController',
-    ['AcountService','AuthSession','$scope','$location','$http',  function(AcountService,AuthSession,$scope,$location,$http) {
+    ['$rootScope','AcountService','AuthSession','$scope','$location','$http',  function($rootScope,AcountService,AuthSession,$scope,$location,$http) {
     	var self=this;
 		self.user={// this is the parameters object that contain the search criteria
     			'username':'',
@@ -17,6 +17,8 @@ monApp.controller('AcountController',
 	                    	 if (res.authenticated) {
 	         					$scope.message = '';
 	         					AuthSession.connected=res;
+	         					$rootScope.user=res.principal;
+	         					console.log(AuthSession.connected);
 	         					// setting the same header value for all request calling from
 	         					// this application
 	         					$http.defaults.headers.common['Authorization'] = 'Basic ' + base64Credential;

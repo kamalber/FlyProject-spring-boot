@@ -25,7 +25,6 @@ monApp.controller('StatsController',
 	 StatsService.getAnalysedPostsWithStats(self.params)
 	 .then(
 	      function(data){
-	    	  console.log(data);
 	      setDataToBarChart(data); 
 	      setDataToLineChart(data);
 	      mappy(data);
@@ -193,16 +192,21 @@ monApp.controller('StatsController',
 		    $scope.markers = [];
 		    
 		    var infoWindow = new google.maps.InfoWindow();
+		
+		    var oms = new OverlappingMarkerSpiderfier($scope.map, { 
+		    	  markersWontMove: true, 
+		    	  markersWontHide: true,
+		    	  basicFormatEvents: true
+		    	});
 		    
 		    var createMarker = function (info){
 		        var marker = new google.maps.Marker({
 		            map: $scope.map,
 		            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-		        //    http://maps.google.com/mapfiles/ms/icons/red-dot.png__ http://maps.google.com/mapfiles/ms/icons/blue-dot.png
-		            position: new google.maps.LatLng(info.latitude, info.longitude),
-		           // title: info.city
+		            position: new google.maps.LatLng(info.location.latitude, info.location.longitude),
+		            title: info.title
 		        });
-		     //   marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
+		      marker.content = '<div class="infoWindowContent">' + info.content + '</div>';
 		        
 		        google.maps.event.addListener(marker, 'click', function(){
 		            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
@@ -213,9 +217,33 @@ monApp.controller('StatsController',
 		        
 		    }  
 		    
+		    var createSpiderMarker = function (info,iconUrl){
+		    		    var marker = new google.maps.Marker({ 
+		    		    	 icon: iconUrl,
+		    		    	 position: new google.maps.LatLng(info.location.latitude, info.location.longitude)
+		    		    	});  // markerData works here as a LatLngLiteral
+		    		    google.maps.event.addListener(marker, 'spider_click', function(e) {// 'spider_click', not plain 'click'
+		    		    	infoWindow.setContent(info.content);
+		    		    	infoWindow.open($scope.map, marker);
+		    		    });
+		    		    oms.addMarker(marker);  // adds the marker to the spiderfier _and_ the map
+		    		    
+		    }
+		    
+		    // creating negative posts marker
 		    for (i = 0; i < data.negativePosts.length; i++){
-		    	console.log(data.negativePosts[i].location);
-		        createMarker(data.negativePosts[i].location);
+		    	var iconUrl='http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+		    	createSpiderMarker(data.negativePosts[i],iconUrl);	
+		    }
+		    // creating positive posts marker
+		    for (i = 0; i < data.positivePosts.length; i++){
+		    	var iconUrl='http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+		    	createSpiderMarker(data.positivePosts[i],iconUrl);	
+		    }
+		    // creating neutral posts marker
+		    for (i = 0; i < data.neutralPosts.length; i++){
+		    	var iconUrl='http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+		    	createSpiderMarker(data.neutralPosts[i],iconUrl);	
 		    }
 
 		    $scope.openInfoWindow = function(e, selectedMarker){
