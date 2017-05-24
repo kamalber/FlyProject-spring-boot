@@ -11,6 +11,8 @@ monApp.constant('urls', {
     ACOUNT_SERVICE_API: 'http://localhost:8080/acount/'
 });
 
+
+
 monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpProvider) {
   $routeProvider
   .when('/login', {
@@ -61,3 +63,15 @@ monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpP
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
 
+
+monApp.run( function($rootScope,AuthSession, $location) {
+    // register listener to watch route changes
+    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+      if (AuthSession.connected == null) {
+    	  if(current.templateUrl !="/login" &&  current.templateUrl !="/register"){
+    		  $location.path( "/login" );
+    	  }
+        
+      }         
+    });
+ })
