@@ -21,7 +21,7 @@ public class Location {
 	private double longitude=0.0;
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="location")
-	private List<Publication> publications = new ArrayList<Publication>();
+	private List<Publication> publications ;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Country country =new Country();
