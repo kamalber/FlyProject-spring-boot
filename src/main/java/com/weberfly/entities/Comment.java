@@ -35,7 +35,7 @@ public class Comment implements Serializable{
 	 * Description of the property user.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL)
-	private RegularUser user ;
+	private User user ;
 	@ManyToOne
     private Publication publication ;
 
@@ -61,7 +61,7 @@ public class Comment implements Serializable{
 	private String text ;
 
 	
-	public RegularUser getUser() {
+	public User getUser() {
 		return this.user;
 	}
 
@@ -69,7 +69,7 @@ public class Comment implements Serializable{
 	 * Sets a value to attribute user. 
 	 * @param newUser 
 	 */
-	public void setUser(RegularUser newUser) {
+	public void setUser(User newUser) {
 		this.user = newUser;
 	}
 

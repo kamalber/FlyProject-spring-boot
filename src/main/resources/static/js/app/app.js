@@ -7,15 +7,18 @@ monApp.constant('urls', {
     TYPECATEGORY_SERVICE_API : 'http://localhost:8080/typeCategorys/',
     CATEGORY_SERVICE_API:   'http://localhost:8080/categorys/',
     CATEGORYITEM_SERVICE_API:   'http://localhost:8080/categoryItems/',
-    COMMENT_SERVICE_API: 'http://localhost:8080/comments/'
+    COMMENT_SERVICE_API: 'http://localhost:8080/comments/',
+    ACOUNT_SERVICE_API: 'http://localhost:8080/acount/'
 });
+
+
 
 monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpProvider) {
   $routeProvider
   .when('/login', {
 		templateUrl : 'views/user/login.html',
-		controller : 'navigation',
-		controllerAs: 'controller'
+		controller : 'AcountController',
+		controllerAs: 'ctrl'
 	})
 	
      .when('/posts', {
@@ -60,20 +63,15 @@ monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpP
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
 
-//var angular = require('angular');
-//var LoginController = require("./LoginController");
-//
-//var login = angular.module('login', ['ngRoute']);
-//login.controller("LoginController", LoginController);
-//login.service("login", require("./LoginApi"));
-//
-//module.exports = login;
-//login.config(['$routeProvider', function($routeProvider) {
-//	  $routeProvider
-//	  
-//	     .when('/login', {
-//	    	 templateUrl: '/views/user/login.html',
-//	    	 controller:'LoginController',
-//	    	 controllerAs:'ctrl',
-//	    	})
-//}]);
+
+monApp.run( function($rootScope,AuthSession, $location) {
+    // register listener to watch route changes
+    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+      if (AuthSession.connected == null) {
+    	  if(current.templateUrl !="/login" &&  current.templateUrl !="/register"){
+    		  $location.path( "/login" );
+    	  }
+        
+      }         
+    });
+ })

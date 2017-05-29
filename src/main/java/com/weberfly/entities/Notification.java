@@ -54,7 +54,7 @@ public class Notification implements Serializable{
 	 * Description of the property user.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL )
-	public RegularUser user = new RegularUser();
+	public User user = new User();
 
 	// Start of user code (user defined attributes for Notification)
 
@@ -156,7 +156,7 @@ public class Notification implements Serializable{
 	 * Returns user.
 	 * @return user 
 	 */
-	public RegularUser getUser() {
+	public User getUser() {
 		return this.user;
 	}
 
@@ -164,7 +164,7 @@ public class Notification implements Serializable{
 	 * Sets a value to attribute user. 
 	 * @param newUser 
 	 */
-	public void setUser(RegularUser newUser) {
+	public void setUser(User newUser) {
 		this.user = newUser;
 	}
 

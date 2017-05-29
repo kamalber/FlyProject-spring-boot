@@ -49,9 +49,9 @@ public   class Publication implements Serializable {
 	 * Description of the property user.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL )
-	private RegularUser user =new RegularUser();
+	private User user =new User();
 
-	@OneToOne(cascade= CascadeType.ALL)
+	@ManyToOne(cascade= CascadeType.ALL)
 	private Location location;
 	/**
 	 * Description of the property categorys.
@@ -92,11 +92,11 @@ public   class Publication implements Serializable {
 		this.date = date;
 	}
 
-	public RegularUser getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(RegularUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

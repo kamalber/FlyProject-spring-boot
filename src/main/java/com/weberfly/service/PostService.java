@@ -59,7 +59,13 @@ import com.weberfly.util.SentimentStats;
 import com.weberfly.util.opensource.classifiers.NaiveBayes;
 import com.weberfly.util.opensource.dataobjects.NaiveBayesKnowledgeBase;
 
+
 import javassist.expr.Cast;
+
+import net.minidev.json.parser.JSONParser;
+import scala.collection.parallel.ParIterableLike.Foreach;
+
+
 
 @Service
 public class PostService {
@@ -514,7 +520,11 @@ return sentencesPolarity;
 
 	public List<Post> getAll() {
 		return postRepository.findAll();
+
 	}
+
+	
+
 
 	public Post findPost(Long id) {
 		return postRepository.findOne(id);
@@ -524,8 +534,14 @@ return sentencesPolarity;
 		return publicationRepository.findOne(id);
 	}
 
+
 	// get analysed post between two dates
-	public List<Post> getAnalysedPosts(String querySearche, String startDate, String endDate) {
+
+
+	
+	        // get analysed post between two dates 
+	public List<Post> getAnalysedPosts(String querySearche,String startDate, String endDate){
+
 		DateFormat formatter = new SimpleDateFormat("yy-dd-MM");
 		CategoryItem item = categoryItemRepository.findByNameIgnoreCase(querySearche);
 		List<CategoryItem> items = null;
@@ -725,6 +741,7 @@ return sentencesPolarity;
 	private Date getStartDateFromYear(int year) {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, year);
+
 		cal.set(Calendar.DAY_OF_YEAR, 1);
 		cal.set(Calendar.HOUR_OF_DAY, 1);
 		Date dateStart = cal.getTime();
@@ -741,4 +758,10 @@ return sentencesPolarity;
 		return dateEnd;
 
 	}
-}
+
+
+	
+
+	}
+
+

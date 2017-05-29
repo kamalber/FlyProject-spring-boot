@@ -46,7 +46,7 @@ public class Category implements Serializable{
 		private List<CategoryItem> categoryItems = new ArrayList<CategoryItem>();
 	  
 	  @ManyToMany(mappedBy="categories")
-		private List<RegularUser> users = new ArrayList<RegularUser>();
+		private List<User> users = new ArrayList<User>();
 
 	public Long getId() {
 		return id;

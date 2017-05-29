@@ -30,7 +30,7 @@ public class Message implements Serializable{
 	 * Description of the property sender.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL )
-	private User sender = new RegularUser();
+	private User sender = new User();
 
 	/**
 	 * Description of the property date.
@@ -41,7 +41,7 @@ public class Message implements Serializable{
 	 * Description of the property receiver.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL )
-	private User receiver = new RegularUser();
+	private User receiver = new User();
     /**
 	 * Description of the property content.
 	 */
