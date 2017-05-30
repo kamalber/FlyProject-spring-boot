@@ -134,8 +134,9 @@
 							<a class="btn btn-info" ng-click="ctrl.edit(p)"
 								href="/layout.html#!/posts/{{p.id}}">Read More <i
 								class="fa fa-angle-right"></i></a>
-
+	
 						</div>
+						<a class="label label-warning  col-md-offset-5">{{(p.comments|filter:query).length}} comments</a>
 					</div>
 				</div>
 
