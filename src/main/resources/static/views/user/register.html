@@ -1,3 +1,4 @@
+
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="x_panel">
 		<div class="x_title">
@@ -35,7 +36,8 @@
 
 				<div class="stepContainer" style="height: 281px;">
 					<div id="step-1" class="content" style="display: block;">
-						<form class="form-horizontal form-label-left" ng-submit="ctrl.register()" name="register" novalidate>
+						<form class="form-horizontal form-label-left"
+							ng-submit="ctrl.register()" name="register" novalidate>
 
 							<div class="form-group"
 								ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
@@ -79,9 +81,9 @@
 								</div>
 							</div>
 
-	<!-- 							<div class="alert alert-warning margin-top-5" -->
-	<!-- 								ng-show="confirmPassword != ctrl.user.password ">Password -->
-	<!-- 								Not Matching</div> -->
+							<!-- 							<div class="alert alert-warning margin-top-5" -->
+							<!-- 								ng-show="confirmPassword != ctrl.user.password ">Password -->
+							<!-- 								Not Matching</div> -->
 
 
 
@@ -138,8 +140,8 @@
 							ng-disabled="register.$invalid || (confirmPassword != ctrl.user.password)">Register</button>
 						<button class="btn btn-default" ui-sref="login">Login</button>
 						<a href="#" class="buttonFinish buttonDisabled btn btn-default">Finish</a>
-						<a href="#" class="buttonNext btn btn-success">Next</a> 
-						<a href="#" class="buttonPrevious buttonDisabled btn btn-primary">Previous</a>
+						<a href="#" class="buttonNext btn btn-success">Next</a> <a
+							href="#" class="buttonPrevious buttonDisabled btn btn-primary">Previous</a>
 					</div>
 				</div>
 				<!-- End SmartWizard Content -->
@@ -147,43 +149,133 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+
+
+
+<!-- 	################################################################################################## -->
+
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>
+				user registration <small>register for new account </small>
+			</h2>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			<!-- Smart Wizard -->
+<form class="form-horizontal form-label-left"
+							ng-submit="ctrl.register()" name="register" novalidate>
+			<xs-wizard has-save="true" has-breadcrumbs="true"
+				save-text="Submit Order" on-page-change="vm.pageChange(state);"
+				on-cancel="vm.cancel();" on-save="vm.save();"> <xs-wizard-page
+				page-tag="User Info">
+			<div class="pane">
+				<h4>Page 1: User Info</h4>
+				
+				
+
+							<div class="form-group"
+								ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+									for="name">Name:</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" required class="form-control"
+										ng-model="ctrl.user.name" id="name" name="name">
+								</div>
+							</div>
+
+							<div class="form-group"
+								ng-class="{ 'has-error': register.username.$invalid && register.username.$dirty }">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+									for="ctrl.username">username:</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="text" required class="form-control"
+										ng-model="ctrl.user.username" id="ctrl.username"
+										name="username">
+								</div>
+							</div>
+
+							<div class="form-group"
+								ng-class="{ 'has-error': register.password.$invalid && register.password.$dirty }">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+									for="pwd">Password:</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="password" required class="form-control" id="pwd"
+										ng-model="ctrl.user.password" name="password">
+								</div>
+							</div>
+
+							<div class="form-group"
+								ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }">
+								<label for="cpwd"
+									class="control-label col-md-3 col-sm-3 col-xs-12">
+									Confirm Password:</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input type="password" name="confirmPassword" required
+										class="form-control" id="cpwd" ng-model="confirmPassword">
+								</div>
+							</div>
+
+<!-- 														<div class="alert alert-warning margin-top-5" -->
+<!-- 															ng-show="confirmPassword != ctrl.user.password ">Password -->
+<!-- 															Not Matching</div> -->
+
+
+
+					
+				
+			</div>
+			</xs-wizard-page> <xs-wizard-page page-tag="Order">
+			<div class="pane">
+				<h4>Page 2: Order</h4>
+
+							
+
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<div id="gender" class="btn-group" data-toggle="buttons">
+												<label class="btn btn-default"
+													data-toggle-class="btn-primary"
+													data-toggle-passive-class="btn-default"> <input
+													type="radio" name="gender" value="male"> &nbsp;
+													Male &nbsp;
+												</label> <label class="btn btn-primary"
+													data-toggle-class="btn-primary"
+													data-toggle-passive-class="btn-default"> <input
+													type="radio" name="gender" value="female"> Female
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12">Date
+											Of Birth <span class="required">*</span>
+										</label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<input id="birthday"
+												class="date-picker form-control col-md-7 col-xs-12"
+												required="required" type="text">
+										</div>
+									</div>
+								
+						
+			</div>
+			</xs-wizard-page> <xs-wizard-page page-tag="Payment">
+			<div class="pane">
+				<h4>Page 3: Payment</h4>
+			</div>
+			</xs-wizard-page> <xs-wizard-page page-tag="Confirmation">
+			<div class="pane">
+				<h4>Page 4: Confirmation</h4>
+			</div>
+			</xs-wizard-page> </xs-wizard>
+	</form>
+		</div>
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	<xs-wizard has-save="true"
-                                   has-breadcrumbs="true"
-                                   save-text="Submit Order"
-                                   on-page-change="vm.pageChange(state);"
-                                   on-cancel="vm.cancel();"
-                                   on-save="vm.save();">
-
-                            <xs-wizard-page page-tag="User Info">
-                                <div class="pane">
-                                    <h4>Page 1: User Info</h4>
-                                </div>
-                            </xs-wizard-page>
-
-                            <xs-wizard-page page-tag="Order">
-                                <div class="pane">
-                                    <h4>Page 2: Order</h4>
-                                </div>
-                            </xs-wizard-page>
-
-                            <xs-wizard-page page-tag="Payment">
-                                <div class="pane">
-                                    <h4>Page 3: Payment</h4>
-                                </div>
-                            </xs-wizard-page>
-
-                            <xs-wizard-page page-tag="Confirmation">
-                                <div class="pane">
-                                    <h4>Page 4: Confirmation</h4>
-                                </div>
-                            </xs-wizard-page>
-
-                        </xs-wizard>
+</div>
