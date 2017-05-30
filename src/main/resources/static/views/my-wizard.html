@@ -1,0 +1,66 @@
+<form novalidate class="form-horizontal my-wizard" name="wizard.form" ng-class="{ 'my-wizard-page-active': pageActive }">
+
+  <fieldset ng-if="pageIndex < pages.length">
+
+    <legend>
+      <div class="row">
+        <div class="col-sm-offset-3 col-sm-9">
+          <span class="my-wizard-page-slide my-wizard-page-slide-left">{{ currentPage.name }}</span>
+        </div>
+      </div>
+    </legend>
+
+    <div class="row">
+      <div class="col-sm-offset-3 col-sm-9">
+        <p class="my-wizard-page-slide my-wizard-page-slide-right">{{ currentPage.description }}</p>
+      </div>
+    </div>
+
+    <!-- Magic starts here -->
+
+    <div fg-form
+         fg-form-data="data"
+         fg-schema="currentPage.schema">
+    </div>
+
+    <!-- Magic ends here -->
+
+  </fieldset>
+
+
+  <fieldset ng-if="pageIndex === pages.length">
+
+    <legend>
+      <div class="row">
+        <div class="col-sm-offset-3 col-sm-3">Summary</div>
+      </div>
+    </legend>
+
+    <div class="form-group">
+      <label class="control-label col-sm-3">Form data</label>
+
+      <div class="col-sm-9">
+        <div jsonify="data"></div>
+      </div>
+    </div>
+
+  </fieldset>
+
+  <div class="row">
+
+    <div class="col-sm-offset-3 col-sm-3">
+      <button type="button" class="btn btn-default" ng-class="{ disabled: !prevAllowed() }" ng-click="prevPage()">
+        Previous
+      </button>
+      <button ng-if="pageIndex < pages.length" type="submit" class="btn btn-default" ng-class="{ disabled: !nextAllowed() }" ng-click="nextPage()">
+        Next
+      </button>
+      <button ng-if="pageIndex === pages.length" type="submit" class="btn btn-primary" ng-class="{ disabled: !nextAllowed() }" ng-click="onFinish({data: data})">
+        Finish
+      </button>
+    </div>
+
+  </div>
+</form>
+
+    
