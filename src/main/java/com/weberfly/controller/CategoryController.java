@@ -43,7 +43,7 @@ public class CategoryController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> listAll() {
 		List<Category> items = categoryService.findAll();
-		
+
 		
 		if (items.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

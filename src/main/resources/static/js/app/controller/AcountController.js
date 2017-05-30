@@ -5,8 +5,10 @@ monApp.controller('AcountController',
     			'username':'',
     			'password':'',
     	};
+		
         self.login = login;
-       
+        self.register = register;
+        
 	      function login(){
 	        	console.log('About to log in');
 	        	// creating base64 encoded String from user name and password
@@ -32,4 +34,16 @@ monApp.controller('AcountController',
 	                     }
 	                 );
 	        }
+	      
+	      function register(){
+	    	  console.log("about to register");
+	    	  AcountService.register(user)
+	    	  .then(function(res){
+	    	   $location.path( "/login" );	  
+	    	  },
+	    	  function(errorMessage){
+	    		  $scope.message = 'Failed to create user!';
+	    	  }
+	       );
+	      }
 }]);

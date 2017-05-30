@@ -20,7 +20,11 @@ monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpP
 		controller : 'AcountController',
 		controllerAs: 'ctrl'
 	})
-	
+	.when('/register', {
+		templateUrl : 'views/user/register.html',
+		controller : 'AcountController',
+		controllerAs: 'ctrl'
+	})
      .when('/posts', {
     	 templateUrl: 'views/post/index.html',
     	 controller:'PostController',
@@ -68,9 +72,9 @@ monApp.run( function($rootScope,AuthSession, $location) {
     // register listener to watch route changes
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
       if (AuthSession.connected == null) {
-    	  if(current.templateUrl !="/login" &&  current.templateUrl !="/register"){
-    		  $location.path( "/login" );
-    	  }
+//    	  if(current.templateUrl !="/login" ||  current.templateUrl !="/register"){
+//    		  $location.path( "/login" );
+//    	  }
         
       }         
     });
