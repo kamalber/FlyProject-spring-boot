@@ -67,11 +67,11 @@ monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpP
 monApp.run( function($rootScope,AuthSession, $location) {
     // register listener to watch route changes
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-      if (AuthSession.connected == null) {
-    	  if(current.templateUrl !="/login" &&  current.templateUrl !="/register"){
-    		  $location.path( "/login" );
-    	  }
-        
-      }         
+//      if (AuthSession.connected == null) {
+//    	  if(current.templateUrl !="/login" &&  current.templateUrl !="/register"){
+//    		  $location.path( "/login" );
+//    	  }
+//        
+//      }         
     });
  })

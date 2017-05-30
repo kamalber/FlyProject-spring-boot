@@ -3,7 +3,7 @@ monApp.controller('PostController',
     	
         var self = this;
      	
-        $scope.post=  $sessionStorage.currentPost;
+        $scope.post=  $sessionStorage.currentPost;      
         self.postList=getAll();
         self.submitPost = submitPost;
         self.submitComment = submitComment;
@@ -20,6 +20,8 @@ monApp.controller('PostController',
 
         self.onlyIntegers = /^\d+$/;
         self.onlyNumbers = /^\d+([,.]\d+)?$/;
+        
+ 
 
         function submitPost() {
             console.log('Submitting');

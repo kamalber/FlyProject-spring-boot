@@ -344,7 +344,7 @@ return sentencesPolarity;
 		Twitter twitter = tf.getInstance();
 
 		Query query = new Query(key).lang("en");
-		query.setCount(9);
+		query.setCount(10);
 		QueryResult result;
 		do {
 			result = twitter.search(query);
