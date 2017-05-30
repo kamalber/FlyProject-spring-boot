@@ -7,6 +7,7 @@ import com.weberfly.entities.Location;
 import com.weberfly.entities.User_test;
 
 @Repository
-public interface LocationRepository extends JpaRepository<Location, String> {
+public interface LocationRepository extends JpaRepository<Location, Long> {
 
+	public Location findOneByIp(String ip);
 }
