@@ -18,11 +18,9 @@ public class CountryService {
 	public List<Country> findAll() {
 		return countryRepository.findAll();
 	}
-	public Country find(String id) {
-		return countryRepository.findOne(id);
+	public Country find(String hc_key) {
+		return countryRepository.findOneByHcKey(hc_key);
 	}
 	
-	public void delete(String id){
-		countryRepository.delete(id);
-	}
+	
 }

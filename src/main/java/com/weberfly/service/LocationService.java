@@ -22,10 +22,7 @@ public class LocationService {
 		locationRepository.save(location);
 	}
 	
-	public Boolean isExist(Location location){
-		return locationRepository.findOne(location.getIp()) != null;
-	}
 	public Location find(String ip){
-	return locationRepository.findOne(ip);
+	return locationRepository.findOneByIp(ip);
 	}
 }
