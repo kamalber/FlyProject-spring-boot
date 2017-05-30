@@ -152,3 +152,38 @@
 	
 	
 	
+	
+	
+	
+	<xs-wizard has-save="true"
+                                   has-breadcrumbs="true"
+                                   save-text="Submit Order"
+                                   on-page-change="vm.pageChange(state);"
+                                   on-cancel="vm.cancel();"
+                                   on-save="vm.save();">
+
+                            <xs-wizard-page page-tag="User Info">
+                                <div class="pane">
+                                    <h4>Page 1: User Info</h4>
+                                </div>
+                            </xs-wizard-page>
+
+                            <xs-wizard-page page-tag="Order">
+                                <div class="pane">
+                                    <h4>Page 2: Order</h4>
+                                </div>
+                            </xs-wizard-page>
+
+                            <xs-wizard-page page-tag="Payment">
+                                <div class="pane">
+                                    <h4>Page 3: Payment</h4>
+                                </div>
+                            </xs-wizard-page>
+
+                            <xs-wizard-page page-tag="Confirmation">
+                                <div class="pane">
+                                    <h4>Page 4: Confirmation</h4>
+                                </div>
+                            </xs-wizard-page>
+
+                        </xs-wizard>

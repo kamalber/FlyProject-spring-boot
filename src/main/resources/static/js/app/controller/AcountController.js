@@ -9,6 +9,22 @@ monApp.controller('AcountController',
         self.login = login;
         self.register = register;
         
+        
+        
+        
+        self.pageChange = function(state) {
+            console.dir(state);
+            // state is an object describing page context
+            //{state: { previousPage: 2, currentPage: 3 }};
+        };
+        self.save = function() {
+            console.log('Got Save');
+        };
+        self.cancel = function() {
+            console.log('Got Cancel');
+        };
+        
+        
 	      function login(){
 	        	console.log('About to log in');
 	        	// creating base64 encoded String from user name and password
