@@ -1,10 +1,9 @@
 package com.weberfly.controller;
 
-
-
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,16 +18,17 @@ import com.weberfly.entities.User;
 import com.weberfly.service.SessionService;
 import com.weberfly.service.threads.PostLocationDetection;
 
-
 @RestController
 @RequestMapping("acount")
 public class AcountController {
-	
+
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
 	SessionService sessionService;
-	
+	@Autowired
+	private ApplicationContext applicationContext;
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<User> createUser(@RequestBody User appUser) {
 		if (userRepository.findOneByUsername(appUser.getUsername()) != null) {
@@ -37,14 +37,17 @@ public class AcountController {
 		appUser.setRole("ADMIN");
 		return new ResponseEntity<User>(userRepository.save(appUser), HttpStatus.CREATED);
 	}
-	
-	@RequestMapping(value= "/detection/{ip}" , method = RequestMethod.GET)
-	public ResponseEntity<?> user(@PathVariable("ip") String ip) {
-	PostLocationDetection postDetection =new PostLocationDetection(ip);
-	postDetection.run();
-	return new ResponseEntity<>(HttpStatus.OK);
+
+	@RequestMapping(value = "/detection/{ip}", method = RequestMethod.GET)
+	public ResponseEntity<?> getLocation(@PathVariable("ip") String ip) {
+
+		PostLocationDetection postDetection = new PostLocationDetection(ip);
+		applicationContext.getAutowireCapableBeanFactory().autowireBean(postDetection);
+		postDetection.run();
+		System.out.println("thread out");
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping("/login")
 	public Principal user(Principal principal) {
 		return principal;

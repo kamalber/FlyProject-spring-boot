@@ -4,8 +4,9 @@ monApp.factory('AcountService',
     	
             var factory = {
                 login: login,
-    
-            };    
+                register: register
+            };
+            
             return factory;
             function login(base64Credential){
                      console.log('user login'+base64Credential);
@@ -29,7 +30,19 @@ monApp.factory('AcountService',
                          );
                      return deferred.promise;
                  }
-          
+          function register(user){
+        	  var deferred=$q.defer();
+        	  $hhtp.post("/acount/register",user)
+        	  .then(function(response){
+        		   console.log('user created successfully '+response);
+                   deferred.resolve(response.data);
+        	  },
+        	  function(errResponse){
+        		  console.log("Error while creating user"+errResponse);
+        		  deferred.reject(errResponse);
+        	  }
+        	);
+          }
 
         }
     ]);
