@@ -32,7 +32,7 @@ monApp.factory('AcountService',
                  }
           function register(user){
         	  var deferred=$q.defer();
-        	  $hhtp.post("/acount/register",user)
+        	  $http.post("/acount/register",user)
         	  .then(function(response){
         		   console.log('user created successfully '+response);
                    deferred.resolve(response.data);
@@ -42,7 +42,10 @@ monApp.factory('AcountService',
         		  deferred.reject(errResponse);
         	  }
         	);
+        	   return deferred.promise;
           }
+          
+          
 
         }
     ]);

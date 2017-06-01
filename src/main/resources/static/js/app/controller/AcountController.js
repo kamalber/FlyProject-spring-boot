@@ -1,17 +1,21 @@
 monApp.controller('AcountController',
-    ['$rootScope','AcountService','AuthSession','$scope','$location','$http',  function($rootScope,AcountService,AuthSession,$scope,$location,$http) {
+    ['$rootScope','TwitterService','AcountService','AuthSession','$scope','$location','$http',  function($rootScope,TwitterService,AcountService,AuthSession,$scope,$location,$http) {
     	var self=this;
 		self.user={// this is the parameters object that contain the search criteria
     			'username':'',
     			'password':'',
     	};
-		
+		self.error=true;
         self.login = login;
         self.register = register;
+        self.addKeyWords = addKeyWordToList;
+        self.twitterKeWords=[];
+        loadKeyWords();
+
+/*       -- variable             */
+        var keyWordList=[];
         
-        
-        
-        
+/*      form wizard manipulation  */
         self.pageChange = function(state) {
             console.dir(state);
             // state is an object describing page context
@@ -19,11 +23,11 @@ monApp.controller('AcountController',
         };
         self.save = function() {
             console.log('Got Save');
+            
         };
         self.cancel = function() {
             console.log('Got Cancel');
         };
-        
         
 	      function login(){
 	        	console.log('About to log in');
@@ -53,13 +57,39 @@ monApp.controller('AcountController',
 	      
 	      function register(){
 	    	  console.log("about to register");
-	    	  AcountService.register(user)
+	    	  self.user.twitterKeyWords=keyWordList;
+	    	  AcountService.register(self.user)
 	    	  .then(function(res){
 	    	   $location.path( "/login" );	  
 	    	  },
 	    	  function(errorMessage){
-	    		  $scope.message = 'Failed to create user!';
+	    		  self.message = 'Failed to create user! '+errorMessage;
+	    		  self.error=false;
 	    	  }
 	       );
 	      }
+	      
+	      function addKeyWordToList(word){
+	    	 if(!keyWordList.includes(word)){
+	    		 keyWordList.push(word);
+	    	 }else{
+	    		 var index=keyWordList.map( (el) => el.id ).indexOf(word.id);
+                 keyWordList.splice(index,1);
+                 
+	    	 }
+	    	 console.log(keyWordList);
+	      }
+	    function  loadKeyWords(){
+	    	  TwitterService.getTwitterKeyWord()
+	    	  .then(function(res){
+	    	  self.twitterKeWords=res;
+	    	  },
+	    	  function(errorMessage){
+	    		  $scope.message = 'Failed load twitter key words! '+errorMessage;
+	    		 
+	    	  }
+	       );
+	    	  
+	      }
+	      
 }]);
