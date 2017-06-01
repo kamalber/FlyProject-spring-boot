@@ -4,6 +4,7 @@ package com.weberfly.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,7 @@ public class Location {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id ;
 	
-	
+	@Column(unique=true)
 	private String ip;
 	private double latitude=0.0;
 	private double longitude=0.0;

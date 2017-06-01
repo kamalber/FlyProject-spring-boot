@@ -32,6 +32,7 @@ public class Country implements Serializable{
 	/**
 	 * Description of the property name.
 	 */
+	@Column(unique=true)
 	private String hcKey;
 	private String name ;
 	
