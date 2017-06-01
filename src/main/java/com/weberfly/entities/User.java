@@ -60,7 +60,7 @@ public  class User implements UserDetails{
 	 */
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	private Session session ;
+	private Session session =new Session();
 	
 	/**
 	 * Description of the property recivedMessages.
@@ -85,10 +85,9 @@ public  class User implements UserDetails{
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="user")
 	private List<Publication> publications ;
 	
-	
-	@ManyToMany(cascade = CascadeType.ALL)
-	 @JoinTable(name = "user_twitter_keyword", joinColumns = @JoinColumn(name = "keyword_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
-	private List<TwitterKeyWord> twitterKeyWords ;
+	@ManyToMany(cascade = CascadeType.MERGE ,fetch= FetchType.EAGER)
+	 @JoinTable(name = "user_twitter_keyword", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "keyword_id", referencedColumnName = "id"))
+	private List<TwitterKeyWord> twitterKeyWords =new ArrayList<TwitterKeyWord>();
 
 
 	/**
@@ -180,6 +179,10 @@ public Session getSession(){
 	}
 
 	
+
+	public List<TwitterKeyWord> getTwitterKeyWords() {
+		return twitterKeyWords;
+	}
 
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
