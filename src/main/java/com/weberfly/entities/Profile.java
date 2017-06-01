@@ -45,7 +45,7 @@ public class Profile implements Serializable{
 	/**
 	 * Description of the property Education.
 	 */
-	private String Education ;
+	private String education ;
 
 	/**
 	 * Description of the property user.
@@ -84,10 +84,10 @@ public class Profile implements Serializable{
 		this.profileDescription = profileDescription;
 	}
 	public String getEducation() {
-		return Education;
+		return this.education;
 	}
 	public void setEducation(String education) {
-		Education = education;
+		this.education = education;
 	}
 	public City getCity() {
 		return city;
