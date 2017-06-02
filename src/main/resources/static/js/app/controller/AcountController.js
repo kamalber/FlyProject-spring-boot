@@ -54,7 +54,9 @@ monApp.controller('AcountController',
 	                     }
 	                 );
 	        }
-	      
+	      function registerRedirect(){
+	    	  $location.path( "/register" );	
+	      }
 	      function register(){
 	    	  console.log("about to register");
 	    	  self.user.twitterKeyWords=keyWordList;

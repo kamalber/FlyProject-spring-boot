@@ -1,10 +1,11 @@
 package com.weberfly.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +17,11 @@ import javax.persistence.Table;
 @Table(name="TwitterKeyWord")
 public class TwitterKeyWord {
 
+	public static enum threadStat{
+		running,
+		suspended,
+		stoped,
+	}
 	/**
 	 * Description of the property id.
 	 */
@@ -24,6 +30,9 @@ public class TwitterKeyWord {
 	private Long id ;
 	
 	private String word;
+	
+	@Enumerated(EnumType.STRING)
+	private threadStat stat; 
 	
 	/**
 	 * Description of the property comments.
@@ -57,6 +66,14 @@ public class TwitterKeyWord {
 
 	public void setTwitterKeyWords(List<Publication> twitterKeyWords) {
 		this.twitterKeyWords = twitterKeyWords;
+	}
+
+	public threadStat getStat() {
+		return stat;
+	}
+
+	public void setStat(threadStat stat) {
+		this.stat = stat;
 	}
 	
 }
