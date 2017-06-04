@@ -7,7 +7,9 @@ monApp.controller('TwitterController',
         
        
         self.addKeyWords = addKeyWordToList;
-        self.submit =submit;
+        self.submit = submit;
+        self.edit = edit;
+        self.remove =remove;
         
 		self.error=true;
         self.successMessage = '';
@@ -86,12 +88,25 @@ monApp.controller('TwitterController',
             );
         }
         
+        function remove(id){
+            console.log('About to remove User with id '+id);
+            TwitterService.remove(id)
+                .then(
+                    function(){
+                    	var index=self.twitterKeyWordList.map( (el) => el.id ).indexOf(id);
+                        self.twitterKeyWordList.splice(index,1);
+                    },
+                    function(errResponse){
+                        console.error('Error while removing user '+id +', Error :'+errResponse.data);
+                    }
+                );
+        }
 	      function addKeyWordToList(word){
 	    	 if(!keyWordList.includes(word)){
 	    		 keyWordList.push(word);
 	    	 }else{
-	    		 var index=keyWordList.map( (el) => el.id ).indexOf(word.id);
-                 keyWordList.splice(index,1);
+	    		 var index=twitterKeyWordList.map( (el) => el.id ).indexOf(word.id);
+	    		 twitterKeyWordList.splice(index,1);
                  
 	    	 }
 	    	 console.log(keyWordList);
