@@ -27,7 +27,7 @@ public class Post extends Publication {
 	public static enum sentiment{
 		positive,
 		negative,
-		neutratl,
+		neutral,
 	}
 	/**
 	 * Description of the property title.
