@@ -24,18 +24,16 @@ public class Session implements Serializable{
 	 * Description of the property id.
 	 */
 	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id ;
 
 	/**
 	 * Description of the property ipUser.
 	 */
-	private String ipUser ;
+	private String ipUser="127.0.0.1";
 
 	/**
-	 * Description of the property user.
-	 */
-	@OneToOne(cascade = CascadeType.ALL,mappedBy="session"  )
-	private User user ;
+	
 
 	/**
 	 * Description of the property time_in.
@@ -97,14 +95,7 @@ public class Session implements Serializable{
 		this.ipUser = newIpUser;
 	}
 
-	/**
-	 * Returns users.
-	 * @return users 
-	 */
-	public User getUser() {
-		return this.user;
-	}
-
+	
 
 	/**
 	 * Returns time_in.
@@ -138,9 +129,7 @@ public class Session implements Serializable{
 		this.time_out = newTime_out;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+
 
 	public double getLatitude() {
 		return latitude;

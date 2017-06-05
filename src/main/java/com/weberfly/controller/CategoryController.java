@@ -42,6 +42,7 @@ public class CategoryController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> listAll() {
+		 //getCountryFromJsonList();
 		List<Category> items = categoryService.findAll();
 		
 		

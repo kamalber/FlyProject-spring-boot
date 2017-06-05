@@ -1,14 +1,15 @@
-var monApp=angular.module('monApp', ['ngRoute','ngStorage','chart.js','moment-picker']);
+var monApp=angular.module('monApp', ['ngRoute','ngStorage','chart.js','moment-picker','xs.ui.wizard'])
+.value('XS_WIZARD_TEMPLATE_DIR', '/views'); 
 monApp.constant('urls', {
-    BASE: 'http://localhost:8080/',
+	BASE: 'http://localhost:8080/',
     USER_SERVICE_API : 'http://localhost:8080/api/user/',
-
     POST_SERVICE_API : 'http://localhost:8080/posts/',
     TYPECATEGORY_SERVICE_API : 'http://localhost:8080/typeCategorys/',
     CATEGORY_SERVICE_API:   'http://localhost:8080/categorys/',
     CATEGORYITEM_SERVICE_API:   'http://localhost:8080/categoryItems/',
     COMMENT_SERVICE_API: 'http://localhost:8080/comments/',
-    ACOUNT_SERVICE_API: 'http://localhost:8080/acount/'
+    ACOUNT_SERVICE_API: 'http://localhost:8080/acount/',
+    TWITTER_KEY_WORD_SERVICE_API: 'http://localhost:8080/twitter/',
 });
 
 
@@ -20,7 +21,11 @@ monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpP
 		controller : 'AcountController',
 		controllerAs: 'ctrl'
 	})
-	
+	.when('/register', {
+		templateUrl : 'views/user/register.html',
+		controller : 'AcountController',
+		controllerAs: 'ctrl'
+	})
      .when('/posts', {
     	 templateUrl: 'views/post/index.html',
     	 controller:'PostController',
@@ -58,7 +63,12 @@ monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpP
 	    	 templateUrl: 'views/statistics/stat.html',
 	    	 controller:'StatsController',
 	    	 controllerAs:'ctrl',
-	    	})   		
+	    	})   	
+	  .when('/keyWords', {
+	    	 templateUrl: 'views/twitter/keyWords.html',
+	    	 controller:'TwitterController',
+	    	 controllerAs:'ctrl',
+	    	})  
      .otherwise({redirectTo: '/'});
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
@@ -73,5 +83,6 @@ monApp.run( function($rootScope,AuthSession, $location) {
 //    	  }
 //        
 //      }         
+
     });
  })

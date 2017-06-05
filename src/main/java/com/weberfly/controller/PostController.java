@@ -45,7 +45,7 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/posts", method = RequestMethod.GET)
-	public List<Post> getAllPosts() {
+	public List<Post> getAllPosts(){
 		return postservice.getAll();
 	}
 

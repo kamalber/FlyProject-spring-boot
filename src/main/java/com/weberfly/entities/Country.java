@@ -25,10 +25,15 @@ public class Country implements Serializable{
 	 * Description of the property id.
 	 */
 	@Id
-	private String hcKey;
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	private Long id ;
+
+	
 	/**
 	 * Description of the property name.
 	 */
+	@Column(unique=true)
+	private String hcKey;
 	private String name ;
 	
 	private double latitude;
@@ -81,6 +86,20 @@ public class Country implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Country [id=" + id + ", hcKey=" + hcKey + ", name=" + name + ", latitude=" + latitude + ", longitude="
+				+ longitude + ", citys=" + citys + "]";
 	}
 
 

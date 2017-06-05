@@ -252,7 +252,6 @@ public class PostService {
 
 		postRepository.save(post);
 	}
-
 	public List<Post> getAll() {
 		return postRepository.findAll();
 
@@ -287,7 +286,7 @@ public class PostService {
 			try {
 				dateStart = formatter.parse(startDate);
 				dateEnd = formatter.parse(endDate);
-				return postRepository.findByCategoryItemsAndDateBetween(items, dateStart, dateEnd);
+				return postRepository.findByTitleAndDateBetween(querySearche, dateStart, dateEnd);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -296,21 +295,16 @@ public class PostService {
 	}
 
 	public SentimentStats getStats(CustomStatsParams params) {
-		SentimentStats stats = null;
-		CategoryItem item = categoryItemRepository.findByNameIgnoreCase(params.getQuery());
-		if (item == null) {
-			// the word that we are looking for doesn't exist
-			return null;
-		}
+		
 
 		if (params.getStartYear() != 0) {
 			if (params.getEndYear() != 0) {
 				// search between many years
-				return this.getSentimentStatsByYear(item, params);
+				return this.getSentimentStatsByYear(params.getQuery(), params);
 			} else if (params.getEndYear() == 0) {
 				if (params.getMonth() == 0) {
 					// search by months of year
-					return this.getSentimentStatsByMonthOfYear(item, params);
+					return this.getSentimentStatsByMonthOfYear(params.getQuery(), params);
 				} else {
 					// search by days of month
 				}
@@ -321,9 +315,9 @@ public class PostService {
 
 	}
 
-	private SentimentStats getSentimentStatsByMonthOfYear(CategoryItem item, CustomStatsParams params) {
+	private SentimentStats getSentimentStatsByMonthOfYear(String title, CustomStatsParams params) {
 		System.out.println("sentiments by month");
-		SentimentStats stats = this.getAnalysedPostStatsTemplate(params, item);
+		SentimentStats stats = this.getAnalysedPostStatsTemplate(params, title);
 		if (stats == null) {
 			return null;
 		}
@@ -346,9 +340,9 @@ public class PostService {
 		return stats;
 	}
 
-	private SentimentStats getSentimentStatsByYear(CategoryItem item, CustomStatsParams params) {
+	private SentimentStats getSentimentStatsByYear(String title, CustomStatsParams params) {
 		System.out.println("sentiments by month");
-		SentimentStats stats = this.getAnalysedPostStatsTemplate(params, item);
+		SentimentStats stats = this.getAnalysedPostStatsTemplate(params, title);
 		if (stats == null) {
 			return null;
 		}
@@ -372,15 +366,14 @@ public class PostService {
 
 	}
 
-	private SentimentStats getAnalysedPostStatsTemplate(CustomStatsParams params, CategoryItem item) {
+	private SentimentStats getAnalysedPostStatsTemplate(CustomStatsParams params, String title) {
 		SentimentStats stats = new SentimentStats();
-		List<CategoryItem> items = new ArrayList<>();
-		items.add(item);
+	
 		Date dateStart = getStartDateFromYear(params.getStartYear());
 		Date dateEnd = params.getEndYear() != 0 ? getEndDateFromYear(params.getEndYear())
 				: getEndDateFromYear(params.getStartYear());
 
-		List<Post> posts = postRepository.findByCategoryItemsAndDateBetween(items, dateStart, dateEnd);
+		List<Post> posts = postRepository.findByTitleAndDateBetween(params.getQuery(), dateStart, dateEnd);
 		if (posts.isEmpty()) {
 			return null;
 		}
