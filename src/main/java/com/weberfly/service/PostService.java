@@ -31,6 +31,7 @@ import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
@@ -69,11 +70,7 @@ import scala.collection.parallel.ParIterableLike.Foreach;
 
 @Service
 public class PostService {
-	private static final String TWITTER_CONSUMER_KEY = "ECm1eGhFxR2a0IRHuaX5hxytI";
-	private static final String TWITTER_SECRET_KEY = "jQ1u1TcO6NN4OlGL5SBzIIssqVhe5TfeDkNXq2HBYwRDPgfwOb";
-	private static final String TWITTER_ACCESS_TOKEN = "814239581084286976-RC3zktBH1pJNECZ1LGNlrTDgf398iY1";
-	private static final String TWITTER_ACCESS_TOKEN_SECRET = "GZTzYDVwpxSEejufsj3gWoabA5XPy0q4EhV3wqptyrC2H";
-
+	
 	@Autowired
 	private PostRepository postRepository;
 	@Autowired
@@ -97,35 +94,21 @@ public class PostService {
 		return lines.toArray(new String[lines.size()]);
 	}
 
-	public static List<String> readLines2(URL url) throws IOException {
-
-		Reader fileReader = new InputStreamReader(url.openStream(), Charset.forName("UTF-8"));
-		List<String> lines;
-		try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-			lines = new ArrayList<>();
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				lines.add(line);
-			}
-		}
-
-		return lines;
-	}
-	public static String readLines3(BufferedReader bufferedReader) throws IOException {
-		    String lines="";		
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				lines+=line;
-			}		
-		return lines;
-	}
+	public static String getMaxPolarityByTools(String gate , String dumax, String nltk){
+		List<String> sentiments = new ArrayList<String>();
+		sentiments.add(gate);
+		sentiments.add(dumax);
+		sentiments.add(nltk);
+		Map<String, Long> counts = sentiments.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+		return Collections.max(counts.entrySet(), Map.Entry.comparingByValue()).getKey();
+	}	
 
 	public static String getAnalyseByDumax(String content) throws IOException {
 		// map of dataset files
 		Map<String, URL> trainingFiles = new HashMap<>();
-		trainingFiles.put("Positive", PostService.class.getResource("/datasets/DabbabiData/positive1.csv"));
-		trainingFiles.put("Negative", PostService.class.getResource("/datasets/DabbabiData/negative1.csv"));
-		trainingFiles.put("Neutral", PostService.class.getResource("/datasets/DabbabiData/neutral1.csv"));
+		trainingFiles.put("positive", PostService.class.getResource("/datasets/DabbabiData/positive1.csv"));
+		trainingFiles.put("negative", PostService.class.getResource("/datasets/DabbabiData/negative1.csv"));
+		trainingFiles.put("neutral", PostService.class.getResource("/datasets/DabbabiData/neutral1.csv"));
 		Map<String, String[]> trainingExamples = new HashMap<>();
 		for (Map.Entry<String, URL> entry : trainingFiles.entrySet()) {
 			trainingExamples.put(entry.getKey(), readLines(entry.getValue()));
@@ -162,8 +145,8 @@ public class PostService {
 		// add request header
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
+//		System.out.println("\nSending 'GET' request to URL : " + url);
+//		System.out.println("Response Code : " + responseCode);
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
@@ -195,11 +178,11 @@ public class PostService {
 		BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
 
 		String output;
-		System.out.println("Output from Server .... \n");
+		System.out.println("Output from Server Gate .... \n");
 		output = br.readLine();
-		System.out.println(output);
+//		System.out.println(output);
 		JSONObject fulljson = new JSONObject(output);
-		System.out.println(fulljson);
+//		System.out.println(fulljson);
 		JSONObject obj1 = fulljson.getJSONObject("entities");
 		JSONArray dataJsonArray = obj1.getJSONArray("SentenceSet");
 		JSONObject objsent = dataJsonArray.getJSONObject(0);
@@ -210,301 +193,53 @@ public class PostService {
 
 		return sentiment;
 	}
-	public static List<SentencePolarity> getTestAnalyseByNLTK(List<String> sentences) throws Exception{
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		HttpPost postRequest = new HttpPost(
-				"http://localhost:5000/sentiments");
-		JSONObject jsonIn = new JSONObject();
 	
-		jsonIn.put("sentences", sentences);
-		System.out.println("size---"+sentences.size());
-//		System.out.println("sentences++++"+sentences);
-		StringEntity input = new StringEntity(jsonIn.toString());
-		input.setContentType("application/json");
-		postRequest.setEntity(input);
-		HttpResponse response = httpClient.execute(postRequest);
-		if (response.getStatusLine().getStatusCode() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
-		}
-		BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent()),"UTF-8"));
-
-		String output;
-		System.out.println("Output from Server .... \n");
-		output = readLines3(br);
-//		System.out.println("ici---"+output);
-		JSONObject jsonOut = new JSONObject(output);
-		JSONArray dataJsonArray = jsonOut.getJSONArray("tasks");
-		List<SentencePolarity>sentencesPolarity = new ArrayList<>();
-		
-		for (int i = 0; i < dataJsonArray.length(); i++) {
-		
-		JSONObject objsent = dataJsonArray.getJSONObject(i);
-		SentencePolarity sentencePolarity = new SentencePolarity();
-		sentencePolarity.setPolarity(objsent.getString("polarity"));
-		sentencePolarity.setSentence(objsent.getString("sentence"));
-		sentencesPolarity.add(sentencePolarity);
-		} 
-		httpClient.getConnectionManager().shutdown();
-		
-return sentencesPolarity;
-	}
-
-	public static List<SentencePolarity> getTestAnalyseByDumax(List<String> sentences) throws IOException {
-		// map of dataset files
-		Map<String, URL> trainingFiles = new HashMap<>();
-
-		trainingFiles.put("Positive", PostService.class.getResource("/datasets/DabbabiData/positive1.csv"));
-		trainingFiles.put("Negative", PostService.class.getResource("/datasets/DabbabiData/negative1.csv"));
-		trainingFiles.put("Neutral", PostService.class.getResource("/datasets/DabbabiData/neutral1.csv"));
-
-		Map<String, String[]> trainingExamples = new HashMap<>();
-		for (Map.Entry<String, URL> entry : trainingFiles.entrySet()) {
-			trainingExamples.put(entry.getKey(), readLines(entry.getValue()));
-		}
-
-		// train classifier
-		NaiveBayes nb = new NaiveBayes();
-		nb.setChisquareCriticalValue(6.63); // 0.01 pvalue
-		nb.train(trainingExamples);
-
-		// get trained classifier knowledgeBase
-		NaiveBayesKnowledgeBase knowledgeBase = nb.getKnowledgeBase();
-
-		nb = null;
-		trainingExamples = null;
-
-		// Use classifier
-		nb = new NaiveBayes(knowledgeBase);
-		// String exampleEn = "i don't like this book";
-		String outputEn;
-		List<SentencePolarity> sentencesPolarity = new ArrayList<SentencePolarity>();
-		for (String sentence : sentences) {
-			SentencePolarity sentencePolarity = new SentencePolarity();
-			outputEn = nb.predict(sentence);
-			sentencePolarity.setPolarity(outputEn);
-			sentencePolarity.setSentence(sentence);
-			// System.out.println("-----------"+sentencePolarity);
-
-			sentencesPolarity.add(sentencePolarity);
-		}
-
-		return sentencesPolarity;
-		// System.out.format("The sentense \"%s\" was classified as \"%s\".%n",
-		// exampleEn, outputEn);
-
-	}
-
-	public  List<SentencePolarity> getTestAnalyseByGate(List<String> sentences) throws IOException, Exception {
-		JSONObject json = new JSONObject();		
-		List<SentencePolarity>sentencesPolarity = new ArrayList<SentencePolarity>();	
-		for (String sentence : sentences) {
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		HttpPost postRequest = new HttpPost(
-				"https://cloud-api.gate.ac.uk/process-document/generic-opinion-mining-english?annotations=Sentiment:SentenceSet");
-		
-		SentencePolarity sentencePolarity = new SentencePolarity();
-		json.put("text", sentence);
-		StringEntity input = new StringEntity(json.toString());
-		input.setContentType("application/json");
-		postRequest.setEntity(input);
-		HttpResponse response = httpClient.execute(postRequest);
-		if (response.getStatusLine().getStatusCode() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().toString());
-		}
-		BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
-
-		String output;
-		System.out.println("Output from Server .... \n");
-		output = br.readLine();
-		System.out.println(output);
-		JSONObject fulljson = new JSONObject(output);
-		System.out.println(fulljson);
-		JSONObject obj1 = fulljson.getJSONObject("entities");
-		JSONArray dataJsonArray = obj1.getJSONArray("SentenceSet");
-		JSONObject objsent = dataJsonArray.getJSONObject(0);
-		String sentiment = objsent.getString("polarity");
-		sentencePolarity.setPolarity(sentiment);
-		sentencePolarity.setSentence(sentence);
-		sentencesPolarity.add(sentencePolarity);
-		httpClient.getConnectionManager().shutdown();
-		}
-		
-
-		return sentencesPolarity;
-	}
-
-	public List<String> getTwittersByKeyWord(String key) throws Exception {
-		System.out.format("begin");
-		ConfigurationBuilder cb = new ConfigurationBuilder();
-		System.out.format("end");
-		List<String> tweetsCollected = new ArrayList<String>();
-		cb.setDebugEnabled(true).setOAuthConsumerKey(TWITTER_CONSUMER_KEY).setOAuthConsumerSecret(TWITTER_SECRET_KEY)
-				.setOAuthAccessToken(TWITTER_ACCESS_TOKEN).setOAuthAccessTokenSecret(TWITTER_ACCESS_TOKEN_SECRET);
-		TwitterFactory tf = new TwitterFactory(cb.build());
-		Twitter twitter = tf.getInstance();
-
-		Query query = new Query(key).lang("en");
-		query.setCount(10);
-		QueryResult result;
-		do {
-			result = twitter.search(query);
-
-			List<twitter4j.Status> tweets = result.getTweets();
-			for (twitter4j.Status tweet : tweets) {
-				tweetsCollected.add(tweet.getText());
-				// System.out.println(tweet.getText()+"00000000");
-				//
-			}
-		} while ((query = result.nextQuery()) != null);
-		// System.exit(0);
-
-		return tweetsCollected;
-	}
-
-	public List<SentencePolarity> getAnalysisTweetsByDumax(String KeyWord) throws IOException, Exception {
-		return getTestAnalyseByDumax(getTwittersByKeyWord(KeyWord));
-	}
-	public List<SentencePolarity> getAnalysisTweetsByGate(String KeyWord) throws IOException, Exception {
-		return getTestAnalyseByGate(getTwittersByKeyWord(KeyWord));
-	}
-	public List<SentencePolarity> getAnalysisTweetsByNLTK(String KeyWord) throws IOException, Exception {
-		List<String>originalTweets = getTwittersByKeyWord(KeyWord);
-		List<String>filtredTweets = new ArrayList<>();
-		for (String tweets : originalTweets) {
-		
-		 String utf8tweet = "";
-	        try {
-	            byte[] utf8Bytes = tweets.getBytes("UTF-8");
-
-	            utf8tweet = new String(utf8Bytes, "UTF-8");
-
-	        } catch (UnsupportedEncodingException e) {
-	            e.printStackTrace();
-	        }
-	        Pattern unicodeOutliers = Pattern.compile("[^\\x00-\\x7F]",
-	                Pattern.UNICODE_CASE | Pattern.CANON_EQ
-	                        | Pattern.CASE_INSENSITIVE);
-	        Matcher unicodeOutlierMatcher = unicodeOutliers.matcher(utf8tweet);
-	        utf8tweet = unicodeOutlierMatcher.replaceAll("");
-	        filtredTweets.add(utf8tweet);
-	        }
-		return getTestAnalyseByNLTK(filtredTweets);
-	}
-
-	public Map<String, Double> getAnalyseRateForEachTools(String method) throws Exception {
-		List<String> positive_sentences = readLines2(
-				PostService.class.getResource("/datasets/DabbabiData/positive_sentences.txt"));
-		List<String> negative_sentences = readLines2(
-				PostService.class.getResource("/datasets/DabbabiData/negative_sentences.txt"));
-		Map<String, Double> analyserates = new HashMap<>();
-		List<SentencePolarity> testByPositives=null ;
-		List<SentencePolarity> testByNegatives=null;
-		if(method=="nltk"){
-			testByNegatives = getTestAnalyseByNLTK(negative_sentences);	
-			testByPositives = getTestAnalyseByNLTK(positive_sentences);		
-	    
-		 }
-		if(method=="gate"){
-			testByNegatives = getTestAnalyseByGate(negative_sentences);	
-			testByPositives = getTestAnalyseByGate(positive_sentences);		
-	    
-		 }
-		if(method=="dumax"){    
-		testByPositives = getTestAnalyseByDumax(positive_sentences);
-		testByNegatives = getTestAnalyseByDumax(negative_sentences);}
-
-		List<String> polarityPos = new ArrayList<String>();
-		List<String> polarityNeg = new ArrayList<String>();
-
-		for (SentencePolarity sentencePolarity : testByPositives) {
-			polarityPos.add(sentencePolarity.getPolarity());
-			// System.out.println(polarity);
-		}
-		for (SentencePolarity sentencePolarity : testByNegatives) {
-			polarityNeg.add(sentencePolarity.getPolarity());
-			// System.out.println(polarity);
-		}
-		analyserates.put("Positive",
-				(double) Collections.frequency(polarityPos, "Positive")/polarityPos.size()*100);
-		analyserates.put("Negative",
-				(double) Collections.frequency(polarityNeg, "Negative")/polarityNeg.size()*100);
-
-		return analyserates;
-
-	}
-	public Map<String, Double> getAnalyseRateForDumax() throws Exception{
-		return getAnalyseRateForEachTools("dumax");
-	}
-    public Map<String, Double> getAnalyseRateForNLTK() throws Exception{
-    	return getAnalyseRateForEachTools("nltk");
-    }
-    public Map<String, Double> getAnalyseRateForGate() throws Exception{
-    	return getAnalyseRateForEachTools("gate");
-    }
+   
 	public void savePost(Post post) throws Exception {
 		String content = post.getContent();
 		// testGateApi();
-//		List<String>tests = new ArrayList<>();
-//		tests.add("I love Brokeback Mountain.");
-//		tests.add("I hate Harry Potter..");
-//
-//		tests.add("I liked the Da Vinci Code but it ultimatly didn't seem to hold it's own.");
-//		tests.add("that's not even an exaggeration ) and at midnight we went to Wal-Mart to buy the Da Vinci Code which is amazing of course.");
-
-//		System.out.println(getTestAnalyseByNLTK(tests));
+		List<String>tests = new ArrayList<>();
+		tests.add("I tink this is normal");
+		tests.add("I go to scool");
+		tests.add("i hate this movie");
+		tests.add("nice beach");
+	        
+//		System.out.println(getTestAnalyseByCombining(tests));
 //		System.out.println("Dumax"+getTestAnalyseByDumax(tests));
 //		System.out.println("this is the rate analysis dumax " + getAnalyseRateForDumax());
 //		System.out.println("this is the rate analysis nltk " + getAnalyseRateForNLTK());
-		
+//		System.out.println("this is the rate analysis gate " + getAnalyseRateForGate());
 //		System.out.println(getTwittersByKeyWord("messi"));
-//		System.out.println(getAnalysisTweetsByNLTK("zafzafi"));
-		System.out.println(getAnalysisTweetsByGate("messi"));
-
+//		System.out.println("Dddd"+getAnalysisTweetsByDumax("zafzafi"));
+//		System.out.println("nnnn"+getAnalysisTweetsByNLTK("zafzafi"));
+//		System.out.println("Gggg"+getAnalysisTweetsByGate("ronaldo"));
+//		System.out.println("Gggg"+getTestAnalyseByGate(tests));
+//    	System.out.println("CCCC"+getAnalysisTweetsBycombining("ronaldo"));		
+		
 		// GateSentiment
 		String gatesentiment = getAnalyseByGateApi(content);
 		// System.out.println(gatesentiment);
-		if (gatesentiment.equalsIgnoreCase("positive"))
-			post.setGateSentment(Post.sentiment.positive);
-		if (gatesentiment.equalsIgnoreCase("negative"))
-			post.setGateSentment(Post.sentiment.negative);
-		if (gatesentiment.equalsIgnoreCase("neutral"))
-			post.setGateSentment(Post.sentiment.neutratl);
-
+		Post.sentiment sentGate= Post.sentiment.valueOf(gatesentiment);	
+		post.setGateSentment(sentGate);	
+		
+		// DumaxSentiement
+		String dumaxsentiment = getAnalyseByDumax(content);
+		// System.out.println("----------------------"+dumaxsentiment);
+		Post.sentiment sentDumax = Post.sentiment.valueOf(dumaxsentiment);
+		post.setDumaxSentment(sentDumax);
+			
 		// NLTK Sentiment
 		content = content.replace(" ", "%20");
 		content = content.replace(":", "%20");
 		String nltkSentiment = getAnalyseByNLTK(content);
-		if (nltkSentiment.equalsIgnoreCase("positive"))
-			post.setNltkSentment(Post.sentiment.positive);
-		if (nltkSentiment.equalsIgnoreCase("negative"))
-			post.setNltkSentment(Post.sentiment.negative);
-		if (nltkSentiment.equalsIgnoreCase("neutral"))
-			post.setNltkSentment(Post.sentiment.neutratl);
-
-		// DumaxSentiement
-		String dumaxsentiment = getAnalyseByDumax(post.getContent());
-		// System.out.println("----------------------"+dumaxsentiment);
-		if (dumaxsentiment.equalsIgnoreCase("Positive"))
-			post.setDumaxSentment(Post.sentiment.positive);
-		if (dumaxsentiment.equalsIgnoreCase("Negative"))
-			post.setDumaxSentment(Post.sentiment.negative);
-		if (dumaxsentiment.equalsIgnoreCase("Neutral"))
-			post.setDumaxSentment(Post.sentiment.neutratl);
-
+		Post.sentiment sentNltk= Post.sentiment.valueOf(nltkSentiment);	
+		post.setNltkSentment(sentNltk);
+		
 		// General sentiment
-		List<String> sentiments = new ArrayList<String>();
-		sentiments.add(gatesentiment.toLowerCase());
-		sentiments.add(dumaxsentiment.toLowerCase());
-		sentiments.add(nltkSentiment.toLowerCase());
-		Map<String, Long> counts = sentiments.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
-		String key = Collections.max(counts.entrySet(), Map.Entry.comparingByValue()).getKey();
+		String generalSentiment = getMaxPolarityByTools(gatesentiment, dumaxsentiment, nltkSentiment);
+		Post.sentiment sentGeneral= Post.sentiment.valueOf(generalSentiment);	
+		post.setGeneralSentiment(sentGeneral);
 
-		if (key.equalsIgnoreCase("Positive"))
-			post.setGeneralSentiment(Post.sentiment.positive);
-		if (key.equalsIgnoreCase("Negative"))
-			post.setGeneralSentiment(Post.sentiment.negative);
-		if (key.equalsIgnoreCase("Neutral"))
-			post.setGeneralSentiment(Post.sentiment.neutratl);
 
 		List<CategoryItem> categoryItems = categoryItemRepository.findAll();
 		List<CategoryItem> pubcategoryItems = new ArrayList<>();
@@ -662,7 +397,7 @@ return sentencesPolarity;
 			}
 			if (senti == Post.sentiment.positive) {
 				stats.getPositivePosts().add(p);
-			} else if (senti == Post.sentiment.neutratl) {
+			} else if (senti == Post.sentiment.neutral) {
 				stats.getNeutralPost().add(p);
 			} else if (senti == Post.sentiment.negative) {
 				stats.getNegativePosts().add(p);
