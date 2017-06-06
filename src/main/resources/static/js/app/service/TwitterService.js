@@ -4,10 +4,12 @@ monApp.factory('TwitterService',
     	
             var factory = {
             		 getTwitterKeyWord: getTwitterKeyWord,
+            		 planScheduledTask: planScheduledTask,
             		 get: getKeyWord,
                      create: createKeyWord,
                      update: updateKeyWord,
-                     remove: removeKeyWord
+                     remove: removeKeyWord,
+                     
                
             };
             CrudEngine.setUrl(urls.TWITTER_KEY_WORD_SERVICE_API);
@@ -32,6 +34,22 @@ monApp.factory('TwitterService',
             function removeKeyWord(id) {
             	return CrudEngine.remove(id);
             }
-
+            
+           function planScheduledTask(twitterkeyWord){
+               var deferred = $q.defer();
+               $http.post(urls.TWITTER_KEY_WORD_SERVICE_API+"planTask",twitterkeyWord)
+                   .then(
+                       function (response) { 
+                           deferred.resolve(response);
+                       },
+                       function (errResponse) {
+                           
+                           deferred.reject(errResponse);
+                       }
+                   );
+               return deferred.promise;
+           
+           }
         }
     ]);
+

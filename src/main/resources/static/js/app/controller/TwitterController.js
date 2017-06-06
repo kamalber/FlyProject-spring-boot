@@ -2,20 +2,26 @@ monApp.controller('TwitterController',
     ['$rootScope','TwitterService','AuthSession','$scope','$location','$http',  function($rootScope,TwitterService,AuthSession,$scope,$location,$http) {
     	var self=this;
 		self.keyWord={};
+		self.periodList=[
+	  {'id':1,'period':'evrey day'},
+	  {'id':2,'period':'evrey week'},
+	  {'id':3,'period':'evrey mounth'}
+		]
         self.twitterKeyWordList=[];
         loadKeyWords();
-        
-       
-        self.addKeyWords = addKeyWordToList;
+        self.reset = reset;
         self.submit = submit;
         self.edit = edit;
         self.remove =remove;
+        self.planThreadTask =  planScheduledTask;
+        self.addKeyWords = addKeyWordToList;
+        self.selectPeriod = selectPeriod;
         
 		self.error=true;
         self.successMessage = '';
         self.errorMessage = '';
         self.done = false;
-        
+
         self.onlyIntegers = /^\d+$/;
         self.onlyNumbers = /^\d+([,.]\d+)?$/;
 /*       -- variable             */
@@ -79,8 +85,9 @@ monApp.controller('TwitterController',
             self.successMessage='';
             self.errorMessage='';
             TwitterService.get(id).then(
-                function (keyWord ) {
+                function (keyWord) {
                     self.keyWord  = keyWord ;
+                    console.log(keyWord);
                 },
                 function (errResponse) {
                     console.error('Error while removing category ' + id + ', Error :' + errResponse.data);
@@ -123,5 +130,35 @@ monApp.controller('TwitterController',
 	       );
 	    	  
 	      }
-	      
+	    function selectPeriod(period){
+	    	if(period.id==1){//dayly	
+	    		self.keyWord.period=daily;
+	    	}else if(period.id==2){//weekly 
+	    		self.keyWord.period=weekly
+	    	}else{//mounthlty
+	    		self.keyWord.period=mounthly;
+	    	}
+	    	console.log(period);
+	    	//self.keyWord.period;
+	    }
+	    
+	    function planScheduledTask(){
+	    	console.log("kk");
+	    	TwitterService.planScheduledTask(self.keyWord)
+	    	.then(function(res){
+	    		console.log(res);
+	    	},
+	    	function(errorMessage){
+	    		
+	    	}
+	    	);
+	    }
+	    
+        function reset(){
+        	console.log("d");
+            self.successMessage='';
+            self.errorMessage='';
+            self.keyWord={};
+            $scope.myForm.$setPristine(); //reset Form
+        }
 }]);

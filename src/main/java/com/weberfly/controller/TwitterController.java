@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.weberfly.entities.TwitterKeyWord;
+import com.weberfly.entities.TwitterKeyWord.Period;
 import com.weberfly.entities.TwitterKeyWord;
 import com.weberfly.service.TwitterKeyWordService;
+import com.weberfly.service.threads.TwitterTimerThread;
 import com.weberfly.util.CustomErrorType;
 
 @RestController
@@ -27,6 +29,22 @@ public class TwitterController {
 	public static final Logger logger = LoggerFactory.getLogger(TwitterController.class);
 	@Autowired
 	TwitterKeyWordService twitterKeyWordService;
+	
+	
+	// plan schudeled task
+	@RequestMapping(value = "/planTask", method = RequestMethod.POST)
+	public ResponseEntity<?> planScheduledTask(@RequestBody TwitterKeyWord item,UriComponentsBuilder ucBuilder) {
+		if (item == null) {
+			logger.error("key word list is empty ");
+			return new ResponseEntity(new CustomErrorType("item not found "), HttpStatus.NOT_FOUND);
+		}
+		System.out.println(item);
+	
+		TwitterTimerThread task=new TwitterTimerThread(item.getWord(),item.getStartDate(),item.getPeriod());
+		task.createTAsk();
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ResponseEntity<List<TwitterKeyWord>> prepareCreateUser() {
 
