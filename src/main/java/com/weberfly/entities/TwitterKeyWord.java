@@ -46,15 +46,11 @@ public class TwitterKeyWord {
 
 	private String threadPlaningDescription;
 
-	/**
-	 * Description of the property comments.
-	 */
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "keyWord")
 	private List<Twitte> twittes;
 
-	@ManyToMany(mappedBy = "categoryItems")
-	private List<Publication> twitterKeyWords;
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -75,10 +71,7 @@ public class TwitterKeyWord {
 		this.twittes = twittes;
 	}
 
-	public void setTwitterKeyWords(List<Publication> twitterKeyWords) {
-		this.twitterKeyWords = twitterKeyWords;
-	}
-
+	
 	public threadStat getStat() {
 		return stat;
 	}

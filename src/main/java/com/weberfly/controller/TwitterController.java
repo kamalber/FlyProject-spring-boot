@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.weberfly.entities.TwitterKeyWord;
 import com.weberfly.entities.TwitterKeyWord.Period;
 import com.weberfly.entities.TwitterKeyWord;
+import com.weberfly.service.TweetAnalyseService;
 import com.weberfly.service.TwitterKeyWordService;
 import com.weberfly.service.threads.TwitterTimerThread;
 import com.weberfly.util.CustomErrorType;
@@ -29,6 +31,10 @@ public class TwitterController {
 	public static final Logger logger = LoggerFactory.getLogger(TwitterController.class);
 	@Autowired
 	TwitterKeyWordService twitterKeyWordService;
+	@Autowired
+	private ApplicationContext applicationContext;
+	@Autowired
+	private TweetAnalyseService tweetService;
 	
 	
 	// plan schudeled task
@@ -40,7 +46,8 @@ public class TwitterController {
 		}
 		System.out.println(item);
 	
-		TwitterTimerThread task=new TwitterTimerThread(item.getWord(),item.getStartDate(),item.getPeriod());
+		TwitterTimerThread task=new TwitterTimerThread(item,tweetService);
+		applicationContext.getAutowireCapableBeanFactory().autowireBean(item);
 		task.createTAsk();
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
