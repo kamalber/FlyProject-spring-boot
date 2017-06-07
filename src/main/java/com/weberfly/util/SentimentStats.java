@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.weberfly.entities.Post;
 
 
-public class SentimentStats{
 
-private List<Post> positivePosts=new ArrayList<>();
+public class SentimentStats<T>{
 
-private List<Post> negativePosts=new ArrayList<>();
+private List<T> positiveItems=new ArrayList<>();
 
-private List<Post> neutralPost=new ArrayList<>();
+private List<T> negativeItems=new ArrayList<>();
+
+private List<T> neutralItems=new ArrayList<>();
 
 private List<String> labelSeries=new ArrayList<>();
 
@@ -71,28 +71,28 @@ public void setAverageDataCount(List<Float> splineDataCount) {
 	this.averageDataCount = splineDataCount;
 }
 
-public List<Post> getPositivePosts() {
-	return positivePosts;
+public List<T> getPositiveItems() {
+	return positiveItems;
 }
 
-public void setPositivePosts(List<Post> positivePosts) {
-	this.positivePosts = positivePosts;
+public void setPositiveItems(List<T> positivePosts) {
+	this.positiveItems = positivePosts;
 }
 
-public List<Post> getNegativePosts() {
-	return negativePosts;
+public List<T> getNegativeItems() {
+	return negativeItems;
 }
 
-public void setNegativePosts(List<Post> negativePosts) {
-	this.negativePosts = negativePosts;
+public void setNegativeItems(List<T> negativePosts) {
+	this.negativeItems = negativePosts;
 }
 
-public List<Post> getNeutralPost() {
-	return neutralPost;
+public List<T> getNeutralItems() {
+	return neutralItems;
 }
 
-public void setNeutralPost(List<Post> neutralPost) {
-	this.neutralPost = neutralPost;
+public void setNeutralItems(List<T> neutralPost) {
+	this.neutralItems = neutralPost;
 }
 
 public List<String> getLabelSeries() {
