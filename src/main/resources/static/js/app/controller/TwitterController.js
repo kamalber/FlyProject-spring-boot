@@ -3,10 +3,10 @@ monApp.controller('TwitterController',
     	var self=this;
 		self.keyWord={};
 		self.periodList=[
-	  {'id':1,'period':'evrey day'},
-	  {'id':2,'period':'evrey week'},
-	  {'id':3,'period':'evrey mounth'}
-		]
+	             {'id':1,'period':'evrey houre'},
+	             {'id':2,'period':'evrey day'},
+	             {'id':3,'period':'evrey week'}
+	                	];
         self.twitterKeyWordList=[];
         loadKeyWords();
         self.reset = reset;
@@ -130,16 +130,15 @@ monApp.controller('TwitterController',
 	       );
 	    	  
 	      }
-	    function selectPeriod(period){
-	    	if(period.id==1){//dayly	
-	    		self.keyWord.period=daily;
-	    	}else if(period.id==2){//weekly 
-	    		self.keyWord.period=weekly
-	    	}else{//mounthlty
-	    		self.keyWord.period=mounthly;
+	    function selectPeriod(idPeriod){
+	    	
+	    	if(idPeriod==1){	
+	    		self.keyWord.period="hourly";
+	    	}else if(idPeriod==2){
+	    		self.keyWord.period="daily"
+	    	}else{
+	    		self.keyWord.period="weekly";//"weekly";
 	    	}
-	    	console.log(period);
-	    	//self.keyWord.period;
 	    }
 	    
 	    function planScheduledTask(){
