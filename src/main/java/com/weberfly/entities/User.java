@@ -80,10 +80,10 @@ public  class User implements UserDetails{
 	private Profile profile = new Profile() ;
 	
 	/*
-	 * Description of the property publications.
+	 * Description of the property Posts.
 	 */
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="user")
-	private List<Publication> publications ;
+	private List<Post> posts ;
 	
 	@ManyToMany(cascade = CascadeType.MERGE ,fetch= FetchType.EAGER)
 	 @JoinTable(name = "user_twitter_keyword", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "keyword_id", referencedColumnName = "id"))
@@ -174,8 +174,8 @@ public Session getSession(){
 	}
 
 	
-	public void setPublications(List<Publication> publications) {
-		this.publications = publications;
+	public void setPosts(List<Post> Posts) {
+		this.posts = Posts;
 	}
 
 	

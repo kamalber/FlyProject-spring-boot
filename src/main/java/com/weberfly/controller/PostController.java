@@ -24,6 +24,7 @@ import com.weberfly.entities.Publication;
 import com.weberfly.service.PostService;
 import com.weberfly.util.CustomErrorType;
 import com.weberfly.util.CustomStatsParams;
+import com.weberfly.util.PostSentimentStats;
 import com.weberfly.util.SentimentStats;
 
 @RestController
@@ -81,14 +82,14 @@ public class PostController {
 	public ResponseEntity<?> getStatisctics(@RequestBody CustomStatsParams params, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating item : {}", params);
 
-		SentimentStats stats = postservice.getStats(params);
+		PostSentimentStats stats = postservice.getStats(params);
 		if (stats == null) {
 			logger.error("list is empty ");
 			return new ResponseEntity(new CustomErrorType("empty list for query " + params.getQuery()),
 					HttpStatus.NOT_FOUND);
 
 		}
-		return new ResponseEntity<SentimentStats>(stats, HttpStatus.OK);
+		return new ResponseEntity<PostSentimentStats>(stats, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/posts/params", method = RequestMethod.GET)

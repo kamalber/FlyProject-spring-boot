@@ -121,6 +121,8 @@
 							</td>
 							<td><button data-toggle="modal" data-target="#myModal" ng-click="ctrl.edit(u.id)" class="btn btn-primary btn-xs">
 							<i class="fa fa-folder"  ></i> plan </button>
+							<button data-toggle="modal" data-target="#pieChartModal" ng-click="ctrl.getTotalStats(u)" class="btn btn-primary btn-xs">
+							<i class="fa fa-bar-chart"  ></i>  stats </button>
 								<button type="button" ng-click="ctrl.edit(u.id)"
 									class="btn btn-info btn-xs">
 									<i class="fa fa-pencil"></i> Edit
@@ -213,4 +215,42 @@
       </div>
     </div>
   </div>
+  
+  
+  
+  
+  
+    <!-- Modal -->
+  <div class="modal fade" id="pieChartModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">chart for twittes list </h4>
+        </div>
+        <div class="modal-body">
+            <div ng-show="ctrl.piChartBool" id="pieChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+            
+            <div  ng-show="ctrl.error" class="alert alert-info alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>{{ctrl.infoMessage}}</strong> .
+                  </div>
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn  btn-warning btn-sm " data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+
   

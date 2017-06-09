@@ -12,8 +12,6 @@ monApp.constant('urls', {
     TWITTER_KEY_WORD_SERVICE_API: 'http://localhost:8080/twitter/',
 });
 
-
-
 monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpProvider) {
   $routeProvider
   .when('/login', {
@@ -69,6 +67,11 @@ monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpP
 	    	 controller:'TwitterController',
 	    	 controllerAs:'ctrl',
 	    	})  
+	    .when('/tweetStats', {
+	    	 templateUrl: 'views/twitter/stat.html',
+	    	 controller:'TwitterStatsController',
+	    	 controllerAs:'ctrl',
+	    	})  	
      .otherwise({redirectTo: '/'});
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);

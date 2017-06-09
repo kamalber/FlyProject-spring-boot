@@ -1,5 +1,7 @@
 package com.weberfly.util;
 
+import com.weberfly.entities.TwitterKeyWord;
+
 public class CustomStatsParams {
 
 	private int startYear;
@@ -7,6 +9,7 @@ public class CustomStatsParams {
 	private int month;
 	private String query;
 	private int sentimentMethode;
+	private TwitterKeyWord keyWord;
 
 	public int getSentimentMethode() {
 		return sentimentMethode;
@@ -46,6 +49,14 @@ public class CustomStatsParams {
 
 	public void setQuery(String querySearche) {
 		this.query = querySearche;
+	}
+
+	public TwitterKeyWord getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(TwitterKeyWord keyWord) {
+		this.keyWord = keyWord;
 	}
 
 	@Override

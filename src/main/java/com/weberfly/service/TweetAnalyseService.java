@@ -513,6 +513,7 @@ public class TweetAnalyseService {
 				twitte=new Twitte();
 				twitte.setKeyWord(keyWord);
 				twitte.setText(tweet.getText());
+				twitte.setDate(tweet.getCreatedAt());
 				gateSenti=this.getAnalyseByGateApi(twitte.getText());
 				twitte.setGateSentment(Post.sentiment.valueOf(gateSenti));
 				//ntlkSenti=this.getAnalyseByNLTK(twitte.getText());

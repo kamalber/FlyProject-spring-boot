@@ -31,6 +31,7 @@ import com.weberfly.entities.Post;
 import com.weberfly.entities.Publication;
 import com.weberfly.util.CustomStatsParams;
 import com.weberfly.util.Polarity;
+import com.weberfly.util.PostSentimentStats;
 import com.weberfly.util.SentimentStats;
 @Service
 public class PostService {
@@ -59,14 +60,6 @@ public class PostService {
 
 		return lines.toArray(new String[lines.size()]);
 	}
-
-
-
-
-
-
-	
-   
 	public void savePost(Post post) throws Exception {
 		String content = post.getContent();
 		// testGateApi();
@@ -166,7 +159,7 @@ public class PostService {
 		return null;
 	}
 
-	public SentimentStats getStats(CustomStatsParams params) {
+	public PostSentimentStats getStats(CustomStatsParams params) {
 		
 
 		if (params.getStartYear() != 0) {
@@ -187,9 +180,9 @@ public class PostService {
 
 	}
 
-	private SentimentStats getSentimentStatsByMonthOfYear(String title, CustomStatsParams params) {
+	private PostSentimentStats getSentimentStatsByMonthOfYear(String title, CustomStatsParams params) {
 		System.out.println("sentiments by month");
-		SentimentStats stats = this.getAnalysedItemstatsTemplate(params, title);
+		PostSentimentStats stats = this.getAnalysedItemstatsTemplate(params, title);
 		if (stats == null) {
 			return null;
 		}
@@ -212,9 +205,9 @@ public class PostService {
 		return stats;
 	}
 
-	private SentimentStats getSentimentStatsByYear(String title, CustomStatsParams params) {
+	private PostSentimentStats getSentimentStatsByYear(String title, CustomStatsParams params) {
 		System.out.println("sentiments by month");
-		SentimentStats stats = this.getAnalysedItemstatsTemplate(params, title);
+		PostSentimentStats stats = this.getAnalysedItemstatsTemplate(params, title);
 		if (stats == null) {
 			return null;
 		}
@@ -235,11 +228,11 @@ public class PostService {
 		}
 		System.out.println("statisticsss  " + stats.getPositiveDataCount());
 		return stats;
-
+ 
 	}
 
-	private SentimentStats getAnalysedItemstatsTemplate(CustomStatsParams params, String title) {
-		SentimentStats<Post> stats = new SentimentStats<Post>();
+	private PostSentimentStats getAnalysedItemstatsTemplate(CustomStatsParams params, String title) {
+		PostSentimentStats stats = new PostSentimentStats();
 	
 		Date dateStart = getStartDateFromYear(params.getStartYear());
 		Date dateEnd = params.getEndYear() != 0 ? getEndDateFromYear(params.getEndYear())
@@ -358,9 +351,6 @@ public class PostService {
 		return dateEnd;
 
 	}
-
-
-	
 
 	}
 
