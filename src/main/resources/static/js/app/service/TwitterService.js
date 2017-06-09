@@ -5,6 +5,8 @@ monApp.factory('TwitterService',
             var factory = {
             		 getTwitterKeyWord: getTwitterKeyWord,
             		 planScheduledTask: planScheduledTask,
+            		 getStats:getStats,
+            		 getTotalStats:getTotalStats,
             		 get: getKeyWord,
                      create: createKeyWord,
                      update: updateKeyWord,
@@ -14,6 +16,7 @@ monApp.factory('TwitterService',
             };
             CrudEngine.setUrl(urls.TWITTER_KEY_WORD_SERVICE_API);
             return factory;
+            
             function getTwitterKeyWord(){         
                return CrudEngine.getAll();
             }
@@ -34,6 +37,33 @@ monApp.factory('TwitterService',
             function removeKeyWord(id) {
             	return CrudEngine.remove(id);
             }
+            function getTotalStats(keyWord) {
+		
+				var deferred = $q.defer();
+				$http.post(urls.TWITTER_KEY_WORD_SERVICE_API+ "totalStats", keyWord)
+						.then(function(response) {
+							console.log('Fetched successfully twitter stats ');
+							deferred.resolve(response.data);
+						}, function(errResponse) {
+							console.error('Error while loading twitter stats');
+							deferred.reject(errResponse);
+						});
+				return deferred.promise;
+			}
+            
+        	function getStats(params) {
+				console.log('Fetching Items with query :' + params.query);
+				var deferred = $q.defer();
+				$http.post(urls.TWITTER_KEY_WORD_SERVICE_API+ "statistics", params)
+						.then(function(response) {
+							console.log('Fetched successfully posts stats ');
+							deferred.resolve(response.data);
+						}, function(errResponse) {
+							console.error('Error while loading posts stats');
+							deferred.reject(errResponse);
+						});
+				return deferred.promise;
+			}
             
            function planScheduledTask(twitterkeyWord){
                var deferred = $q.defer();
