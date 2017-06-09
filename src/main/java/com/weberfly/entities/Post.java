@@ -3,10 +3,12 @@ package com.weberfly.entities;
  * 2017, All rights reserved.
  *******************************************************************************/
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -30,25 +32,18 @@ public class Post extends Publication {
 		neutral,
 	}
 	/**
-	 * Description of the property title.
-	 */
-
-	/**
 	 * Description of the property content.
 	 */
 	private String content ;
 	private String title;
 
-	@Enumerated(EnumType.ORDINAL)
-    private sentiment nltkSentment;
-	@Enumerated(EnumType.ORDINAL)
-    private sentiment dumaxSentment;
-	@Enumerated(EnumType.ORDINAL)
-    private sentiment gateSentment;
-	@Enumerated(EnumType.ORDINAL)
-	private sentiment generalSentiment;
-	// Start of user code (user defined attributes for Post)
 
+	// Start of user code (user defined attributes for Post)
+	/**
+	 * Description of the property user.
+	 */
+	@ManyToOne(cascade = CascadeType.ALL )
+	private User user =new User();
 
 	// End of user code
 
@@ -84,36 +79,13 @@ public class Post extends Publication {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public sentiment getNltkSentment() {
-		return nltkSentment;
+
+	public User getUser() {
+		return user;
 	}
 
-	public void setNltkSentment(sentiment nltkSentment) {
-		this.nltkSentment = nltkSentment;
-	}
-
-	public sentiment getDumaxSentment() {
-		return dumaxSentment;
-	}
-
-	public void setDumaxSentment(sentiment dumaxSentment) {
-		this.dumaxSentment = dumaxSentment;
-	}
-
-	public sentiment getGateSentment() {
-		return gateSentment;
-	}
-
-	public void setGateSentment(sentiment gateSentment) {
-		this.gateSentment = gateSentment;
-	}
-
-	public sentiment getGeneralSentiment() {
-		return generalSentiment;
-	}
-
-	public void setGeneralSentiment(sentiment generalSentiment) {
-		this.generalSentiment = generalSentiment;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	

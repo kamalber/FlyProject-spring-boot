@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.weberfly.entities.Post.sentiment;
 
 
 // End of user code
@@ -27,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @DiscriminatorColumn(name = "pubs", discriminatorType = DiscriminatorType.STRING)
 
 
-public   class Publication implements Serializable {
+public  class Publication implements Serializable {
 	/**
 	 * Description of the property id.
 	 */
@@ -45,11 +46,14 @@ public   class Publication implements Serializable {
 	 */
 	private Date date = new Date();
 
-	/**
-	 * Description of the property user.
-	 */
-	@ManyToOne(cascade = CascadeType.ALL )
-	private User user =new User();
+	@Enumerated(EnumType.ORDINAL)
+    private sentiment nltkSentment;
+	@Enumerated(EnumType.ORDINAL)
+    private sentiment dumaxSentment;
+	@Enumerated(EnumType.ORDINAL)
+    private sentiment gateSentment;
+	@Enumerated(EnumType.ORDINAL)
+	private sentiment generalSentiment;
 
 	@ManyToOne(cascade= CascadeType.ALL)
 	private Location location;
@@ -92,15 +96,6 @@ public   class Publication implements Serializable {
 		this.date = date;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	
 	public List<CategoryItem> getCategoryItems() {
 		return categoryItems;
 	}
@@ -125,11 +120,36 @@ public   class Publication implements Serializable {
 		this.location = location;
 	}
 
-	
+	public sentiment getNltkSentment() {
+		return nltkSentment;
+	}
 
-	// Start of user code (user defined attributes for Publication)
+	public void setNltkSentment(sentiment nltkSentment) {
+		this.nltkSentment = nltkSentment;
+	}
 
-	// End of user code
+	public sentiment getDumaxSentment() {
+		return dumaxSentment;
+	}
 
+	public void setDumaxSentment(sentiment dumaxSentment) {
+		this.dumaxSentment = dumaxSentment;
+	}
+
+	public sentiment getGateSentment() {
+		return gateSentment;
+	}
+
+	public void setGateSentment(sentiment gateSentment) {
+		this.gateSentment = gateSentment;
+	}
+
+	public sentiment getGeneralSentiment() {
+		return generalSentiment;
+	}
+
+	public void setGeneralSentiment(sentiment generalSentiment) {
+		this.generalSentiment = generalSentiment;
+	}
 
 }
