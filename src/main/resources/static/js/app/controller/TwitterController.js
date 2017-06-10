@@ -28,7 +28,7 @@ monApp.controller('TwitterController',
 
         self.onlyIntegers = /^\d+$/;
         self.onlyNumbers = /^\d+([,.]\d+)?$/;
-/*       -- variable             */
+/* -- variable */
         var keyWordList=[];
         
         function submit() {
@@ -141,7 +141,7 @@ monApp.controller('TwitterController',
 	    	}else if(idPeriod==2){
 	    		self.keyWord.period="daily"
 	    	}else{
-	    		self.keyWord.period="weekly";//"weekly";
+	    		self.keyWord.period="weekly";// "weekly";
 	    	}
 	    }
 	    
@@ -173,8 +173,11 @@ monApp.controller('TwitterController',
 	    	}
 	    	);
 	    }
-	    function setStatsToPieChart(){
+	    function setStatsToPieChart(data){
 	    	  // Build the chart
+	    	Highcharts.setOptions({
+	    	    colors:['#058DC7', '#50B432', '#ED561B']
+	    	});
 	        Highcharts.chart('pieChart', {
 	            chart: {
 	                plotBackgroundColor: null,
@@ -202,26 +205,15 @@ monApp.controller('TwitterController',
 	                name: 'Brands',
 	                colorByPoint: true,
 	                data: [{
-	                    name: 'Microsoft Internet Explorer',
-	                    y: 56.33
-	                }, {
-	                    name: 'Chrome',
-	                    y: 24.03,
-	                    sliced: true,
-	                    selected: true
-	                }, {
-	                    name: 'Firefox',
-	                    y: 10.38
-	                }, {
-	                    name: 'Safari',
-	                    y: 4.77
-	                }, {
-	                    name: 'Opera',
-	                    y: 0.91
-	                }, {
-	                    name: 'Proprietary or Undetectable',
-	                    y: 0.2
-	                }]
+	                    name: 'neutral',
+	                    y: data['neutral']
+	                    },
+	                     { name: 'Positive',
+	                    y:  data['positive']
+	                   },
+	                    { name: 'negative',
+		                    y: data['negative']
+	                    }]
 	            }]
 	        });
 	    }
@@ -230,6 +222,6 @@ monApp.controller('TwitterController',
             self.successMessage='';
             self.errorMessage='';
             self.keyWord={};
-            $scope.myForm.$setPristine(); //reset Form
+            $scope.myForm.$setPristine(); // reset Form
         }
 }]);
