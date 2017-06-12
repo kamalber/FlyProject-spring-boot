@@ -46,6 +46,10 @@ public class Profile implements Serializable{
 	 * Description of the property Education.
 	 */
 	private String education ;
+	 
+	private String image;
+	
+	private String webSite;
 
 	/**
 	 * Description of the property user.
@@ -95,12 +99,17 @@ public class Profile implements Serializable{
 	public void setCity(City city) {
 		this.city = city;
 	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	public String getWebSite() {
+		return webSite;
+	}
+	public void setWebSite(String webSite) {
+		this.webSite = webSite;
+	}
 	
-	
-
-	
-
-
-
-
 }

@@ -1,8 +1,8 @@
-var monApp=angular.module('monApp', ['ngRoute','ngStorage','chart.js','moment-picker','xs.ui.wizard'])
+var monApp=angular.module('monApp', ['ngRoute','ngStorage','chart.js','moment-picker','xs.ui.wizard','ngFileUpload', 'ngImgCrop'])
 .value('XS_WIZARD_TEMPLATE_DIR', '/views'); 
 monApp.constant('urls', {
 	BASE: 'http://localhost:8080/',
-    USER_SERVICE_API : 'http://localhost:8080/api/user/',
+    USER_SERVICE_API : 'http://localhost:8080/user/',
     POST_SERVICE_API : 'http://localhost:8080/posts/',
     TYPECATEGORY_SERVICE_API : 'http://localhost:8080/typeCategorys/',
     CATEGORY_SERVICE_API:   'http://localhost:8080/categorys/',
@@ -72,6 +72,16 @@ monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpP
 	    	 controller:'TwitterStatsController',
 	    	 controllerAs:'ctrl',
 	    	})  	
+	      .when('/profile', {
+	    	 templateUrl: 'views/user/profile.html',
+	    	 controller:'ProfileController',
+	    	 controllerAs:'ctrl',
+	    	})  
+	    	.when('/userList', {
+		    	 templateUrl: 'views/user/list.html',
+		    	 controller:'UserController',
+		    	 controllerAs:'ctrl',
+		   	}) 
      .otherwise({redirectTo: '/'});
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);

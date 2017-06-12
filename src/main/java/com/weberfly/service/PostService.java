@@ -94,12 +94,19 @@ public class PostService {
 		post.setDumaxSentment(sentDumax);
 			
 		// NLTK Sentiment
-		content = content.replace(" ", "%20");
-		content = content.replace(":", "%20");
-		String nltkSentiment = tweetAnalyseService.getAnalyseByNLTK(content);
-		Post.sentiment sentNltk= Post.sentiment.valueOf(nltkSentiment);	
-		post.setNltkSentment(sentNltk);
+//		content = content.replace(" ", "%20");
+//		content = content.replace(":", "%20");
+//		String nltkSentiment = tweetAnalyseService.getAnalyseByNLTK(content);
+//		Post.sentiment sentNltk= Post.sentiment.valueOf(nltkSentiment);	
+//		post.setNltkSentment(sentNltk);
 		
+		
+		// a supprimer
+				String nltkSentiment = "neutral";
+				Post.sentiment sentNltk= Post.sentiment.valueOf(nltkSentiment);	
+				post.setNltkSentment(sentNltk);
+		
+				
 		// General sentiment
 		String generalSentiment = tweetAnalyseService.getMaxPolarityByTools(gatesentiment, dumaxsentiment, nltkSentiment);
 		Post.sentiment sentGeneral= Post.sentiment.valueOf(generalSentiment);	
@@ -115,6 +122,7 @@ public class PostService {
 		}
 		post.setCategoryItems(pubcategoryItems);
 
+		
 		postRepository.save(post);
 	}
 	public List<Post> getAll() {

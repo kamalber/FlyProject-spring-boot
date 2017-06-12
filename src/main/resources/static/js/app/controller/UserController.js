@@ -11,14 +11,81 @@ monApp.controller('UserController',
         self.updateUser = updateUser;
         self.removeUser = removeUser;
         self.editUser = editUser;
+        self.getUserSentiment=getUserSentiment;
         self.reset = reset;
 
         self.successMessage = '';
         self.errorMessage = '';
         self.done = false;
+        self.error=false;
+		self.piChartBool=false;
 
         self.onlyIntegers = /^\d+$/;
         self.onlyNumbers = /^\d+([,.]\d+)?$/;
+        getAllUsers();
+        
+        
+        
+   function getUserSentiment(user){
+	    	UserService.getUserSentimentStats(user)
+	    	.then(function(data){
+	    		self.error=false;
+	    		self.piChartBool=true;
+	    		console.log(data);
+	    		setStatsToPieChart(data);
+	    	},
+	    	function(errorMessage){
+	    		console.log("empty");
+	    		self.piChartBool=false
+	    		self.error=true;
+	    		self.infoMessage = 'this user have not post anything since is firts registration';
+	    	}
+	    	);
+	    }
+	    function setStatsToPieChart(data){
+	    	  // Build the chart
+	    	Highcharts.setOptions({
+	    	    colors:['#058DC7', '#50B432', '#ED561B']
+	    	});
+	        Highcharts.chart('pieChart', {
+	            chart: {
+	                plotBackgroundColor: null,
+	                plotBorderWidth: null,
+	                plotShadow: false,
+	                type: 'pie'
+	            },
+	            title: {
+	                text: 'sentiments analysis '
+	            },
+	            tooltip: {
+	                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	            },
+	            plotOptions: {
+	                pie: {
+	                    allowPointSelect: true,
+	                    cursor: 'pointer',
+	                    dataLabels: {
+	                        enabled: false
+	                    },
+	                    showInLegend: true
+	                }
+	            },
+	            series: [{
+	                name: 'Brands',
+	                colorByPoint: true,
+	                data: [{
+	                    name: 'neutral',
+	                    y: data['neutral']
+	                    },
+	                     { name: 'Positive',
+	                    y:  data['positive']
+	                   },
+	                    { name: 'negative',
+		                    y: data['negative']
+	                    }]
+	            }]
+	        });
+	    }
         
         function submit() {
             console.log('Submitting');
@@ -31,6 +98,22 @@ monApp.controller('UserController',
             }
         }
 
+        
+        function getAllUsers() {
+            console.log('About to create user');
+            UserService.getAllUsers()
+                .then(
+                    function (response) {
+                        console.log('User fetched successfully');
+                        self.users=response;
+                    },
+                    function (errResponse) {
+                        console.error('Error while creating User');
+                        
+                    }
+                );
+        }
+        
         function createUser(user) {
             console.log('About to create user');
             UserService.createUser(user)
@@ -86,10 +169,7 @@ monApp.controller('UserController',
         }
 
 
-        function getAllUsers(){
-        	
-            return UserService.getAllUsers();
-        }
+        
 
         function editUser(id) {
             self.successMessage='';

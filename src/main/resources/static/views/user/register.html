@@ -10,11 +10,10 @@
 		<div class="x_content">
 			<!-- Smart Wizard -->
 			<form class="form-horizontal form-label-left"
-				ng-submit="ctrl.register()" name="register" novalidate>
+				ng-submit="" name="register" novalidate>
 				<xs-wizard has-save="true" has-breadcrumbs="true"
 					save-text="Submit Order" on-page-change="ctrl.pageChange(state);"
-					on-cancel="ctrl.cancel();" on-save="ctrl.save();">
-					 <xs-wizard-page
+					on-cancel="ctrl.cancel();" on-save="ctrl.save();"> <xs-wizard-page
 					page-tag="User Info">
 				<div class="pane">
 					<h4>Page 1: User Info</h4>
@@ -63,17 +62,20 @@
 
 
 
-						<div class="alert alert-warning margin-top-5"
-						ng-show="confirmPassword != ctrl.user.password ">Password Not Matching</div>
+					<div class="alert alert-warning margin-top-5"
+						ng-show="confirmPassword != ctrl.user.password ">Password
+						Not Matching</div>
 
-                    <div class="form-group"
+					<div class="form-group"
 						ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }">
 						<label for="email"
-							class="control-label col-md-3 col-sm-3 col-xs-12">
-							Email :</label>
+							class="control-label col-md-3 col-sm-3 col-xs-12"> Email
+							:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="email" id="email" class="form-control" placeholder="Enter a valid email address"
-							name="email" data-parsley-trigger="change" required="" ng-model="user.profile.email">
+							<input type="email" id="email" class="form-control"
+								placeholder="Enter a valid email address" name="email"
+								data-parsley-trigger="change" required=""
+								ng-model="user.profile.email">
 						</div>
 					</div>
 
@@ -100,9 +102,9 @@
 							</div>
 						</div>
 					</div>
-					
-					
-					
+
+
+
 
 					<div class="form-group">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date
@@ -114,7 +116,7 @@
 								required="required" type="text">
 						</div>
 					</div>
-					
+
 					<div class="form-group"
 						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12"
@@ -124,8 +126,8 @@
 								ng-model="ctrl.user.profile.workHis" id="work" name="work">
 						</div>
 					</div>
-					
-						<div class="form-group"
+
+					<div class="form-group"
 						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12"
 							for="adresse">adresse:</label>
@@ -134,65 +136,69 @@
 								ng-model="ctrl.user.profile.adresse" id="work" name="adresse">
 						</div>
 					</div>
-					
+
 					<div class="form-group"
 						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12"
 							for="Education">Education:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="text" required class="form-control"
-								ng-model="ctrl.user.profile.education" id="work" name="Education">
+								ng-model="ctrl.user.profile.education" id="work"
+								name="Education">
 						</div>
 					</div>
-					
+
 				</div>
 				</xs-wizard-page> 
-				<xs-wizard-page page-tag="Tags to follow" ng-click="ctrl.loadKeyWords()">
+				
+				 <xs-wizard-page page-tag="Tags to follow"
+					ng-click="ctrl.loadKeyWords()">
 				<div class="pane">
 					<h4>Page 3: tags to follow</h4>
-	<div class="form-group">
-	<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-                  <div class="x_panel">
-                    <div class="x_title_black">
-                      <h2>select tags you want to follow <small>tags</small></h2>
-                      <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title_black">
+									<h2>
+										select tags you want to follow <small>tags</small>
+									</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
 
-                      <div class="">
-                        <ul class="to_do">
-                        <li ng-repeat="u in ctrl.twitterKeWords">
-                        
-                            <p>
-                            <input class="magic-checkbox" type="checkbox" name="layout" id="{{u.id}}">
-                            <label for="{{u.id}}" ng-click="ctrl.addKeyWords(u)"> {{u.word}}</label>
-                           
-                            </p>
-                          </li>
-                  
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+									<div class="">
+										<ul class="to_do">
+											<li ng-repeat="u in ctrl.twitterKeWords">
+
+												<p>
+													<input class="magic-checkbox" type="checkbox" name="layout"
+														id="{{u.id}}"> <label for="{{u.id}}"
+														ng-click="ctrl.addKeyWords(u)"> {{u.word}}</label>
+
+												</p>
+											</li>
+
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				</div>
-				</xs-wizard-page>
-				 <xs-wizard-page page-tag="Confirmation">
+				</xs-wizard-page> <xs-wizard-page page-tag="Confirmation">
 				<div class="pane">
 					<h4>Page 4: Confirmation</h4>
 				</div>
-				</xs-wizard-page>
-
-				 </xs-wizard>
-				 <br>
-			 <div class="alert alert-danger" role="alert" ng-hide="ctrl.error">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Error:</span>
-               {{ctrl.message}}
-               </div>
+				</xs-wizard-page> </xs-wizard>
+				<br>
+				<div class="alert alert-danger" role="alert" ng-hide="ctrl.error">
+					<span class="glyphicon glyphicon-exclamation-sign"
+						aria-hidden="true"></span> <span class="sr-only">Error:</span>
+					{{ctrl.message}}
+				</div>
 			</form>
 		</div>
 	</div>
 </div>
+

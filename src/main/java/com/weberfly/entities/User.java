@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
  */
 @Entity
 @Table(name="User")
+@Scope("session")
 public  class User implements UserDetails{
 	/**
 	 * Description of the property id.
@@ -55,6 +57,8 @@ public  class User implements UserDetails{
     private String  role;
     
     private String fullName;
+    
+    
 	/**
 	 * Description of the property session.
 	 */

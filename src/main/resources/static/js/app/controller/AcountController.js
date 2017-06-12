@@ -1,5 +1,6 @@
 monApp.controller('AcountController',
-    ['$rootScope','TwitterService','AcountService','AuthSession','$scope','$location','$http',  function($rootScope,TwitterService,AcountService,AuthSession,$scope,$location,$http) {
+    ['$rootScope','TwitterService','AcountService','AuthSession','Upload', '$timeout','$scope','$location','$http','$sessionStorage', 
+     function($rootScope,TwitterService,AcountService,AuthSession,Upload,$timeout,$scope,$location,$http,$sessionStorage) {
     	var self=this;
 		self.user={// this is the parameters object that contain the search criteria
     			'username':'',
@@ -29,6 +30,25 @@ monApp.controller('AcountController',
             console.log('Got Cancel');
         };
         
+        $scope.upload = function (dataUrl, name) {
+            Upload.upload({
+                url: 'acount/upload',
+                data: {
+                    file: Upload.dataUrltoBlob(dataUrl, name)
+                },
+            }).then(function (response) {
+                $timeout(function () {
+                    $scope.result = response.data;
+                });
+            }, function (response) {
+                if (response.status > 0) $scope.errorMsg = response.status 
+                    + ': ' + response.data;
+            }, function (evt) {
+                $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+            });
+        }
+        
+        
 	      function login(){
 	        	console.log('About to log in');
 	        	// creating base64 encoded String from user name and password
@@ -39,8 +59,9 @@ monApp.controller('AcountController',
 	                    	 if (res.authenticated) {
 	         					$scope.message = '';
 	         					AuthSession.connected=res;
-	         					$rootScope.user=res.principal;
+	         					$rootScope.connected=res.principal;
 	         					console.log(AuthSession.connected);
+	         					$sessionStorage.connected=res.principal;
 	         					// setting the same header value for all request calling from
 	         					// this application
 	         					$http.defaults.headers.common['Authorization'] = 'Basic ' + base64Credential;

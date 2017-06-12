@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.apache.commons.io.IOUtils;
@@ -27,10 +29,12 @@ public class PostLocationDetection extends Thread {
 	CountryService countryService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	HttpSession session;
 	User connectd;
 
 	public PostLocationDetection() {
-		this.connectd= (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		this.connectd= (User)session.getAttribute("connected");
 	}
 
 	@Override

@@ -1,78 +1,204 @@
-<div class="generic-container">
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead">User </span></div>
-		<div class="panel-body">
-	        <div class="formcontainer">
-	            <div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
-	            <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
-	            <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
-	                <input type="hidden" ng-model="ctrl.user.id" />
-	                <div class="row">
-	                    <div class="form-group col-md-12">
-	                        <label class="col-md-2 control-lable" for="uname">Name</label>
-	                        <div class="col-md-7">
-	                            <input type="text" ng-model="ctrl.user.name" id="uname" class="username form-control input-sm" placeholder="Enter your name" required ng-minlength="3"/>
-	                        </div>
-	                    </div>
-	                </div>
-
-	                <div class="row">
-	                    <div class="form-group col-md-12">
-	                        <label class="col-md-2 control-lable" for="age">Age</label>
-	                        <div class="col-md-7">
-	                            <input type="text" ng-model="ctrl.user.age" id="age" class="form-control input-sm" placeholder="Enter your Age." required ng-pattern="ctrl.onlyIntegers"/>
-	                        </div>
-	                    </div>
-	                </div>
-	
-	                <div class="row">
-	                    <div class="form-group col-md-12">
-	                        <label class="col-md-2 control-lable" for="salary">Salary</label>
-	                        <div class="col-md-7">
-	                            <input type="text" ng-model="ctrl.user.salary" id="salary" class="form-control input-sm" placeholder="Enter your Salary." required ng-pattern="ctrl.onlyNumbers"/>
-	                        </div>
-	                    </div>
-	                </div>
-
-	                <div class="row">
-	                    <div class="form-actions floatRight">
-	                        <input type="submit"  value="{{!ctrl.user.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid || myForm.$pristine">
-	                        <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
-	                    </div>
-	                </div>
-	            </form>
-    	    </div>
-		</div>	
-    </div>
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead">List of Users </span></div>
-		<div class="panel-body">
-			<div class="table-responsive">
-		        <table class="table table-hover">
-		            <thead>
-		            <tr>
-		                <th>ID</th>
-		                <th>NAME</th>
-		                <th>AGE</th>
-		                <th>SALARY</th>
-		                <th width="100"></th>
-		                <th width="100"></th>
-		            </tr>
-		            </thead>
-		            <tbody>
-		            <tr ng-repeat="u in ctrl.getAllUsers()">
-		                <td>{{u.id}}</td>
-		                <td>{{u.name}}</td>
-		                <td>{{u.age}}</td>
-		                <td>{{u.salary}}</td>
-		                <td><button type="button" ng-click="ctrl.editUser(u.id)" class="btn btn-success custom-width">Edit</button></td>
-		                <td><button type="button" ng-click="ctrl.removeUser(u.id)" class="btn btn-danger custom-width">Remove</button></td>
-		            </tr>
-		            </tbody>
-		        </table>		
+	<div class="title_right">
+		<div
+			class="col-md-3 col-sm-3 col-xs-3 form-group pull-right top_search">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Search for...">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button">Go!</button>
+				</span>
 			</div>
 		</div>
-    </div>
+	</div>
+
+	<div class="col-md-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Projects</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+
+				<p>Simple table with project listing with progress and editing
+					options</p>
+
+				<!-- start project list -->
+				<table class="table table-striped projects">
+					<thead>
+						<tr>
+							<th style="width: 1%">#</th>
+							<th style="width: 20%">Project Name</th>
+							<th>Team Members</th>
+							<th>Project Progress</th>
+							<th>Status</th>
+							<th style="width: 20%">#Edit</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="u in ctrl.users">
+							<td>#</td>
+							<td><a>{{u.fullName}}</a> <br> <small>Created
+									01.01.2015</small></td>
+							<td>
+								<ul class="list-inline">
+									<li><img src="images/user.png" class="avatar" alt="Avatar">
+									</li>
+									<li><img src="images/user.png" class="avatar" alt="Avatar">
+									</li>
+								</ul>
+							</td>
+							<td class="project_progress">
+								<div class="progress progress_sm">
+									<div class="progress-bar bg-green" role="progressbar"
+										data-transitiongoal="87" aria-valuenow="86"
+										style="width: 87%;"></div>
+								</div> <small>87% Complete</small>
+							</td>
+							<td>
+								<button type="button" class="btn btn-success btn-xs">Success</button>
+							</td>
+							<td>
+							<button data-toggle="modal" data-target="#pieChartModal" ng-click="ctrl.getUserSentiment(u)" class="btn btn-primary btn-xs">
+							<i class="fa fa-bar-chart"  ></i>  stats </button>
+								<button type="button" ng-click="ctrl.edit(u.id)"
+									class="btn btn-info btn-xs">
+									<i class="fa fa-pencil"></i> Edit
+								</button>
+								<button type="button" ng-click="ctrl.remove(u.id)"
+									class="btn btn-danger btn-xs ">
+									<i class="fa fa-trash-o"></i> Delete
+								</button></td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- end project list -->
+
+			</div>
+		</div>
+	</div>
 </div>
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">plan a thread to collect twittes</h4>
+        </div>
+        <div class="modal-body">
+          
+          <form class="form-horizontal form-label-left"
+				ng-submit="ctrl.planThreadTask()" name="register" novalidate>
+
+					<div class="form-group"
+						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12"
+							for="thread">Thread planning :</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" required class="form-control"
+								ng-model="ctrl.keyWord.threadPlaningDescription" id="thread" name="thread">
+						</div>
+					</div>
+
+
+               	<div class="form-group"
+						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12"
+							for="StartDate">Thread planning :</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="input-group" moment-picker="ctrl.keyWord.startDate"
+								format="YYYY-MM-DD">
+								<span class="input-group-addon">
+								 <i class="fa fa-calendar-o"></i>
+								</span> <input class="form-control" placeholder="Select a date"
+									ng-model="ctrl.keyWord.startDate"
+									ng-model-options="{ updateOn: 'blur' }">
+							</div>
+							</div>
+				</div>
+				
+				<div class="form-group"
+						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12"
+							for="Period">Period :</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+					
+					<div class="btn-group open">
+                          <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button" aria-expanded="true"> Dropdown <span class="caret"></span> </button>
+                          <ul class="dropdown-menu">
+                            <li ng-repeat="x in ctrl.periodList" ><a ng-click="ctrl.selectPeriod(x.id)">{{x.period}}</a>
+                            </li>
+                          </ul>
+                        </div>
+					
+					
+					
+							<input type="text" required class="form-control"
+								ng-model="ctrl.keyWord.period" id="Period" name="Period">
+						</div>
+					</div>
+				</form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary btn-sm " ng-click="ctrl.planThreadTask()" data-dismiss="modal"><i class="fa fa-save"></i> plan</button>
+            <button type="button" class="btn  btn-warning btn-sm " data-dismiss="modal"><i class="fa fa-undo"></i> cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+    <!-- Modal -->
+  <div class="modal fade" id="pieChartModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">chart for twittes list </h4>
+        </div>
+        <div class="modal-body">
+            <div ng-show="ctrl.piChartBool" id="pieChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+            
+            <div  ng-show="ctrl.error" class="alert alert-info alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>{{ctrl.infoMessage}}</strong> .
+                  </div>
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn  btn-warning btn-sm " data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+
+  

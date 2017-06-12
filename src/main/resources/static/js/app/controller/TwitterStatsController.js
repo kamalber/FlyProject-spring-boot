@@ -4,7 +4,7 @@ monApp.controller('TwitterStatsController',
 		self.keyWordList=[];
 		self.params={// this is the parameters object that contain the search criteria
     			'query':'',
-    			'startYear': 0,
+    			'startYear':0,
     			'endYear':0,
     			 'month':0,
     			'sentimentMethode':0
@@ -25,8 +25,6 @@ monApp.controller('TwitterStatsController',
         function selectKeyWord(x){
         	self.params.keyWord=x;
         }
-        
-  
         	function getAnalysedTwitteStatsWithStats(){
         		 self.hightchart=true;
         		 
