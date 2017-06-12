@@ -3,12 +3,15 @@ package com.weberfly.entities;
  * 2017, All rights reserved.
  *******************************************************************************/
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -43,8 +46,13 @@ public class Post extends Publication {
 	 * Description of the property user.
 	 */
 	@ManyToOne(cascade = CascadeType.ALL )
-	private User user =new User();
+	private User user ;
 
+	/**
+	 * Description of the property comments.
+	 */
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="post")
+	private List<Comment> comments ;
 	// End of user code
 
 	/**
@@ -86,6 +94,14 @@ public class Post extends Publication {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 	

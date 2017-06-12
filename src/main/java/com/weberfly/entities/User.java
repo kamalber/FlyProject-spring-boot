@@ -91,7 +91,7 @@ public  class User implements UserDetails{
 	
 	@ManyToMany(cascade = CascadeType.MERGE ,fetch= FetchType.EAGER)
 	 @JoinTable(name = "user_twitter_keyword", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "keyword_id", referencedColumnName = "id"))
-	private List<TwitterKeyWord> twitterKeyWords =new ArrayList<TwitterKeyWord>();
+	private List<TwitterKeyWord> twitterKeyWords ;
 
 
 	/**
@@ -184,9 +184,6 @@ public Session getSession(){
 
 	
 
-	public List<TwitterKeyWord> getTwitterKeyWords() {
-		return twitterKeyWords;
-	}
 
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;

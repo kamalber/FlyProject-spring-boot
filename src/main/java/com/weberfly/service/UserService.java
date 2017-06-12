@@ -22,7 +22,6 @@ public class UserService {
 	PostRepository postRepository;
 	
 	public User save(User user){
-		System.out.println(user.getTwitterKeyWords().get(0).getWord());
 		return userRepository.saveAndFlush(user);
 		
 	}

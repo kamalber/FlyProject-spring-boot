@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.weberfly.entities.Post.sentiment;
 
 
 
@@ -37,8 +38,16 @@ public class Comment implements Serializable{
 	@ManyToOne(cascade = CascadeType.ALL)
 	private User user ;
 	@ManyToOne
-    private Publication publication ;
-
+    private Post post ;
+	
+	@Enumerated(EnumType.ORDINAL)
+    private sentiment nltkSentment;
+	@Enumerated(EnumType.ORDINAL)
+    private sentiment dumaxSentment;
+	@Enumerated(EnumType.ORDINAL)
+    private sentiment gateSentment;
+	@Enumerated(EnumType.ORDINAL)
+	private sentiment generalSentiment;
 	/**
 	 * Description of the property date.
 	 */
@@ -153,13 +162,44 @@ public class Comment implements Serializable{
 		this.text = newText;
 	}
 
-//	public Publication getPublication() {
-//		return publication;
-//	}
-
-	public void setPublication(Publication publication) {
-		this.publication = publication;
+	public void setPost(Post post) {
+		this.post = post;
 	}
+
+	public sentiment getNltkSentment() {
+		return nltkSentment;
+	}
+
+	public void setNltkSentment(sentiment nltkSentment) {
+		this.nltkSentment = nltkSentment;
+	}
+
+	public sentiment getDumaxSentment() {
+		return dumaxSentment;
+	}
+
+	public void setDumaxSentment(sentiment dumaxSentment) {
+		this.dumaxSentment = dumaxSentment;
+	}
+
+	public sentiment getGateSentment() {
+		return gateSentment;
+	}
+
+	public void setGateSentment(sentiment gateSentment) {
+		this.gateSentment = gateSentment;
+	}
+
+	public sentiment getGeneralSentiment() {
+		return generalSentiment;
+	}
+
+	public void setGeneralSentiment(sentiment generalSentiment) {
+		this.generalSentiment = generalSentiment;
+	}
+
+
+	
 
 
 

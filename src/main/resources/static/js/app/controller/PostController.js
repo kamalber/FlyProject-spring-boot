@@ -43,8 +43,8 @@ monApp.controller('PostController',
         
         function createComment(comment) {
             console.log('About to create comment');
-            comment.publication=$scope.post;
-            console.log(comment.publication);
+            comment.post=$scope.post;
+            console.log(comment.post);
             CommentService.create(comment)
                 .then(
                     function (commentResult) {

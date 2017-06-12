@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import com.weberfly.dao.PublicationRepository;
 import com.weberfly.entities.CategoryItem;
 import com.weberfly.entities.Post;
 import com.weberfly.entities.Publication;
+import com.weberfly.entities.User;
 import com.weberfly.util.CustomStatsParams;
 import com.weberfly.util.Polarity;
 import com.weberfly.util.PostSentimentStats;
@@ -44,6 +46,9 @@ public class PostService {
 	private CategoryItemRepository categoryItemRepository;
 	@Autowired
 	TweetAnalyseService tweetAnalyseService;
+	@Autowired
+	HttpSession session;
+	
 	public static final String USER_AGENT = "Mozilla/5.0";
 
 	public static String[] readLines(URL url) throws IOException {
@@ -59,6 +64,10 @@ public class PostService {
 		}
 
 		return lines.toArray(new String[lines.size()]);
+	}
+	
+	public List<Post> findByUser(User u){
+		return postRepository.findByUser(u);
 	}
 	public void savePost(Post post) throws Exception {
 		String content = post.getContent();
@@ -120,9 +129,13 @@ public class PostService {
 				pubcategoryItems.add(item);
 			}
 		}
-		post.setCategoryItems(pubcategoryItems);
-
-		
+		//post.setCategoryItems(pubcategoryItems);
+      
+		User u=(User)session.getAttribute("connected");
+		if(u!=null){
+		//post.setUser(u);
+		System.out.println(u);
+		}
 		postRepository.save(post);
 	}
 	public List<Post> getAll() {

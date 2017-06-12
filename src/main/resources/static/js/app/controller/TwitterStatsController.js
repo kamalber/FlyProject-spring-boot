@@ -15,6 +15,7 @@ monApp.controller('TwitterStatsController',
         self.successMessage = '';
         self.errorMessage = '';
         self.done = false;
+        loadKeyWords();
         $scope.itemArray = [
                             {id: 1, name: 'first'},
                             {id: 2, name: 'second'},
@@ -23,7 +24,7 @@ monApp.controller('TwitterStatsController',
                             {id: 5, name: 'fifth'},
                         ];
 
-                        $scope.selected = { value: $scope.itemArray[0] };
+                        $scope.selected = {};
         self.onlyIntegers = /^\d+$/;
         self.onlyNumbers = /^\d+([,.]\d+)?$/;
         $scope.items = [{
@@ -36,7 +37,7 @@ monApp.controller('TwitterStatsController',
         	  subItem: { name: 'bSubItem' }
         	}];
      
-        loadKeyWords();
+ 
         
         function selectKeyWord(x){
         	self.params.keyWord=x;

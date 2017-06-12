@@ -1,6 +1,7 @@
 package com.weberfly.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.weberfly.entities.Comment;
+import com.weberfly.entities.Post;
 import com.weberfly.entities.Publication;
 import com.weberfly.service.CommentService;
 import com.weberfly.service.PostService;
@@ -67,6 +69,17 @@ public class CommentConroller {
 
 	
 	// ------------------- Delete a item-----------------------------------------
+//	-------------------- get post comments sentiment --------------------
+	@RequestMapping(value = "/commentPolarity", method = RequestMethod.POST)
+	public ResponseEntity<?> getCommentSentiment(@RequestBody Post post) {
+		
+		Map<String,Long> stats=commentService.getTotalSentimentByPost(post);
 
+		if (stats== null||stats.isEmpty()) {
+			logger.error("no stats to collect ");
+			return new ResponseEntity(new CustomErrorType("no comments for this post"), HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(stats, HttpStatus.OK);
+	}
 	
 }

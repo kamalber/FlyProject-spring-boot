@@ -3,6 +3,9 @@ package com.weberfly.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +24,8 @@ import com.weberfly.entities.Category;
 import com.weberfly.entities.CategoryItem;
 import com.weberfly.entities.Post;
 import com.weberfly.entities.Publication;
+import com.weberfly.entities.User;
+import com.weberfly.service.CommentService;
 import com.weberfly.service.PostService;
 import com.weberfly.util.CustomErrorType;
 import com.weberfly.util.CustomStatsParams;
@@ -31,7 +36,8 @@ import com.weberfly.util.SentimentStats;
 public class PostController {
 	@Autowired
 	private PostService postservice;
-
+    @Autowired
+    HttpSession session;
 	public static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
 	@RequestMapping(value = "/posts", method = RequestMethod.POST)
@@ -46,10 +52,13 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/posts", method = RequestMethod.GET)
-	public List<Post> getAllPosts(){
-		return postservice.getAll();
+	public  ResponseEntity<?> getAllPosts(){
+		List<Post> items =postservice.getAll();
+		return new ResponseEntity<List<Post>>(items, HttpStatus.CREATED);
 	}
 
+
+	
 	@RequestMapping(value = "/posts/statistics/{query}/{startDate}/{endDate}", method = RequestMethod.GET)
 	public ResponseEntity<?> getItem(@PathVariable("startDate") String startDate,
 			@PathVariable("endDate") String endDate, @PathVariable("query") String querySearche) {
@@ -77,7 +86,18 @@ public class PostController {
 			return new ResponseEntity<Post>(item, HttpStatus.OK);
 		}
 
+		// -------------------Retrieve Single item by User------------------------------------------
 
+		@RequestMapping(value = "/posts/byUser", method = RequestMethod.GET)
+		public ResponseEntity<?> getItems() {
+			User u=(User)session.getAttribute("connected");
+			List<Post> items = postservice.findByUser(u);
+			if (items == null) {
+				
+				return new ResponseEntity(new CustomErrorType("items not found"), HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<List<Post>>(items, HttpStatus.OK);
+		}
 	@RequestMapping(value = "/posts/statistics", method = RequestMethod.POST)
 	public ResponseEntity<?> getStatisctics(@RequestBody CustomStatsParams params, UriComponentsBuilder ucBuilder) {
 		logger.info("Creating item : {}", params);

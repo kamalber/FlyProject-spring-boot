@@ -64,11 +64,7 @@ public  class Publication implements Serializable {
 	 @JoinTable(name = "Pub_CategoryItem", joinColumns = @JoinColumn(name = "pub_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "catItem_id", referencedColumnName = "id"))
 	private List<CategoryItem> categoryItems = new ArrayList<CategoryItem>();
 
-	/**
-	 * Description of the property comments.
-	 */
-	@OneToMany(cascade = CascadeType.ALL,mappedBy="publication")
-	private List<Comment> comments ;
+	
 
 	public Long getId() {
 		return id;
@@ -104,13 +100,6 @@ public  class Publication implements Serializable {
 		this.categoryItems = categoryItems;
 	}
 
-	public List<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
 
 	public Location getLocation() {
 		return location;

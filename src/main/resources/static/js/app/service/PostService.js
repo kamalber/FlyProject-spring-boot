@@ -31,6 +31,17 @@ monApp.factory('PostService',
             }
             
          
-
+function findByUser(user){
+	var deferred = $q.defer();
+	$http.post(urls.USER_SERVICE_API+ "findByUser", user)
+			.then(function(response) {
+				console.log('Fetched successfully  stats ');
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while loading  stats');
+				deferred.reject(errResponse);
+			});
+	return deferred.promise;
+}
         }
     ]);

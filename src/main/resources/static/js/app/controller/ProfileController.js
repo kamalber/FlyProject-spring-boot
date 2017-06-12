@@ -1,6 +1,6 @@
 monApp.controller('ProfileController',
-    ['$rootScope','TwitterService','AcountService','AuthSession','Upload','$timeout','$scope','$location','$sessionStorage',
-     function($rootScope,TwitterService,AcountService,AuthSession,Upload,$timeout,$scope,$location,$sessionStorage) {
+    ['$rootScope','TwitterService','PostService','AcountService','AuthSession','Upload','$timeout','$scope','$location','$sessionStorage',
+     function($rootScope,TwitterService,PostService,AcountService,AuthSession,Upload,$timeout,$scope,$location,$sessionStorage) {
     	var self=this;
 		self.user={// this is the parameters object that contain the search criteria
     			'username':'',
@@ -11,6 +11,8 @@ monApp.controller('ProfileController',
        
         self.addKeyWords = addKeyWordToList;
         self.twitterKeWords=[];
+        self.userPosts={};
+        loadUSerPost();
         loadKeyWords();
 
 /*       -- variable             */
@@ -29,6 +31,8 @@ monApp.controller('ProfileController',
             }).then(function (response) {
                 $timeout(function () {
                     $scope.result = response.data;
+                    $sessionStorage.connected=response.data;
+                    self.connected= response.data;
                 });
             }, function (response) {
                 if (response.status > 0) $scope.errorMsg = response.status 
@@ -81,5 +85,19 @@ monApp.controller('ProfileController',
 	       );
 	    	  
 	      }
-	      
+
+	    function  loadUSerPost(){
+	    	
+	    	  PostService.findByUser()
+	    	  .then(function(res){
+	    	  self.userPosts=res;
+	    	  },
+	    	  function(errorMessage){
+	    		  $scope.message = 'Failed load twitter key words! '+errorMessage;
+	    		 
+	    	  }
+	       );
+	    	  
+	      }
+
 }]);

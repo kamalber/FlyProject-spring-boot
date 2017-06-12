@@ -21,7 +21,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	
 	   @Query("SELECT COUNT(t) FROM Post t WHERE t.user=:user AND t.generalSentiment=:senti AND "
 	   		+ "date between :start and :end")
-	   public Long countSentimentByKeyWordAnd(@Param("user") User user,
+	   public Long countSentimentByUserandDate(@Param("user") User user,
 			   @Param("senti") Post.sentiment senti,@Param("start") Date startDate,@Param("end") Date endDate);
 	   
 	   @Query("SELECT COUNT(t) FROM Post t WHERE t.user=:user AND t.generalSentiment=:senti")
