@@ -1,4 +1,4 @@
-var monApp=angular.module('monApp', ['ngRoute','ngStorage','chart.js','moment-picker','xs.ui.wizard','ngFileUpload', 'ngImgCrop'])
+var monApp=angular.module('monApp', ['ngRoute','ngStorage','chart.js','moment-picker','xs.ui.wizard','ngFileUpload', 'ngImgCrop','ui.select','ngSanitize'])
 .value('XS_WIZARD_TEMPLATE_DIR', '/views'); 
 monApp.constant('urls', {
 	BASE: 'http://localhost:8080/',

@@ -31,6 +31,14 @@
 						<div class=" form-group pull-right top_search">
 							<div class="input-group">
 								
+								<ui-select ng-model="selected.value">
+                                 <ui-select-match>
+                                  <span ng-bind="$select.selected.name"></span>
+                                   </ui-select-match> <ui-select-choices
+										repeat="item in (itemArray | filter: $select.search) track by item.id">
+									<span ng-bind="item.name"></span> </ui-select-choices>
+                                    </ui-select>
+								
 							<button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button" aria-expanded="true"> Dropdown <span class="caret"></span> </button>
                           <ul class="dropdown-menu">
                             <li ng-repeat="x in ctrl.keyWordList" ><a ng-click="ctrl.selectKeyWord(x)">{{x.word}}</a>
@@ -204,3 +212,4 @@
 <!--  div for showing setiments post -->
 <div class="row">
 </div>
+

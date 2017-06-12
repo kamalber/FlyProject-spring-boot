@@ -2,7 +2,7 @@
 		<div
 			class="col-md-3 col-sm-3 col-xs-3 form-group pull-right top_search">
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search for...">
+				<input type="text" class="form-control" ng-model="searchText" placeholder="">
 				<span class="input-group-btn">
 					<button class="btn btn-default" type="button">Go!</button>
 				</span>
@@ -46,7 +46,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="u in ctrl.users">
+						<tr ng-repeat="u in ctrl.users | filter:searchText">
 							<td>#</td>
 							<td><a>{{u.fullName}}</a> <br> <small>Created
 									01.01.2015</small></td>
