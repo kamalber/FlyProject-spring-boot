@@ -179,7 +179,8 @@ public class TweetAnalyseService {
 	}
 
 	public String getAnalyseByNLTK(String content) throws Exception {
-		
+		content = content.replace(" ", "%20");
+		content = content.replace(":", "%20");
 		String url = "http://localhost:8000/" + this.unicodeSentence(content);
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -461,7 +462,7 @@ public class TweetAnalyseService {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpPost postRequest = new HttpPost(
 				"https://cloud-api.gate.ac.uk/process-document/generic-opinion-mining-english?annotations=Sentiment:SentenceSet");
-		json.put("text", content);
+		json.put("text", this.unicodeSentence(content));
 		
 		StringEntity input = new StringEntity(json.toString());
 		input.setContentType("application/json");
@@ -516,8 +517,8 @@ public class TweetAnalyseService {
 				twitte.setDate(tweet.getCreatedAt());
 				gateSenti=this.getAnalyseByGateApi(twitte.getText());
 				twitte.setGateSentment(Post.sentiment.valueOf(gateSenti));
-				//ntlkSenti=this.getAnalyseByNLTK(twitte.getText());
-				//twitte.setNltkSentment(Post.sentiment.valueOf(ntlkSenti));
+				ntlkSenti=this.getAnalyseByNLTK(twitte.getText());
+				twitte.setNltkSentment(Post.sentiment.valueOf(ntlkSenti));
 				dumaxSenti=this.getAnalyseByDumax(twitte.getText());
 				twitte.setDumaxSentment(Post.sentiment.valueOf(dumaxSenti));
 				combainingSenti=this.getMaxPolarityByTools(gateSenti, dumaxSenti, "positive");

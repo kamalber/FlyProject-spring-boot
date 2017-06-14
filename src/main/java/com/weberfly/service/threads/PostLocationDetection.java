@@ -2,7 +2,6 @@ package com.weberfly.service.threads;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.security.Principal;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,7 +17,7 @@ import com.weberfly.entities.Session;
 import com.weberfly.entities.User;
 import com.weberfly.service.CountryService;
 import com.weberfly.service.LocationService;
-import com.weberfly.service.SessionService;
+
 import com.weberfly.service.UserService;
 
 public class PostLocationDetection extends Thread {
@@ -34,7 +33,7 @@ public class PostLocationDetection extends Thread {
 	User connectd;
 
 	public PostLocationDetection() {
-		this.connectd= (User)session.getAttribute("connected");
+		this.connectd= (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 	@Override

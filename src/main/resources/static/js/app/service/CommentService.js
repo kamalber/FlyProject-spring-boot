@@ -4,6 +4,7 @@ monApp.factory('CommentService',
     	
             var factory = {
                 getAll: getAll,
+                getCommentsPolarity:getCommentsPolarity,
                 get: get,
                 create: create
                 
@@ -16,10 +17,12 @@ monApp.factory('CommentService',
            
 
             function getAll(){
+            	CrudEngine.setUrl(urls.COMMENT_SERVICE_API);
                 return CrudEngine.getAll();
             }
 
             function get(id) {
+            	CrudEngine.setUrl(urls.COMMENT_SERVICE_API);
             	return CrudEngine.get(id);
             }
 
@@ -28,7 +31,19 @@ monApp.factory('CommentService',
             	return CrudEngine.create(comment);
             }
             
-         
+            function getCommentsPolarity(post){
+            	var deferred = $q.defer();
+            	$http.post(urls.COMMENT_SERVICE_API+ "commentPolarity", post)
+            			.then(function(response) {
+            				console.log('Fetched successfully  stats ');
+            				deferred.resolve(response.data);
+            			}, function(errResponse) {
+            				console.error('Error while loading  stats');
+            				deferred.reject(errResponse);
+            			});
+            	return deferred.promise;
+            }
+                    
 
         }
     ]);

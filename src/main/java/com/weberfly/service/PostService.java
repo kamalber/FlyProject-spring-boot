@@ -21,13 +21,13 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.weberfly.dao.CategoryItemRepository;
 import com.weberfly.dao.PostRepository;
 import com.weberfly.dao.PublicationRepository;
 import com.weberfly.entities.CategoryItem;
+import com.weberfly.entities.Location;
 import com.weberfly.entities.Post;
 import com.weberfly.entities.Publication;
 import com.weberfly.entities.User;
@@ -35,20 +35,21 @@ import com.weberfly.util.CustomStatsParams;
 import com.weberfly.util.Polarity;
 import com.weberfly.util.PostSentimentStats;
 import com.weberfly.util.SentimentStats;
+
 @Service
 public class PostService {
-	
+
 	@Autowired
 	private PostRepository postRepository;
 	@Autowired
 	private PublicationRepository publicationRepository;
 	@Autowired
-	private CategoryItemRepository categoryItemRepository;
-	@Autowired
 	TweetAnalyseService tweetAnalyseService;
 	@Autowired
+	LocationService locatonService;
+	@Autowired
 	HttpSession session;
-	
+
 	public static final String USER_AGENT = "Mozilla/5.0";
 
 	public static String[] readLines(URL url) throws IOException {
@@ -65,86 +66,77 @@ public class PostService {
 
 		return lines.toArray(new String[lines.size()]);
 	}
-	
-	public List<Post> findByUser(User u){
+
+	public List<Post> findByUser(User u) {
 		return postRepository.findByUser(u);
 	}
+
 	public void savePost(Post post) throws Exception {
 		String content = post.getContent();
-		// testGateApi();
-		List<String>tests = new ArrayList<>();
-		tests.add("I tink this is normal");
-		tests.add("I go to scool");
-		tests.add("i hate this movie");
-		tests.add("nice beach");
-	        
-//		System.out.println(getTestAnalyseByCombining(tests));
-//		System.out.println("Dumax"+getTestAnalyseByDumax(tests));
-//		System.out.println("this is the rate analysis dumax " + getAnalyseRateForDumax());
-//		System.out.println("this is the rate analysis nltk " + getAnalyseRateForNLTK());
-//		System.out.println("this is the rate analysis gate " + getAnalyseRateForGate());
-//		System.out.println(getTwittersByKeyWord("messi"));
-//		System.out.println("Dddd"+getAnalysisTweetsByDumax("zafzafi"));
-//		System.out.println("nnnn"+getAnalysisTweetsByNLTK("zafzafi"));
-//		System.out.println("Gggg"+getAnalysisTweetsByGate("ronaldo"));
-//		System.out.println("Gggg"+getTestAnalyseByGate(tests));
-//    	System.out.println("CCCC"+getAnalysisTweetsBycombining("ronaldo"));		
-		
+
+		// System.out.println(getTestAnalyseByCombining(tests));
+		// System.out.println("Dumax"+getTestAnalyseByDumax(tests));
+		// System.out.println("this is the rate analysis dumax " +
+		// getAnalyseRateForDumax());
+		// System.out.println("this is the rate analysis nltk " +
+		// getAnalyseRateForNLTK());
+		// System.out.println("this is the rate analysis gate " +
+		// getAnalyseRateForGate());
+		// System.out.println(getTwittersByKeyWord("messi"));
+		// System.out.println("Dddd"+getAnalysisTweetsByDumax("zafzafi"));
+		// System.out.println("nnnn"+getAnalysisTweetsByNLTK("zafzafi"));
+		// System.out.println("Gggg"+getAnalysisTweetsByGate("ronaldo"));
+		// System.out.println("Gggg"+getTestAnalyseByGate(tests));
+		// System.out.println("CCCC"+getAnalysisTweetsBycombining("ronaldo"));
+
 		// GateSentiment
 		String gatesentiment = tweetAnalyseService.getAnalyseByGateApi(content);
 		// System.out.println(gatesentiment);
-		Post.sentiment sentGate= Post.sentiment.valueOf(gatesentiment);	
-		post.setGateSentment(sentGate);	
-		
+		Post.sentiment sentGate = Post.sentiment.valueOf(gatesentiment);
+		post.setGateSentment(sentGate);
+
 		// DumaxSentiement
 		String dumaxsentiment = tweetAnalyseService.getAnalyseByDumax(content);
 		// System.out.println("----------------------"+dumaxsentiment);
 		Post.sentiment sentDumax = Post.sentiment.valueOf(dumaxsentiment);
 		post.setDumaxSentment(sentDumax);
-			
+
 		// NLTK Sentiment
-//		content = content.replace(" ", "%20");
-//		content = content.replace(":", "%20");
-//		String nltkSentiment = tweetAnalyseService.getAnalyseByNLTK(content);
-//		Post.sentiment sentNltk= Post.sentiment.valueOf(nltkSentiment);	
-//		post.setNltkSentment(sentNltk);
-		
-		
-		// a supprimer
-				String nltkSentiment = "neutral";
-				Post.sentiment sentNltk= Post.sentiment.valueOf(nltkSentiment);	
-				post.setNltkSentment(sentNltk);
-		
-				
+		content = content.replace(" ", "%20");
+		content = content.replace(":", "%20");
+		String nltkSentiment = tweetAnalyseService.getAnalyseByNLTK(content);
+		Post.sentiment sentNltk = Post.sentiment.valueOf(nltkSentiment);
+		post.setNltkSentment(sentNltk);
+
 		// General sentiment
-		String generalSentiment = tweetAnalyseService.getMaxPolarityByTools(gatesentiment, dumaxsentiment, nltkSentiment);
-		Post.sentiment sentGeneral= Post.sentiment.valueOf(generalSentiment);	
+		String generalSentiment = tweetAnalyseService.getMaxPolarityByTools(gatesentiment, dumaxsentiment,
+				nltkSentiment);
+		Post.sentiment sentGeneral = Post.sentiment.valueOf(generalSentiment);
 		post.setGeneralSentiment(sentGeneral);
 
+		// List<CategoryItem> categoryItems = categoryItemRepository.findAll();
+		// List<CategoryItem> pubcategoryItems = new ArrayList<>();
+		// for (CategoryItem item : categoryItems) {
+		// if (content.toLowerCase().contains(item.getName().toLowerCase())) {
+		// pubcategoryItems.add(item);
+		// }
+		// }
+		// post.setCategoryItems(pubcategoryItems);
 
-		List<CategoryItem> categoryItems = categoryItemRepository.findAll();
-		List<CategoryItem> pubcategoryItems = new ArrayList<>();
-		for (CategoryItem item : categoryItems) {
-			if (content.toLowerCase().contains(item.getName().toLowerCase())) {
-				pubcategoryItems.add(item);
-			}
-		}
-		//post.setCategoryItems(pubcategoryItems);
-      
-		User u=(User)session.getAttribute("connected");
-		if(u!=null){
-		//post.setUser(u);
-		System.out.println(u);
+	
+		User u = (User) session.getAttribute("connected");
+		Location location=locatonService.find(u.getSession().getIpUser());
+		post.setLocation(location);
+		if (u != null) {
+			// post.setUser(u);
 		}
 		postRepository.save(post);
 	}
+
 	public List<Post> getAll() {
 		return postRepository.findAll();
 
 	}
-
-	
-
 
 	public Post findPost(Long id) {
 		return postRepository.findOne(id);
@@ -154,20 +146,16 @@ public class PostService {
 		return publicationRepository.findOne(id);
 	}
 
-
 	// get analysed post between two dates
 
-
-	
-	        // get analysed post between two dates 
-	public List<Post> getAnalysedPosts(String querySearche,String startDate, String endDate){
+	// get analysed post between two dates
+	public List<Post> getAnalysedPosts(String querySearche, String startDate, String endDate) {
 
 		DateFormat formatter = new SimpleDateFormat("yy-dd-MM");
-		CategoryItem item = categoryItemRepository.findByNameIgnoreCase(querySearche);
-		List<CategoryItem> items = null;
-		if (item != null) {
-			items = new ArrayList<>();
-			items.add(item);
+//		CategoryItem item = categoryItemRepository.findByNameIgnoreCase(querySearche);
+//		List<CategoryItem> items = null;
+	
+		
 			Date dateStart, dateEnd;
 			try {
 				dateStart = formatter.parse(startDate);
@@ -176,12 +164,10 @@ public class PostService {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-		}
 		return null;
 	}
 
 	public PostSentimentStats getStats(CustomStatsParams params) {
-		
 
 		if (params.getStartYear() != 0) {
 			if (params.getEndYear() != 0) {
@@ -249,12 +235,12 @@ public class PostService {
 		}
 		System.out.println("statisticsss  " + stats.getPositiveDataCount());
 		return stats;
- 
+
 	}
 
 	private PostSentimentStats getAnalysedItemstatsTemplate(CustomStatsParams params, String title) {
 		PostSentimentStats stats = new PostSentimentStats();
-	
+
 		Date dateStart = getStartDateFromYear(params.getStartYear());
 		Date dateEnd = params.getEndYear() != 0 ? getEndDateFromYear(params.getEndYear())
 				: getEndDateFromYear(params.getStartYear());
@@ -265,12 +251,14 @@ public class PostService {
 		}
 
 		String sentimentMethode = "";
-		if (params.getSentimentMethode() == 0) {
-			sentimentMethode = "getDumaxSentment";
-		} else if (params.getSentimentMethode() == 1) {
+		if (params.getSentimentMethode() == 1) {
 			sentimentMethode = "getNltkSentment";
-		} else {
-			sentimentMethode = "getOtherSentment";
+		} else if (params.getSentimentMethode() == 2) {
+			sentimentMethode = "getGateSentment";
+		} else if(params.getSentimentMethode() == 3) {
+			sentimentMethode = "getDumaxSentment";
+		}else{
+			sentimentMethode = "getGeneralSentiment";
 		}
 		for (Post p : Items) {
 			Post.sentiment senti = null;
@@ -373,6 +361,4 @@ public class PostService {
 
 	}
 
-	}
-
-
+}

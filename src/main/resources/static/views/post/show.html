@@ -1,91 +1,159 @@
 <ng-include src="'naveBarleft.html'"></ng-include>
  
+
+ 
   <div class="col-md-6 col-sm-6 col-xs-6 ">
-  <div class="row">
-<div class="x_panel">
-            <!-- Blog Post Content Column -->
-            <div class="col-lg-12">
+ 
+ 
+ 		<div class="row">
+			<div class="x_panel">
+				<div class="x_title">
+					
+				
+         <a href="javascript:;"
+								class="user-profile dropdown-toggle" data-toggle="dropdown"
+								aria-expanded="false"> <img src="images/{{post.user.profile.image}}"
+									alt="">{{post.user.fullName}} 
+							
+							</a>
+							
+								
+             
+					<a ng-if="p.generalSentiment == 'positive'"  class="label label-success  col-md-offset-5">{{post.generalSentiment}}</a>
+					<a ng-if="p.generalSentiment == 'negative'"  class="label label-danger   col-md-offset-5">{{psot.generalSentiment}}</a>
+					<a ng-if="p.generalSentiment == 'neutral'"  class="label label-default  col-md-offset-5">{{post.generalSentiment}}</a>
+					<ul class="nav navbar-right panel_toolbox">
+				
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-expanded="false"><i
+								class="fa fa-wrench"></i></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Settings 1</a></li>
+								<li><a href="#">Settings 2</a></li>
+							</ul></li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+				
+				<div class="row">
 
-                <!-- Blog Post -->
-
-	
-  <div class="media" >
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">{{post.user.username}}
-                            <small>{{post.date}}</small>
-                        </h4>
-                      {{post.content}}                        
-                    </div>
-                </div>
-                <hr>
-
-<!--                 Date/Time -->
-<!--                 <p><i class="fa fa-clock-o"></i> Posted on {{post.date}}</p> -->
-                
-
-<!--                 <hr> -->
-
-<!--                 Preview Image -->
-<!--                 <img class="img-responsive" src="http://placehold.it/900x300" alt=""> -->
-
-<!--                 <hr> -->
-
-<!--                 Post Content -->
-<!--                 <p data-ng-blur>{{post.content}}</p> -->
-                
-<!--                 <hr> -->
-
-                <!-- Blog Comments -->
-
-                <!-- Comments Form -->
+</div>
+<blockquote class="blockquote">
+                      <p>{{post.content}}</p>
+<!--                         <footer>Someone famous in <cite title="Source Title">Source Title</cite> -->
+<!--                         </footer> -->
+                      </blockquote>
+					
+	<hr>
+					<div class="row">
+						<div class="col-md-6 " >
+							<i class="fa fa-clock-o"></i> Posted on {{post.date | date:"EEE, d
+							MMM yyyy 'at' hh:mm a"}}
+						</div>
+				    <!-- Comments Form -->
                 <form ng-submit="ctrl.submitComment()" name="myForm" class="form-group">
-                <div class="well">
-                    <h4>Leave a Comment:</h4>
+                
+              
                     <form role="form">
                         <div class="form-group">
                             <textarea ng-model="ctrl.comment.text" class="form-control" rows="3"></textarea>
                         </div>
                          <button type="submit"  class="btn btn-primary " ng-disabled="myForm.$invalid || myForm.$pristine">Submit</button>
                     </form>
-                    </div>
+                    
                     </form>
                
-               
+               </div>
+				
+				
+											</div>
+				</div>
 
-                <hr>
+			
 
-                <!-- Posted Comments -->
 
-                <!-- Comment -->
-           
+		</div>
+ 
 
-                <!-- Comment -->
-                <div class="media" ng-repeat="c in post.comments ">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">{{c.user.username}}
-                            <small>{{c.date}}</small>
-                        </h4>
-                      {{c.text}}                        
-                    </div>
-                </div>
 
-           
- </div>
-            <!-- Blog Sidebar Widgets Column -->
-          
+  	<div class="row">
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>post comments </h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"><i
+						class="fa fa-wrench"></i></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Settings 1</a></li>
+						<li><a href="#">Settings 2</a></li>
+					</ul></li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			 <ul class="messages">
+                              <li ng-repeat="c in post.comments">
+                                <img src="/images/{{c.user.profile.image}}" class="avatar" alt="Avatar">
+                                <div class="message_date">
+                                  <p class="date text-info">{{c.date}}</p>
+                              
+                                </div>
+                                <div class="message_wrapper">
+                                  <h4 class="heading">{{c.user.fullName}}</h4>
+                                  <blockquote class="message">{{c.text}}    </blockquote>
+                                  <br>
+                                  <p class="url">
+                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
+                                  </p>
+                                </div>
+                              </li>
+                            </ul>
+		</div>
+	</div>
 </div>
-        </div>
-        </div>
+</div>
+
+            <!-- Blog Sidebar Widgets Column -->
+                     
+
+     
         <!-- /.row -->
       
         <ng-include src="'naveBarRight.html'"></ng-include>
-      <div id="barChartContainer"
-				style="min-width: 500px; height: 450px; margin: 0 auto"></div>
-		
         
+     
+		
+  	<div class="col-sm-4 col-md-3 col-xs-3">
+  	
+	<div class="x_panel">
+		<div class="x_title">
+			<h2>Bar Graph</h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"><i
+						class="fa fa-wrench"></i></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Settings 1</a></li>
+						<li><a href="#">Settings 2</a></li>
+					</ul></li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+			<div id="pieChartContainer" style="min-width: 70px; height: 300px; margin: 0 auto"></div>
+				<div class="clearfix"></div>
+				<div id="barChartContainer" style="min-width: 70px; height: 300px; margin: 0 auto"></div>
+		</div>
+	</div>
+</div>

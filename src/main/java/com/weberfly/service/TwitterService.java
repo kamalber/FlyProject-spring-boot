@@ -147,12 +147,14 @@ public class TwitterService {
 		}
 
 		String sentimentMethode = "";
-		if (params.getSentimentMethode() == 0) {
-			sentimentMethode = "getDumaxSentment";
-		} else if (params.getSentimentMethode() == 1) {
+		if (params.getSentimentMethode() == 1) {
 			sentimentMethode = "getNltkSentment";
-		} else {
-			sentimentMethode = "getOtherSentment";
+		} else if (params.getSentimentMethode() == 2) {
+			sentimentMethode = "getGateSentment";
+		} else if(params.getSentimentMethode() == 3) {
+			sentimentMethode = "getDumaxSentment";
+		}else{
+			sentimentMethode = "getGeneralSentiment";
 		}
 		for (Twitte p : Items) {
 			Post.sentiment senti = null;

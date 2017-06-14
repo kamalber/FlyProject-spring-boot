@@ -1,6 +1,6 @@
 <!-- Custom Theme Style --> 
 <link href="../../build/css/search.css" rel="stylesheet">
-<div class="container" id="search-view" ng-hide="ctrl.searchShow">
+<div class="container" id="search-view" ng-show="ctrl.searchShow">
 	<div class="row" style='padding: 140px 100px 0;'>
 		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 			<h2 align="center">GET SENTIMENT ANALYSYS ON A WORD USING
@@ -57,10 +57,10 @@
 										Sentiment methode <span class="caret"></span>
 									</button>
 									<ul role="menu" class="dropdown-menu">
-										<li><a href="#">NTLTK</a></li>
-										<li><a href="#">java</a></li>
+										<li><a data-target="#">NTLTK</a></li>
+										<li><a data-target="#">java</a></li>
 										<li class="divider"></li>
-										<li><a href="#">Other sentiment</a></li>
+										<li><a data-target="#">Other sentiment</a></li>
 									</ul>
 								</div>
 							</div>

@@ -34,7 +34,7 @@ public class TwitterTimerThread extends Timer {
 		System.out.println("dd" +this.keyWord.getStartDate() + " period" + this.keyWord.getWord());
 		long period = 0;
 		if (this.keyWord.getPeriod() == Period.hourly) {
-			this.schedule(timerTask, this.keyWord.getStartDate(), 86400000/5);
+			this.schedule(timerTask, this.keyWord.getStartDate(), 60000);
 		} else if (this.keyWord.getPeriod() == Period.daily) {
 			period = 86400000 * 7;
 			this.schedule(timerTask,this.keyWord.getStartDate(), 86400000);

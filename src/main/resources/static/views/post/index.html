@@ -93,8 +93,8 @@
 				
          <a href="javascript:;"
 								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="production/images/img.jpg"
-									alt="">{{p.user.username}} 
+								aria-expanded="false"> <img src="images/{{p.user.profile.image}}"
+									alt="">{{p.user.fullName}} 
 							
 							</a>
 								
@@ -119,10 +119,14 @@
 				<div class="x_content">
 				
 				<div class="row">
-    <h2 class="col-md-2 col-md-offset-5">{{p.title}}</h2>
+    
 </div>
-
-					<p>{{p.content}}</p>
+<blockquote class="blockquote">
+                      <p>{{p.content}}</p>
+<!--                         <footer>Someone famous in <cite title="Source Title">Source Title</cite> -->
+<!--                         </footer> -->
+                      </blockquote>
+					
 
 					<hr>
 					<div class="row">

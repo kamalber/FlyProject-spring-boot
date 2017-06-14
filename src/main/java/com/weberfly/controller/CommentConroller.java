@@ -68,9 +68,9 @@ public class CommentConroller {
 	}
 
 	
-	// ------------------- Delete a item-----------------------------------------
+
 //	-------------------- get post comments sentiment --------------------
-	@RequestMapping(value = "/commentPolarity", method = RequestMethod.POST)
+	@RequestMapping(value = "/comments/commentPolarity", method = RequestMethod.POST)
 	public ResponseEntity<?> getCommentSentiment(@RequestBody Post post) {
 		
 		Map<String,Long> stats=commentService.getTotalSentimentByPost(post);

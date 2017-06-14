@@ -1,11 +1,22 @@
 <!-- search page  -->
-<!-- <ng-include src="'views/statistics/searchPage.html'"></ng-include> -->
+
+
+
+<!-- --         hichart api             -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js"></script>
+<script src="https://code.highcharts.com/maps/modules/map.js"></script>
+<script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
+
+
+<ng-include src="'views/statistics/searchPage.html'"></ng-include>
 <!-- </> search page -->
 
 <!--      stats pages      -->
   
   
 <!--   search nave bar -->
+<div ng-show="ctrl.statShow">
 <div class="row" >
 <div class="col-md-4 col-sm-3 col-xs-12">
 	<div class="x_panel">
@@ -45,32 +56,27 @@
 					<div class="row">
 						<div class="col-md-5">
 							<input class="magic-radio" type="radio" checked="checked"
-								name="radio" id="3" value="option" /> <label for="3"
-								class="radio-inline"> platform source</label>
+								name="radio" id="1" value="option" ng-click="ctrl.selectSentiMethode(1)"/> <label for="1"
+								class="radio-inline" > NLTK </label>
 						</div>
 						<div class="col-md-5">
 							<input class="magic-radio" type="radio" name="radio" id="2"
-								value="option" /> <label for="2" class="radio-inline">Twitter
-								source </label>
+								value="option" ng-click="ctrl.selectSentiMethode(2)"/> 
+								<label for="2" class="radio-inline"> Gate api </label>
 						</div>
 					</div>
+					
 					<div class="row">
-						<div class="col-md-3">
-							<div class="btn-group open">
-								<button data-toggle="dropdown"
-									class="btn btn-default dropdown-toggle" type="button"
-									aria-expanded="true">
-									Sentiment methode <span class="caret"></span>
-								</button>
-								<ul role="menu" class="dropdown-menu">
-									<li><a href="#">NTLTK</a></li>
-									<li><a href="#">java</a></li>
-									<li class="divider"></li>
-									<li><a href="#">Other sentiment</a></li>
-								</ul>
-							</div>
+						<div class="col-md-5">
+							<input class="magic-radio" type="radio" checked="checked"
+								name="radio" id="3" value="option" ng-click="ctrl.selectSentiMethode(3)"/> <label for="3"
+								class="radio-inline"> java NaiveBayse</label>
 						</div>
-					</div>
+						<div class="col-md-5">
+							<input class="magic-radio" type="radio" name="radio" id="4"
+								value="option" ng-click="ctrl.selectSentiMethode(4)" />
+								 <label for="4" class="radio-inline">combining </label>
+						</div>					</div>
 					<!-- /.input-group -->
 				</div>
 
@@ -99,7 +105,7 @@
 
 							<div class="input-group" moment-picker="ctrl.params.endYear"
 								format="YYYY">
-								<span class="i	nput-group-addon"> <i
+								<span class="input-group-addon"> <i
 									class="octicon octicon-calendar"></i>
 								</span> <input class="form-control" placeholder="Select a date"
 									ng-model="ctrl.params.endYear"
@@ -108,20 +114,19 @@
 						</div>
 					</div>
 					<br>
-					<div class="row">
-						<div class="col-md-6">month selection</div>
-						<div class="col-md-6">
-
-							<div class="input-group" moment-picker="ctrl.params.month"
-								format="MM">
-								<span class="input-group-addon"> <i
-									class="octicon octicon-calendar"></i>
-								</span> <input class="form-control" placeholder="Select a date"
-									ng-model="ctrl.params.month"
-									ng-model-options="{ updateOn: 'blur' }">
-							</div>
-						</div>
-					</div>
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col-md-6">month selection</div> -->
+<!-- 						<div class="col-md-6"> -->
+<!-- 							<div class="input-group" moment-picker="ctrl.params.month" -->
+<!-- 								format="MM"> -->
+<!-- 								<span class="input-group-addon"> <i -->
+<!-- 									class="octicon octicon-calendar"></i> -->
+<!-- 								</span> <input class="form-control" placeholder="Select a date" -->
+<!-- 									ng-model="ctrl.params.month" -->
+<!-- 									ng-model-options="{ updateOn: 'blur' }"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 
 
 					<!-- /.row -->
@@ -206,7 +211,8 @@
 
 </div>  <!-- </>end line hchart div -->
 
-
+<div id="container" style="max-width: 1000px"> </div>
 <!--  div for showing setiments post -->
 <div class="row">
+</div>
 </div>

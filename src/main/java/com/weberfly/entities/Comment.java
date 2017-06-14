@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.weberfly.entities.Post.sentiment;
+
 
 
 
@@ -24,7 +24,7 @@ import com.weberfly.entities.Post.sentiment;
 @Entity
 @Table(name="Comment")
 public class Comment implements Serializable{
-	
+
 	/**
 	 * Description of the property id.
 	 */
@@ -41,13 +41,13 @@ public class Comment implements Serializable{
     private Post post ;
 	
 	@Enumerated(EnumType.ORDINAL)
-    private sentiment nltkSentment;
+    private Post.sentiment nltkSentment;
 	@Enumerated(EnumType.ORDINAL)
-    private sentiment dumaxSentment;
+    private Post.sentiment dumaxSentment;
 	@Enumerated(EnumType.ORDINAL)
-    private sentiment gateSentment;
+    private Post.sentiment gateSentment;
 	@Enumerated(EnumType.ORDINAL)
-	private sentiment generalSentiment;
+	private Post.sentiment generalSentiment;
 	/**
 	 * Description of the property date.
 	 */
@@ -166,35 +166,35 @@ public class Comment implements Serializable{
 		this.post = post;
 	}
 
-	public sentiment getNltkSentment() {
+	public Post.sentiment getNltkSentment() {
 		return nltkSentment;
 	}
 
-	public void setNltkSentment(sentiment nltkSentment) {
+	public void setNltkSentment(Post.sentiment nltkSentment) {
 		this.nltkSentment = nltkSentment;
 	}
 
-	public sentiment getDumaxSentment() {
+	public Post.sentiment getDumaxSentment() {
 		return dumaxSentment;
 	}
 
-	public void setDumaxSentment(sentiment dumaxSentment) {
+	public void setDumaxSentment(Post.sentiment dumaxSentment) {
 		this.dumaxSentment = dumaxSentment;
 	}
 
-	public sentiment getGateSentment() {
+	public Post.sentiment getGateSentment() {
 		return gateSentment;
 	}
 
-	public void setGateSentment(sentiment gateSentment) {
+	public void setGateSentment(Post.sentiment gateSentment) {
 		this.gateSentment = gateSentment;
 	}
 
-	public sentiment getGeneralSentiment() {
+	public Post.sentiment getGeneralSentiment() {
 		return generalSentiment;
 	}
 
-	public void setGeneralSentiment(sentiment generalSentiment) {
+	public void setGeneralSentiment(Post.sentiment generalSentiment) {
 		this.generalSentiment = generalSentiment;
 	}
 

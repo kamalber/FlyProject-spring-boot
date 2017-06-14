@@ -17,7 +17,7 @@ monApp.controller('PostController',
         self.successMessage = '';
         self.errorMessage = '';
         self.done = false;
-
+        self.chartShowBool=false;
         self.onlyIntegers = /^\d+$/;
         self.onlyNumbers = /^\d+([,.]\d+)?$/;
         
@@ -48,7 +48,7 @@ monApp.controller('PostController',
             CommentService.create(comment)
                 .then(
                     function (commentResult) {
-                        
+                    	getCommentsPolarity(getCurrent());
                         self.done = true;                     
                         $scope.post.comments.unshift(commentResult);
                         console.log(commentResult);
@@ -105,6 +105,7 @@ monApp.controller('PostController',
         }
 
         function getAll(){
+        	self.chartShowBool=false;
         	console.log('About to load all posts');
              PostService.getAll()
                   .then(
@@ -143,7 +144,7 @@ monApp.controller('PostController',
             self.errorMessage='';
             console.log('hiiiiiiiiiiiiiiii');
             $sessionStorage.currentPost =Post;
-            
+            getCommentsPolarity(Post);
         }
         
         function reset(){
@@ -153,9 +154,94 @@ monApp.controller('PostController',
             $scope.myForm.$setPristine(); //reset Form
         }
 
-   
-       
-    }
+        function getCommentsPolarity(post){
+           
+            CommentService.getCommentsPolarity(post)
+                .then(
+                    function(data){
+                    	self.chartShowBool=true;
+                    	setStatsToBarChart(data);
+                    	setStatsToPieChart(data);
+                    },
+                    function(errResponse){
+                        console.error('Error');
+                    	self.chartShowBool=false;
+                    }
+                );
+        }
+        function setStatsToBarChart(data){
+        	Highcharts.setOptions({
+	    	    colors:['#058DC7', '#50B432', '#ED561B']
+	    	});
+        	Highcharts.chart('barChartContainer', {
 
+        	    title: {
+        	        text: 'Chart.update'
+        	    },
 
-    ]);
+        	    subtitle: {
+        	        text: 'Plain'
+        	    },
+
+        	    xAxis: {
+        	        categories: ['neutral', 'positive', 'negative']
+        	    },
+
+        	    series: [{
+        	        type: 'column',
+        	        colorByPoint: true,
+        	        data: [data['neutral'], data['positive'], data['negative']],
+        	        showInLegend: false
+        	    }]
+
+        	});
+        }
+        function setStatsToPieChart(data){
+	    	  // Build the chart
+	    	Highcharts.setOptions({
+	    	    colors:['#058DC7', '#50B432', '#ED561B']
+	    	});
+	        Highcharts.chart('pieChartContainer', {
+	            chart: {
+	                plotBackgroundColor: null,
+	                plotBorderWidth: null,
+	                plotShadow: false,
+	                type: 'pie'
+	            },
+	            title: {
+	                text: 'sentiments analysis '
+	            },
+	            tooltip: {
+	                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	            },
+	            plotOptions: {
+	                pie: {
+	                    allowPointSelect: true,
+	                    cursor: 'pointer',
+	                    dataLabels: {
+	                        enabled: false
+	                    },
+	                    showInLegend: true
+	                }
+	            },
+	            series: [{
+	                name: 'Brands',
+	                colorByPoint: true,
+	                data: [{
+	                    name: 'neutral',
+	                    y: data['neutral']
+	                    },
+	                     { name: 'Positive',
+	                    y:  data['positive']
+	                   },
+	                    { name: 'negative',
+		                    y: data['negative']
+	                    }]
+	            }]
+	        });
+	    }
+        function setDataToBarChart(data){
+      	  
+       }   
+        
+    }]);

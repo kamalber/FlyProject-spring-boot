@@ -98,11 +98,7 @@ monApp.controller('CommentController',
                     }
                 );
         }
-
-        
-       
-  
-        
+     
         function reset(){
             self.successMessage='';
             self.errorMessage='';

@@ -62,12 +62,14 @@ public class AcountController {
 	
 	@RequestMapping("/login")
 	public Principal user(Principal principal) {
-	//	PostLocationDetection postDetection = new PostLocationDetection();
-//		applicationContext.getAutowireCapableBeanFactory().autowireBean(postDetection);
-//		postDetection.run();
+		
+	
 		User u=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		session.setAttribute("connected", u);
-	    System.out.println(u);
+	    System.out.println(session.getAttribute("connected"));
+		PostLocationDetection postDetection = new PostLocationDetection();		
+		applicationContext.getAutowireCapableBeanFactory().autowireBean(postDetection);
+		postDetection.run();
 		return principal;
 	}
 	
