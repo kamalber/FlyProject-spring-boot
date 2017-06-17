@@ -1,48 +1,62 @@
-monApp.factory('PostService',
-    ['$localStorage', '$http', '$q', 'urls','CrudEngine',
-        function ($localStorage, $http, $q, urls,CrudEngine) {
-    	
-            var factory = {
-                getAll: getAll,
-                get: get,
-                create: create,
-                findByUser:findByUser
-                
-            };
-         // setting up the specific rest API url to the crud engine
-            CrudEngine.setUrl(urls.POST_SERVICE_API);
-            
-            return factory;
+monApp.factory('PostService', [
+		'$localStorage',
+		'$http',
+		'$q',
+		'urls',
+		'CrudEngine',
+		function($localStorage, $http, $q, urls, CrudEngine) {
 
-           
+			var factory = {
+				getAll : getAll,
+				get : get,
+				create : create,
+				findByUser : findByUser,
+				myPostCommentsPlartiy:getPostCommentsPlarityByUser
 
-            function getAll(){
-            	console.log('About to load all posts2');
-            	
-                return CrudEngine.getAll();
-            }
+			};
+			// setting up the specific rest API url to the crud engine
+			CrudEngine.setUrl(urls.POST_SERVICE_API);
 
-            function get(id) {
-            	CrudEngine.setUrl(urls.POST_SERVICE_API);
-            	return CrudEngine.get(id);
-            }
+			return factory;
 
-            function create(post) {
-            	return CrudEngine.create(post);
-            }
-            
-         
-function findByUser(){
-	var deferred = $q.defer();
-	$http.get(urls.POST_SERVICE_API+ "findByUser")
-			.then(function(response) {
-				console.log('Fetched successfully  stats ');
-				deferred.resolve(response.data);
-			}, function(errResponse) {
-				console.error('Error while loading  stats');
-				deferred.reject(errResponse);
-			});
-	return deferred.promise;
-}
-        }
-    ]);
+			function getAll() {
+				console.log('About to load all posts2');
+
+				return CrudEngine.getAll();
+			}
+
+			function get(id) {
+				CrudEngine.setUrl(urls.POST_SERVICE_API);
+				return CrudEngine.get(id);
+			}
+
+			function create(post) {
+				return CrudEngine.create(post);
+			}
+
+			function findByUser() {
+				var deferred = $q.defer();
+				$http.get(urls.POST_SERVICE_API + "findByUser").then(
+						function(response) {
+							console.log('Fetched successfully  stats ');
+							deferred.resolve(response.data);
+						}, function(errResponse) {
+							console.error('Error while loading  stats');
+							deferred.reject(errResponse);
+						});
+				return deferred.promise;
+			}
+
+			function getPostCommentsPlarityByUser() {
+				var deferred = $q.defer();
+				$http.get(urls.POST_SERVICE_API + "userStats").then(
+						function(response) {
+							console.log('Fetched successfully  stats ');
+							deferred.resolve(response.data);
+						}, function(errResponse) {
+							console.error('Error while loading  stats');
+							deferred.reject(errResponse);
+						});
+				return deferred.promise;
+			}
+		} ]);

@@ -90,6 +90,7 @@ public class PostService {
 		// System.out.println("CCCC"+getAnalysisTweetsBycombining("ronaldo"));
 
 		// GateSentiment
+		System.out.println(content);
 		String gatesentiment = tweetAnalyseService.getAnalyseByGateApi(content);
 		// System.out.println(gatesentiment);
 		Post.sentiment sentGate = Post.sentiment.valueOf(gatesentiment);
@@ -102,12 +103,11 @@ public class PostService {
 		post.setDumaxSentment(sentDumax);
 
 		// NLTK Sentiment
-		content = content.replace(" ", "%20");
-		content = content.replace(":", "%20");
+		
 		String nltkSentiment = tweetAnalyseService.getAnalyseByNLTK(content);
 		Post.sentiment sentNltk = Post.sentiment.valueOf(nltkSentiment);
 		post.setNltkSentment(sentNltk);
-
+		System.out.println("nltk" +nltkSentiment+" dumax "+dumaxsentiment+"gate "+gatesentiment);
 		// General sentiment
 		String generalSentiment = tweetAnalyseService.getMaxPolarityByTools(gatesentiment, dumaxsentiment,
 				nltkSentiment);
@@ -128,7 +128,7 @@ public class PostService {
 		Location location=locatonService.find(u.getSession().getIpUser());
 		post.setLocation(location);
 		if (u != null) {
-			// post.setUser(u);
+			 post.setUser(u);
 		}
 		postRepository.save(post);
 	}

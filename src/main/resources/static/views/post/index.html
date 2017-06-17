@@ -1,4 +1,4 @@
-  
+
 <ng-include src="'naveBarleft.html'"></ng-include>
 <!-- Blog Entries Column -->
 <div class="col-md-6 col-sm-6 col-xs-6 ">
@@ -37,7 +37,8 @@
 						<div class="row">
 							<form role="form">
 								<div class="form-group col-md-12">
-									<label class="col-md-3 control-lable" for="uname">post title ?</label>
+									<label class="col-md-3 control-lable" for="uname">post
+										title ?</label>
 									<div class="col-md-9">
 										<input type="text" ng-model="ctrl.post.title" id="uname"
 											class="username form-control input-sm"
@@ -53,10 +54,11 @@
 									</div>
 								</div>
 								<div class="row">
-								<div class="col-md-4">
-								<button type="submit" class="btn btn-primary btn-sm"
-									ng-disabled="myForm.$invalid || myForm.$pristine">Submit</button>
-									</div></div>
+									<div class="col-md-4">
+										<button type="submit" class="btn btn-primary btn-sm"
+											ng-disabled="myForm.$invalid || myForm.$pristine">Submit</button>
+									</div>
+								</div>
 							</form>
 
 						</div>
@@ -66,14 +68,14 @@
 				</div>
 
 
-<!-- 				<label for="message">New POst :</label> -->
-<!-- 				<textarea id="message" required="required" class="form-control" -->
-<!-- 					name="message" data-parsley-trigger="keyup" -->
-<!-- 					data-parsley-minlength="20" data-parsley-maxlength="100" -->
-<!-- 					data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.." -->
-<!-- 					data-parsley-validation-threshold="10"></textarea> -->
+				<!-- 				<label for="message">New POst :</label> -->
+				<!-- 				<textarea id="message" required="required" class="form-control" -->
+				<!-- 					name="message" data-parsley-trigger="keyup" -->
+				<!-- 					data-parsley-minlength="20" data-parsley-maxlength="100" -->
+				<!-- 					data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.." -->
+				<!-- 					data-parsley-validation-threshold="10"></textarea> -->
 
-<!-- 				<br> <span class="btn btn-primary">Create</span> -->
+				<!-- 				<br> <span class="btn btn-primary">Create</span> -->
 
 
 
@@ -89,21 +91,22 @@
 		<div class="row">
 			<div class="x_panel">
 				<div class="x_title">
-					
-				
-         <a href="javascript:;"
-								class="user-profile dropdown-toggle" data-toggle="dropdown"
-								aria-expanded="false"> <img src="images/{{p.user.profile.image}}"
-									alt="">{{p.user.fullName}} 
-							
-							</a>
-								
-             
-					<a ng-if="p.generalSentiment == 'positive'"  class="label label-success  col-md-offset-5">{{p.generalSentiment}}</a>
-					<a ng-if="p.generalSentiment == 'negative'"  class="label label-danger   col-md-offset-5">{{p.generalSentiment}}</a>
-					<a ng-if="p.generalSentiment == 'neutral'"  class="label label-default  col-md-offset-5">{{p.generalSentiment}}</a>
+
+<div class="col-md-4">
+					<a href="javascript:;" class="user-profile dropdown-toggle"
+						data-toggle="dropdown" aria-expanded="false"> <img
+						src="images/{{p.user.profile.image}}" alt="">{{p.user.fullName}}
+</div>
+<div class="col-md-3">
+					</a> <a ng-if="p.generalSentiment == 'positive'"
+						class="label label-success  col-md-offset-5">{{p.generalSentiment}}</a>
+					<a ng-if="p.generalSentiment == 'negative'"
+						class="label label-danger   col-md-offset-5">{{p.generalSentiment}}</a>
+					<a ng-if="p.generalSentiment == 'neutral'"
+						class="label label-default  col-md-offset-5">{{p.generalSentiment}}</a>
+						</div>
 					<ul class="nav navbar-right panel_toolbox">
-				
+
 						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-expanded="false"><i
@@ -117,30 +120,29 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-				
-				<div class="row">
-    
-</div>
-<blockquote class="blockquote">
-                      <p>{{p.content}}</p>
-<!--                         <footer>Someone famous in <cite title="Source Title">Source Title</cite> -->
-<!--                         </footer> -->
-                      </blockquote>
-					
+
+					<div class="row"></div>
+					<blockquote class="blockquote">
+						<p>{{p.content}}</p>
+						<!--                         <footer>Someone famous in <cite title="Source Title">Source Title</cite> -->
+						<!--                         </footer> -->
+					</blockquote>
+
 
 					<hr>
 					<div class="row">
-						<div class="col-md-6 " >
+						<div class="col-md-6 ">
 							<i class="fa fa-clock-o"></i> Posted on {{p.date | date:"EEE, d
 							MMM yyyy 'at' hh:mm a"}}
 						</div>
 						<div class="col-md-3 col-md-offset-3">
-							<a class="btn btn-info" ng-click="ctrl.edit(p)"
-								href="/layout.html#!/posts/{{p.id}}">Read More <i
-								class="fa fa-angle-right"></i></a>
-	
+							<a class="" ng-click="ctrl.edit(p)"
+								href="/layout.html#!/posts/{{p.id}}">Comment
+								{{(p.comments|filter:query).length}} <i class="fa fa-comments"></i>
+							</a>
+
 						</div>
-						<a class="label label-warning  col-md-offset-5">{{(p.comments|filter:query).length}} comments</a>
+
 					</div>
 				</div>
 

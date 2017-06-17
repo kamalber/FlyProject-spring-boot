@@ -10,6 +10,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -45,7 +46,7 @@ public class Post extends Publication {
 	/**
 	 * Description of the property user.
 	 */
-	@ManyToOne(cascade = CascadeType.ALL )
+	@ManyToOne(cascade = CascadeType.MERGE ,fetch= FetchType.EAGER)
 	private User user ;
 
 	/**

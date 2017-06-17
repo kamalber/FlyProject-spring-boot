@@ -1,10 +1,11 @@
 monApp.controller('PostController',
-    ['PostService','CommentService','$scope','$sessionStorage',  function(PostService, CommentService,$scope,$sessionStorage) {
+    ['PostService','CommentService','$scope','$rootScope','$sessionStorage',  function(PostService, CommentService,$scope,$rootScope,$sessionStorage) {
     	
         var self = this;
      	
         $scope.post=  $sessionStorage.currentPost;      
         self.postList=getAll();
+        getCommentsPolarity(getCurrent());
         self.submitPost = submitPost;
         self.submitComment = submitComment;
         self.getAll = getAll;
@@ -133,16 +134,14 @@ monApp.controller('PostController',
         }
 
         
-        function getCurrent(){
-        	 console.log('Koooooooooooo ----'+ $sessionStorage.currentPost.id);
-             
+        function getCurrent(){             
         	return $sessionStorage.currentPost;
         }
         function edit(Post){
 //        delete $sessionStorage.currentPost
             self.successMessage='';
             self.errorMessage='';
-            console.log('hiiiiiiiiiiiiiiii');
+           
             $sessionStorage.currentPost =Post;
             getCommentsPolarity(Post);
         }
@@ -171,13 +170,13 @@ monApp.controller('PostController',
         }
         function setStatsToBarChart(data){
         	Highcharts.setOptions({
-	    	    colors:['#058DC7', '#50B432', '#ED561B']
+	    	    colors:['#058DC7', '#50B432', '#ED561B','#00000']
 	    	});
         	Highcharts.chart('barChartContainer', {
 
-        	    title: {
-        	        text: 'Chart.update'
-        	    },
+        		title: {
+	                text: ''
+	            },
 
         	    subtitle: {
         	        text: 'Plain'
@@ -209,7 +208,7 @@ monApp.controller('PostController',
 	                type: 'pie'
 	            },
 	            title: {
-	                text: 'sentiments analysis '
+	                text: 'comments setiment polarity'
 	            },
 	            tooltip: {
 	                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

@@ -32,8 +32,8 @@ public class PostLocationDetection extends Thread {
 	HttpSession session;
 	User connectd;
 
-	public PostLocationDetection() {
-		this.connectd= (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	public PostLocationDetection(User u) {
+		this.connectd= u;
 	}
 
 	@Override
