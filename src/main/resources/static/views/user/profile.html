@@ -20,6 +20,7 @@ $(function() {
         }
     }, cb);
     cb(start, end);
+    console.log(start);
 });
 </script>
 <div class="row">
@@ -110,9 +111,10 @@ $(function() {
                           <h2>User Activity Report</h2>
                         </div>
                         <div class="col-md-6">
-<div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
+<div id="reportrange" class="pull-right"
+ style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
     <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-    <span></span> <b class="caret"></b>
+    <span id="dateRange" ></span> <b class="caret"></b>
 </div>
 
                         </div>
@@ -126,7 +128,7 @@ $(function() {
 
                       <div class="" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                          <li role="presentation" class="active"><a data-target="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Recent Activity</a>
+                          <li role="presentation" class="active"><a data-target="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Recent posts</a>
                           </li>
                           <li role="presentation" class=""><a data-target="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Projects Worked on</a>
                           </li>

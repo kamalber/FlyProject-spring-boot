@@ -8,14 +8,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -32,6 +36,7 @@ import org.springframework.stereotype.Service;
 import com.weberfly.entities.Post;
 import com.weberfly.entities.Twitte;
 import com.weberfly.entities.TwitterKeyWord;
+import com.weberfly.util.CombainingDataSource;
 import com.weberfly.util.SentencePolarity;
 import com.weberfly.util.opensource.classifiers.NaiveBayes;
 import com.weberfly.util.opensource.dataobjects.NaiveBayesKnowledgeBase;
@@ -48,6 +53,9 @@ public class TweetAnalyseService {
 
 	@Autowired
 	private TwitterService TwitteService;
+	@Autowired
+	HttpSession session;
+
 	
 	private static final String TWITTER_CONSUMER_KEY = "ECm1eGhFxR2a0IRHuaX5hxytI";
 	private static final String TWITTER_SECRET_KEY = "jQ1u1TcO6NN4OlGL5SBzIIssqVhe5TfeDkNXq2HBYwRDPgfwOb";
@@ -236,6 +244,7 @@ public class TweetAnalyseService {
 		JSONObject json = new JSONObject();
 		List<SentencePolarity> sentencesPolarity = new ArrayList<SentencePolarity>();
 		for (String sentence : filtredsentences) {
+			
 			DefaultHttpClient httpClient = new DefaultHttpClient();
 			HttpPost postRequest = new HttpPost(
 					"https://cloud-api.gate.ac.uk/process-document/generic-opinion-mining-english?annotations=Sentiment:SentenceSet");
@@ -262,6 +271,7 @@ public class TweetAnalyseService {
 			JSONArray dataJsonArray = obj1.getJSONArray("SentenceSet");
 			JSONObject objsent = dataJsonArray.getJSONObject(0);
 			String sentiment = objsent.getString("polarity");
+			System.out.println(sentiment);
 			sentencePolarity.setPolarity(sentiment);
 			sentencePolarity.setSentence(sentence);
 			sentencesPolarity.add(sentencePolarity);
@@ -271,11 +281,12 @@ public class TweetAnalyseService {
 		return sentencesPolarity;
 	}
 
-	public List<SentencePolarity> getTestAnalyseByCombining(List<String> sentences) throws IOException, Exception {
+	public List<SentencePolarity> getTestAnalyseByCombining(List<String> sentences,String polarity) throws IOException, Exception {
 		List<SentencePolarity> sentencesPolarity = new ArrayList<SentencePolarity>();
-		List<SentencePolarity> analyseByDumax = getTestAnalyseByDumax(sentences);
-		List<SentencePolarity> analyseByGate = getTestAnalyseByGate(sentences);
-		List<SentencePolarity> analyseByNltk = getTestAnalyseByNLTK(sentences);
+		List<SentencePolarity> analyseByDumax=CombainingDataSource.dataSource.get("dumax"+polarity);
+		List<SentencePolarity> analyseByGate=CombainingDataSource.dataSource.get("gate"+polarity);
+		List<SentencePolarity> analyseByNltk = CombainingDataSource.dataSource.get("nltk"+polarity);
+		
 
 		for (int i = 0; i < sentences.size(); i++) {
 			SentencePolarity sentencePolarity = new SentencePolarity();
@@ -288,6 +299,7 @@ public class TweetAnalyseService {
 	}
 
 	public  String getMaxPolarityByTools(String gate, String dumax, String nltk) {
+		System.out.println(gate +" "+dumax+ " "+nltk);
 		List<String> sentiments = new ArrayList<String>();
 		sentiments.add(gate);
 		sentiments.add(dumax);
@@ -336,9 +348,9 @@ public class TweetAnalyseService {
 		return getTestAnalyseByNLTK(getTwittersByKeyWord(KeyWord));
 	}
 
-	public List<SentencePolarity> getAnalysisTweetsBycombining(String KeyWord) throws IOException, Exception {
-		return getTestAnalyseByCombining(getTwittersByKeyWord(KeyWord));
-	}
+//	public List<SentencePolarity> getAnalysisTweetsBycombining(String KeyWord) throws IOException, Exception {
+//		return getTestAnalyseByCombining(getTwittersByKeyWord(KeyWord));
+//	}
 
 	private String unicodeSentence(String twitte){
 		String utf8tweet = "";
@@ -379,13 +391,19 @@ public class TweetAnalyseService {
 	}
 
 	public Map<String, Double> getAnalyseRateForEachTools(String method) throws Exception {
-		List<String> positive_sentences = readLines2(
-				PostService.class.getResource("/datasets/DabbabiData/positive_sentences.txt"));
-		List<String> negative_sentences = readLines2(
-				PostService.class.getResource("/datasets/DabbabiData/negative_sentences.txt"));
-		List<String> neutral_sentences = readLines2(
-				PostService.class.getResource("/datasets/DabbabiData/neutral_sentences.txt"));
+		Date d1=new Date();
+		System.out.println(d1);
+//		List<String> positive_sentences = readLines2(
+//				PostService.class.getResource("/datasets/DabbabiData/positive_sentences.txt"));
+//		List<String> negative_sentences = readLines2(
+//				PostService.class.getResource("/datasets/DabbabiData/negative_sentences.txt"));
+//		List<String> neutral_sentences = readLines2(
+//				PostService.class.getResource("/datasets/DabbabiData/neutral_sentences.txt"));
 
+		List<String> positive_sentences = readLines2((URL)session.getAttribute("positiveData"));
+		List<String> negative_sentences = readLines2((URL)session.getAttribute("negativeData"));
+		List<String> neutral_sentences = readLines2((URL)session.getAttribute("neutralData"));
+		
 		Map<String, Double> analyserates = new HashMap<>();
 		List<SentencePolarity> testByPositives = null;
 		List<SentencePolarity> testByNegatives = null;
@@ -394,21 +412,32 @@ public class TweetAnalyseService {
 			testByNegatives = getTestAnalyseByNLTK(negative_sentences);
 			testByPositives = getTestAnalyseByNLTK(positive_sentences);
 			testByNeutrals = getTestAnalyseByNLTK(neutral_sentences);
+			CombainingDataSource.dataSource.put("nltkNeutral", testByNeutrals);
+			CombainingDataSource.dataSource.put("nltkPositive", testByPositives);
+			CombainingDataSource.dataSource.put("nltkNegative", testByNegatives);
 		}
 		if (method == "gate") {
 			testByNegatives = getTestAnalyseByGate(negative_sentences);
 			testByPositives = getTestAnalyseByGate(positive_sentences);
 			testByNeutrals = getTestAnalyseByGate(neutral_sentences);
+			CombainingDataSource.dataSource.put("gateNeutral", testByNeutrals);
+			CombainingDataSource.dataSource.put("gatePositive", testByPositives);
+			CombainingDataSource.dataSource.put("gateNegative", testByNegatives);
 		}
 		if (method == "dumax") {
 			testByPositives = getTestAnalyseByDumax(positive_sentences);
 			testByNegatives = getTestAnalyseByDumax(negative_sentences);
 			testByNeutrals = getTestAnalyseByDumax(neutral_sentences);
+			CombainingDataSource.dataSource.put("dumaxNeutral", testByNeutrals);
+			CombainingDataSource.dataSource.put("dumaxPositive", testByPositives);
+			CombainingDataSource.dataSource.put("dumaxNegative", testByNegatives);
 		}
 		if (method == "general") {
-			testByPositives = getTestAnalyseByCombining(positive_sentences);
-			testByNegatives = getTestAnalyseByCombining(negative_sentences);
-			testByNeutrals = getTestAnalyseByCombining(neutral_sentences);
+			
+			testByPositives = getTestAnalyseByCombining(positive_sentences,"Positive");
+			testByNegatives = getTestAnalyseByCombining(negative_sentences,"Negative");
+			testByNeutrals = getTestAnalyseByCombining(neutral_sentences,"Neutral");
+			
 		}
 		List<String> polarityPos = new ArrayList<String>();
 		List<String> polarityNeg = new ArrayList<String>();
@@ -433,8 +462,11 @@ public class TweetAnalyseService {
 		analyserates.put("Neutral",
 				(double) Collections.frequency(polarityNeu, "neutral") / (polarityNeu.size()) * 100);
 
+		Date d2=new Date();
+		
+		System.out.println(d2);
 		return analyserates;
-
+	
 	}
 
 	public Map<String, Double> getAnalyseRateForDumax() throws Exception {

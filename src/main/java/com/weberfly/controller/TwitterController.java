@@ -1,5 +1,6 @@
 package com.weberfly.controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -72,11 +73,12 @@ public class TwitterController {
 			logger.error("key word list is empty ");
 			return new ResponseEntity(new CustomErrorType("item not found "), HttpStatus.NOT_FOUND);
 		}
-		System.out.println(item);
+	
 	
 		TwitterTimerThread task=new TwitterTimerThread(item,tweetService);
 		applicationContext.getAutowireCapableBeanFactory().autowireBean(item);
 		task.createTAsk();
+		item.setStat(TwitterKeyWord.threadStat.running);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -129,6 +131,8 @@ public class TwitterController {
 				return new ResponseEntity(new CustomErrorType("Unable to create. A item with name " + 
 				item.getWord()+ " already exist."),HttpStatus.CONFLICT);
 			}
+			item.setDateCreation(new java.util.Date());
+			item.setStat(TwitterKeyWord.threadStat.stoped);
 			twitterKeyWordService.save(item);
 
 			HttpHeaders headers = new HttpHeaders();

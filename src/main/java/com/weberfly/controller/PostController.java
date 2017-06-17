@@ -88,7 +88,7 @@ public class PostController {
 
 		// -------------------Retrieve Single item by User------------------------------------------
 
-		@RequestMapping(value = "/posts/byUser", method = RequestMethod.GET)
+		@RequestMapping(value = "/posts/findByUser", method = RequestMethod.GET)
 		public ResponseEntity<?> getItems() {
 			User u=(User)session.getAttribute("connected");
 			List<Post> items = postservice.findByUser(u);

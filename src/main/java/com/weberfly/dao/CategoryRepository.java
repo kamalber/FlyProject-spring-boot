@@ -7,7 +7,5 @@ import com.weberfly.entities.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long>{
 
-	    public Category findByType(String type);
-	 
-		public Category findByName(String Name);
+		public Category findByTitle(String title);
 }

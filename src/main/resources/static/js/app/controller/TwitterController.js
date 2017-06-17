@@ -1,5 +1,6 @@
 monApp.controller('TwitterController',
-    ['$rootScope','TwitterService','AuthSession','$scope','$location','$http',  function($rootScope,TwitterService,AuthSession,$scope,$location,$http) {
+    ['$rootScope','TwitterService','AuthSession','$scope','$location','$http',
+     function($rootScope,TwitterService,AuthSession,$scope,$location,$http) {
     	var self=this;
 		self.keyWord={};
 		self.periodList=[
@@ -8,7 +9,10 @@ monApp.controller('TwitterController',
 	             {'id':3,'period':'evrey week'}
 	                	];
         self.twitterKeyWordList=[];
+        self.categoryList=[];
         loadKeyWords();
+        loadAllCategory();
+        
         self.reset = reset;
         self.submit = submit;
         self.edit = edit;
@@ -42,6 +46,19 @@ monApp.controller('TwitterController',
             }
         }
        
+        function loadAllCategory(){
+        	
+             TwitterService.loadAllCategory()
+                  .then(
+                     function(cateroyResults){
+                    	 self.categoryList=self.cateroyResults;
+                    	
+                     },
+                     function(errResponse){
+                         console.error('Error while loading category, Error :'+errResponse.data);
+                     }
+                 );
+        }
         
         function create(keyWord ) {
             console.log('About to create category');

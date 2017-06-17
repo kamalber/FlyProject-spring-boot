@@ -11,6 +11,7 @@ monApp.factory('TwitterService',
                      create: createKeyWord,
                      update: updateKeyWord,
                      remove: removeKeyWord,
+                     loadAllCategory:loadAllCategory
                      
                
             };
@@ -71,6 +72,21 @@ monApp.factory('TwitterService',
                    .then(
                        function (response) { 
                            deferred.resolve(response);
+                       },
+                       function (errResponse) {
+                           
+                           deferred.reject(errResponse);
+                       }
+                   );
+               return deferred.promise;
+           
+           }
+           function loadAllCategory(){
+               var deferred = $q.defer();
+               $http.get(urls.CATEGORY_SERVICE_API)
+                   .then(
+                       function (response) { 
+                           deferred.resolve(response.data);
                        },
                        function (errResponse) {
                            

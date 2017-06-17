@@ -2,6 +2,7 @@ package com.weberfly.controller;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,10 +75,11 @@ public class CategoryController {
 		logger.info("Creating item : {}", item);
 logger.info("{}",categoryService.isExist(item));
 		if (categoryService.isExist(item)) {
-			logger.error("Unable to create. A item with name {} already exist", item.getName());
+			logger.error("Unable to create. A item with name {} already exist", item.getTitle());
 			return new ResponseEntity(new CustomErrorType("Unable to create. A item with name " + 
-			item.getName()+ " already exist."),HttpStatus.CONFLICT);
+			item.getTitle()+ " already exist."),HttpStatus.CONFLICT);
 		}
+		item.setDateCreation(new Date());
 		categoryService.save(item);
 
 		HttpHeaders headers = new HttpHeaders();
@@ -99,7 +101,7 @@ logger.info("{}",categoryService.isExist(item));
 					HttpStatus.NOT_FOUND);
 		}
 
-		currentitem.setName(item.getName());
+		currentitem.setTitle(item.getTitle());
 		
 
 		categoryService.save(currentitem);

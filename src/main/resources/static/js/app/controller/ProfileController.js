@@ -7,12 +7,12 @@ monApp.controller('ProfileController',
     			'password':'',
     	};
 		self.error=true;
+		self.dateRange={};
 		self.connected=$sessionStorage.connected;
-       
         self.addKeyWords = addKeyWordToList;
         self.twitterKeWords=[];
-        self.userPosts={};
-        loadUSerPost();
+        self.userPosts=[];
+        loadUserPosts();
         loadKeyWords();
 
 /*       -- variable             */
@@ -22,6 +22,7 @@ monApp.controller('ProfileController',
         
         
         $scope.uploadImage = function (dataUrl, name) {
+        	console.log( $('#dateRange'));
         	console.log("upload");
             Upload.upload({
                 url: 'acount/uploadImg',
@@ -86,7 +87,7 @@ monApp.controller('ProfileController',
 	    	  
 	      }
 
-	    function  loadUSerPost(){
+	    function  loadUserPosts(){
 	    	
 	    	  PostService.findByUser()
 	    	  .then(function(res){

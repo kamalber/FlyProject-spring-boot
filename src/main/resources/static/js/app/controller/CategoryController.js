@@ -40,24 +40,11 @@ monApp.controller('CategoryController',
                         console.log(categoryResult);
                         self.successMessage = 'category created successfully';
                         self.errorMessage='';
-
                         self.done = true;
-                       self.errorMessage='';
-
-                        self.done = true;
-
-
+                        self.errorMessage='';
                         self.categoryList.push(categoryResult);
-
                         console.log(categoryResult);
-
-
-                        console.log(categoryResult);
-
-                      self.categoryList.push(categoryResult);
-
-                        self.categoryList.unshift(categoryResult);
-
+                        self.categoryList.push(categoryResult);
                         self.category={};
                         $scope.myForm.$setPristine();
                         console.log(CategoryService.get(3));

@@ -7,10 +7,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -35,6 +37,8 @@ public class TwitterKeyWord {
 	private Long id;
 
 	private String word;
+	
+	private Date dateCreation;
 
 	@Enumerated(EnumType.STRING)
 	private threadStat stat;
@@ -50,6 +54,9 @@ public class TwitterKeyWord {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "keyWord")
 	private List<Twitte> twittes;
 
+	@ManyToOne(cascade = CascadeType.MERGE ,fetch= FetchType.EAGER)
+	private Category category;
+	
 	
 	public Long getId() {
 		return id;
@@ -102,6 +109,22 @@ public class TwitterKeyWord {
 
 	public void setThreadPlaningDescription(String threadPlaningDescription) {
 		this.threadPlaningDescription = threadPlaningDescription;
+	}
+	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Date getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public class CategoryService {
 		return categoryRepository.findOne(id);
 	}
 	public Boolean isExist(Category Category){
-		return categoryRepository.findByName(Category.getName()) != null;
+		return categoryRepository.findByTitle(Category.getTitle()) != null;
 	}
 	public void delete(Long id){
 		categoryRepository.delete(id);

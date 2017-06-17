@@ -82,6 +82,11 @@ monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpP
 		    	 controller:'UserController',
 		    	 controllerAs:'ctrl',
 		   	}) 
+		   	.when('/compare', {
+		    	 templateUrl: 'views/statistics/compare.html',
+		    	 controller:'CompareController',
+		    	 controllerAs:'ctrl',
+		   	}) 
      .otherwise({redirectTo: '/'});
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);

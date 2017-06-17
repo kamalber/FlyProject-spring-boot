@@ -1,10 +1,13 @@
 package com.weberfly.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.weberfly.entities.User;
 import com.weberfly.service.SessionService;
-
+import com.weberfly.service.TweetAnalyseService;
 import com.weberfly.service.UserService;
 import com.weberfly.service.threads.PostLocationDetection;
 import com.weberfly.util.CustomErrorType;
@@ -40,6 +43,8 @@ public class AcountController {
 	UserService userService;
 	@Autowired
 	SessionService sessionService;
+	@Autowired
+	TweetAnalyseService tweetAnalyseService;
 	
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -73,9 +78,33 @@ public class AcountController {
 		return principal;
 	}
 	
+	@RequestMapping(value = "/compareTols", method = RequestMethod.GET)
+	public ResponseEntity<?> getCompareRate() {
+		Map<String, Map<String, Double>> stats = new HashMap<>();
+		try {
+			Map<String, Double> ntltkAnalyseRAte = tweetAnalyseService.getAnalyseRateForNLTK();
+			stats.put("nltk", ntltkAnalyseRAte);
+			
+			Map<String, Double> dumaxkAnalyseRAte = tweetAnalyseService.getAnalyseRateForDumax();
+			stats.put("dumax", dumaxkAnalyseRAte);
+			Map<String, Double> gatekAnalyseRAte = tweetAnalyseService.getAnalyseRateForGate();
+			stats.put("gate", gatekAnalyseRAte);
+			Map<String, Double> combainingkAnalyseRAte = tweetAnalyseService.getAnalyseRateGeneral();
+			stats.put("combaining", combainingkAnalyseRAte);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+
+		return new ResponseEntity<Map<String, Map<String, Double>>>(stats, HttpStatus.CREATED);
+	}
+	
+	
 	@RequestMapping(value = "/session", method = RequestMethod.GET)
 	public ResponseEntity<?> getConnected() {
-	
+		
 		User user=(User)session.getAttribute("connected");
 		if (user == null) {
 			logger.error("user not found ");
@@ -108,6 +137,69 @@ public class AcountController {
             Files.write(path, bytes);
             user.getProfile().setImage(file.getOriginalFilename());
             userService.update(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+	
+	@RequestMapping(value = "/uploadFilePositive", method = RequestMethod.POST) 
+    public ResponseEntity<?> uploadFile1(@RequestParam("file") MultipartFile file){
+	
+        if (file.isEmpty()) {
+        	return new ResponseEntity(new CustomErrorType(" error file is empty"), HttpStatus.CONFLICT);
+        }
+
+        try {
+
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+            session.setAttribute("positiveData", path.toUri().toURL());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+	@RequestMapping(value = "/uploadFileNegative", method = RequestMethod.POST) 
+    public ResponseEntity<?> uploadFile2(@RequestParam("file") MultipartFile file){
+	
+        if (file.isEmpty()) {
+        	return new ResponseEntity(new CustomErrorType(" error file is empty"), HttpStatus.CONFLICT);
+        }
+
+        try {
+
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            session.setAttribute("negativeData", path.toUri().toURL());
+            Files.write(path, bytes);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+	@RequestMapping(value = "/uploadFileNeutral", method = RequestMethod.POST) 
+    public ResponseEntity<?> uploadFile3(@RequestParam("file") MultipartFile file){
+	
+        if (file.isEmpty()) {
+        	return new ResponseEntity(new CustomErrorType(" error file is empty"), HttpStatus.CONFLICT);
+        }
+
+        try {
+
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            session.setAttribute("neutralData", path.toUri().toURL());
+            Files.write(path, bytes);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

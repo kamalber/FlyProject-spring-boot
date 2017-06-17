@@ -35,12 +35,6 @@ public class TypeCategory implements Serializable{
 	private String name ;
 
 
-	/**
-	 * Description of the property categorys.
-	 */
-	@OneToMany( mappedBy="type",cascade=CascadeType.ALL)
-	private List<Category> categorys ;
-
 	
 	public Long getId() {
 		return Id;

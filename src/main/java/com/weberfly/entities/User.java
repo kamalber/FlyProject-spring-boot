@@ -111,9 +111,10 @@ public  class User implements UserDetails{
 	 @JoinTable(name = "User_Folowers", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "folowing_id", referencedColumnName = "id"))
 	private List<User> following;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	 @JoinTable(name = "User_Categories", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
-	private List<Category> categories;
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	 @JoinTable(name = "User_Categories", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+//	private List<Category> categories;
+	
 	@ManyToMany(mappedBy="following")
 	private List<User> users;
 	
@@ -209,11 +210,6 @@ public Session getSession(){
 		this.following = following;
 	}
 
-	
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
 
 
 	public void setTwitterKeyWords(List<TwitterKeyWord> twitterKeyWords) {

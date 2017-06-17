@@ -5,7 +5,8 @@ monApp.factory('PostService',
             var factory = {
                 getAll: getAll,
                 get: get,
-                create: create
+                create: create,
+                findByUser:findByUser
                 
             };
          // setting up the specific rest API url to the crud engine
@@ -31,9 +32,9 @@ monApp.factory('PostService',
             }
             
          
-function findByUser(user){
+function findByUser(){
 	var deferred = $q.defer();
-	$http.post(urls.USER_SERVICE_API+ "findByUser", user)
+	$http.get(urls.POST_SERVICE_API+ "findByUser")
 			.then(function(response) {
 				console.log('Fetched successfully  stats ');
 				deferred.resolve(response.data);
