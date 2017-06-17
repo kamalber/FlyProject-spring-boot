@@ -11,6 +11,7 @@ monApp.controller('TwitterStatsController',
     	};
 		self.selectKeyWord=selectKeyWord;
 		self.search=getAnalysedTwitteStatsWithStats;
+		self.selectSentiMethode=selectSentiMethode;
 		self.error=true;
         self.successMessage = '';
         self.errorMessage = '';
@@ -37,7 +38,9 @@ monApp.controller('TwitterStatsController',
         	  subItem: { name: 'bSubItem' }
         	}];
      
- 
+        function selectSentiMethode(sentiId){
+			self.params.sentimentMethode=sentiId;
+		}
         
         function selectKeyWord(x){
         	self.params.keyWord=x;
@@ -49,7 +52,10 @@ monApp.controller('TwitterStatsController',
         		 .then(
         		      function(data){
         		      setDataToBarChart(data); 
-        		      setDataToLineChart(data);
+        		      //setDataToLineChart(data);
+        		      self.positiveTweets=data.positiveItems;
+        		      self.negativeTweets=data.negativeItems;
+        		      self.neutralTweets=data.neutralItems;
         		      self.barChartShow=true;
         		      
         	     	 },function(erroResponse){
@@ -76,7 +82,7 @@ monApp.controller('TwitterStatsController',
        	 Highcharts.chart('lineChartContainer', {
 
        		    title: {
-       		        text: 'sentiments analyses of the query (java)'
+       		        text:  'sentiments analyses of the query ( '+self.params.keyWord.word+' )'
        		    },
 
        		    subtitle: {
@@ -114,9 +120,11 @@ monApp.controller('TwitterStatsController',
         }
         
          function setDataToBarChart(data){
+         	
+         	
        	  Highcharts.chart('barChartContainer', {
          	    title: {
-         	        text: 'sentiments analysis for the query (java)'
+         	       text:  'sentiments analyses of the query ( '+self.params.keyWord.word+' )'
          	    },
          	    xAxis: {
          	        categories: Object.values(data.labelSeries)
@@ -133,16 +141,16 @@ monApp.controller('TwitterStatsController',
          	    },
          	    series: [{
          	        type: 'column',
-         	        name: 'positive',
-         	        data: Object.values(data.positiveDataCount)
+         	        name: 'Neutral',
+         	        data: Object.values(data.neutralDataCount)
          	    }, {
          	        type: 'column',
-         	        name: 'negative',
+         	        name: 'Negative',
          	        data: Object.values(data.negativeDataCount)
          	    }, {
          	        type: 'column',
-         	        name: 'neutral',
-         	        data: Object.values(data.neutralDataCount)
+         	        name: 'Positive',
+         	        data: Object.values(data.positiveDataCount)
          	    }, {
          	        type: 'spline',
          	        name: 'Average',
@@ -156,16 +164,16 @@ monApp.controller('TwitterStatsController',
          	        type: 'pie',
          	        name: 'Total ',
          	        data: [{
-         	            name: 'positive',
-         	            y: Object.keys(data.positiveItems).length,
+         	            name: 'Neutral',
+         	            y: Object.keys(data.neutralItems).length,
          	            color: Highcharts.getOptions().colors[0] // Jane's color
          	        }, {
-         	            name: 'negative',
+         	            name: 'Negative',
          	            y: Object.keys(data.negativeItems).length,
          	            color: Highcharts.getOptions().colors[1] // John's color
          	        }, {
-         	            name: 'neutral',
-         	            y: Object.keys(data.neutralItems).length,
+         	            name: 'Positive',
+         	            y: Object.keys(data.positiveItems).length,
          	            color: Highcharts.getOptions().colors[2] // Joe's color
          	        }],
          	        center: [100, 80],

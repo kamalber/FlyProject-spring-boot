@@ -51,7 +51,7 @@ monApp.controller('TwitterController',
              TwitterService.loadAllCategory()
                   .then(
                      function(cateroyResults){
-                    	 self.categoryList=self.cateroyResults;
+                    	 self.categoryList=cateroyResults;
                     	
                      },
                      function(errResponse){
@@ -70,7 +70,7 @@ monApp.controller('TwitterController',
                         self.errorMessage='';
                         self.done = true;
                         self.twitterKeyWordList.unshift(keyWordResult);
-                        self.category={};
+                        self.keyWord={};
                         $scope.myForm.$setPristine();
                     },
                     function (errResponse) {
@@ -191,6 +191,9 @@ monApp.controller('TwitterController',
 	    	);
 	    }
 	    function setStatsToPieChart(data){
+	    	self.positiveCount=data['positive'];
+	    	self.negativeCount=data['negative'];
+	    	self.neutralCount=data['neutral'];
 	    	  // Build the chart
 	    	Highcharts.setOptions({
 	    	    colors:['#058DC7', '#50B432', '#ED561B']

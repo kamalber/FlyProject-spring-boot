@@ -19,23 +19,28 @@ monApp.factory('TwitterService',
             return factory;
             
             function getTwitterKeyWord(){         
+            	 CrudEngine.setUrl(urls.TWITTER_KEY_WORD_SERVICE_API);
                return CrudEngine.getAll();
             }
      
      
             function getKeyWord(id) {
+            	 CrudEngine.setUrl(urls.TWITTER_KEY_WORD_SERVICE_API);
             	return CrudEngine.get(id);
             }
 
             function createKeyWord(categoryType) {
+            	 CrudEngine.setUrl(urls.TWITTER_KEY_WORD_SERVICE_API);
             	return CrudEngine.create(categoryType);
             }
             
             function updateKeyWord(categoryType, id) {
+            	 CrudEngine.setUrl(urls.TWITTER_KEY_WORD_SERVICE_API);
                return CrudEngine.update(categoryType,id);
             }
 
             function removeKeyWord(id) {
+            	 CrudEngine.setUrl(urls.TWITTER_KEY_WORD_SERVICE_API);
             	return CrudEngine.remove(id);
             }
             function getTotalStats(keyWord) {

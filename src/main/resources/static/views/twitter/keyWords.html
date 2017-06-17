@@ -8,7 +8,7 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Form Design <small>different form elements</small></h2>
+                    <h2> from to Add a buzzWord<small>buzzWord detail</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -45,7 +45,7 @@
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Category</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                         
-								<ui-select ng-model="ctrl.params.keyWord.category">
+								<ui-select ng-model="ctrl.keyWord.category">
                                  <ui-select-match>
                                   <span ng-bind="$select.selected.title"></span>
                                    </ui-select-match> <ui-select-choices
@@ -97,7 +97,7 @@
 	<div class="col-md-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>Projects</h2>
+				<h2 class="text-center center-block">BuzzWord List</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</li>
@@ -114,41 +114,28 @@
 			</div>
 			<div class="x_content">
 
-				<p>Simple table with project listing with progress and editing
-					options</p>
 
 				<!-- start project list -->
 				<table class="table table-striped projects">
 					<thead>
 						<tr>
-							<th style="width: 1%">#</th>
-							<th style="width: 20%">Project Name</th>
-							<th>Category</th>
-							<th>Project Progress</th>
-							<th>Status</th>
-							<th style="width: 20%">#Edit</th>
+							<th style="width: ">#</th>
+							<th style="width: ">#twitter buzzWord</th>
+							<th>#Category</th>
+							
+							<th>#Status</th>
+							<th style="width: ">#Edit</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="u in ctrl.twitterKeyWordList">
 							<td>#</td>
 							<td><a>{{u.word}}</a> <br> <small>Created
-									01.01.2015</small></td>
+									{{u.dateCreation | date :  "dd.MM.y" }}</small></td>
 							<td>
-								<ul class="list-inline">
-									<li><img src="images/user.png" class="avatar" alt="Avatar">
-									</li>
-									<li><img src="images/user.png" class="avatar" alt="Avatar">
-									</li>
-								</ul>
+								{{u.category.title}}
 							</td>
-							<td class="project_progress">
-								<div class="progress progress_sm">
-									<div class="progress-bar bg-green" role="progressbar"
-										data-transitiongoal="87" aria-valuenow="86"
-										style="width: 87%;"></div>
-								</div> <small>87% Complete</small>
-							</td>
+							
 							<td>
 							
 								<button ng-if="u.stat == 'running'" type="button" class="btn btn-success btn-xs">Running</button>
@@ -157,7 +144,7 @@
 							</td>
 							<td><button data-toggle="modal" data-target="#myModal" ng-click="ctrl.edit(u.id)" class="btn btn-primary btn-xs">
 							<i class="fa fa-folder"  ></i> plan </button>
-							<button data-toggle="modal" data-target="#pieChartModal" ng-click="ctrl.getTotalStats(u)" class="btn btn-primary btn-xs">
+							<button data-toggle="modal" data-target="#pieChartModal" ng-click="ctrl.getTotalStats(u)" class="btn btn-success  btn-xs">
 							<i class="fa fa-bar-chart"  ></i>  stats </button>
 								
 								<button type="button" ng-click="ctrl.remove(u.id)"
@@ -185,7 +172,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">plan a thread to collect twittes</h4>
+          <h4 class="modal-title">schedule a task to collect tweets</h4>
         </div>
         <div class="modal-body">
           
@@ -195,7 +182,7 @@
 					<div class="form-group"
 						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12"
-							for="thread">Thread planning :</label>
+							for="thread">Task description :</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="text" required class="form-control"
 								ng-model="ctrl.keyWord.threadPlaningDescription" id="thread" name="thread">
@@ -206,7 +193,7 @@
                	<div class="form-group"
 						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12"
-							for="StartDate">Thread planning :</label>
+							for="StartDate">Task start Date  :</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 							<div class="input-group" moment-picker="ctrl.keyWord.startDate"
 								format="YYYY-MM-DD">
@@ -235,8 +222,6 @@
 					
 					
 					
-							<input type="text" required class="form-control"
-								ng-model="ctrl.keyWord.period" id="Period" name="Period">
 						</div>
 					</div>
 				</form>
@@ -261,18 +246,31 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">chart for twittes list </h4>
+          <h4 class="modal-title">collected tweets sentiment analysis  </h4>
         </div>
-        <div class="modal-body">
-            <div ng-show="ctrl.piChartBool" id="pieChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-            
-            <div  ng-show="ctrl.error" class="alert alert-info alert-dismissible fade in" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                    </button>
-                    <strong>{{ctrl.infoMessage}}</strong> .
-                  </div>
-            
-        </div>
+ 		<div class="modal-body">
+			
+				<div class="row text-center center-block">
+					<button type="button" class="btn btn-success btn-xs">{{ctrl.positiveCount}}
+						positive</button>
+					<button type="button" class="btn btn-primary btn-xs">{{ctrl.neutralCount}}
+						neutral</button>
+					<button type="button" class="btn btn-danger btn-xs">{{ctrl.negativeCount}}
+						negative</button>
+				</div>
+				<div ng-show="ctrl.piChartBool" id="pieChart"
+					style="min-width: 310px; height: 300px; max-width: 500px; margin: 0 auto"></div>
+
+				<div ng-show="ctrl.error"
+					class="alert alert-info alert-dismissible fade in" role="alert">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<strong>{{ctrl.infoMessage}}</strong> .
+				</div>
+
+			</div>
         <div class="modal-footer">
             <button type="button" class="btn  btn-warning btn-sm " data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
         </div>
