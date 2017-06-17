@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -67,12 +68,10 @@ public class AcountController {
 	
 	@RequestMapping("/login")
 	public Principal user(Principal principal) {
-		
-	
 		User u=(User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		session.setAttribute("connected", u);
 	    System.out.println(session.getAttribute("connected"));
-		PostLocationDetection postDetection = new PostLocationDetection();		
+		PostLocationDetection postDetection = new PostLocationDetection(u);		
 		applicationContext.getAutowireCapableBeanFactory().autowireBean(postDetection);
 		postDetection.run();
 		return principal;
@@ -104,7 +103,7 @@ public class AcountController {
 	
 	@RequestMapping(value = "/session", method = RequestMethod.GET)
 	public ResponseEntity<?> getConnected() {
-		
+	
 		User user=(User)session.getAttribute("connected");
 		if (user == null) {
 			logger.error("user not found ");
@@ -141,7 +140,7 @@ public class AcountController {
             e.printStackTrace();
         }
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<User>(user,HttpStatus.CREATED);
     }
 	
 	@RequestMapping(value = "/uploadFilePositive", method = RequestMethod.POST) 

@@ -8,11 +8,12 @@ monApp.controller('AcountController',
     	};
 		self.error=true;
         self.login = login;
+
         self.register = register;
         self.addKeyWords = addKeyWordToList;
         self.twitterKeWords=[];
         loadKeyWords();
-
+        $rootScope.logOut=logOut;
 /*       -- variable             */
         var keyWordList=[];
         
@@ -65,7 +66,7 @@ monApp.controller('AcountController',
 	         					// setting the same header value for all request calling from
 	         					// this application
 	         					$http.defaults.headers.common['Authorization'] = 'Basic ' + base64Credential;
-	         					$location.path( "/posts" );
+	         					$location.path( "/tweetStats" );
 	         				} else {
 	         					$scope.message = 'Authetication Failed !';
 	         				}
@@ -75,6 +76,12 @@ monApp.controller('AcountController',
 	                     }
 	                 );
 	        }
+	      
+	       function logOut(){
+	    	   console.log("log out");
+	    	  $sessionStorage.connected=null;
+	    	  $location.path( "/login" );
+	      }
 	      function registerRedirect(){
 	    	  $location.path( "/register" );	
 	      }
