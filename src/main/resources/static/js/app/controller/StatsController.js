@@ -25,7 +25,7 @@ monApp.controller('StatsController',
 	 .then(
 	      function(data){
 	      setDataToBarChart(data); 
-	      setDataToLineChart(data);
+	     // setDataToLineChart(data);
 	      self.searchShow=false;
 	      self.statShow=true;
 	      self.hightchart=true;
@@ -39,111 +39,112 @@ monApp.controller('StatsController',
 	 });
  }
  
- function setDataToLineChart(data){
-	 Highcharts.chart('lineChartContainer', {
-
-		    title: {
-		        text: 'sentiments analyses of the query (java)'
-		    },
-
-		    subtitle: {
-		        text: 'Source: platforme'
-		    },
-
-		    yAxis: {
-		        title: {
-		            text: 'Number of posts'
-		        }
-		    },
-		    legend: {
-		        layout: 'vertical',
-		        align: 'right',
-		        verticalAlign: 'middle'
-		    },
-
-		    xAxis: {
-	  	        categories: Object.values(data.labelSeries)
-	  	    },
-		    series: [{
-		        name: 'positive',
-		        data: Object.values(data.positiveDataCount)
-		    }, {
-		        name: 'neutral',
-		        data: Object.values(data.neutralDataCount)
-		    }, {
-		        name: 'netagive',
-		        data: Object.values(data.negativeDataCount)
-		    }
-		
-		    ]
-
-		});
- }
+// function setDataToLineChart(data){
+//	 Highcharts.chart('lineChartContainer', {
+//
+//		    title: {
+//		        text: 'sentiments analyses of the query (java)'
+//		    },
+//
+//		    subtitle: {
+//		        text: 'Source: platforme'
+//		    },
+//
+//		    yAxis: {
+//		        title: {
+//		            text: 'Number of posts'
+//		        }
+//		    },
+//		    legend: {
+//		        layout: 'vertical',
+//		        align: 'right',
+//		        verticalAlign: 'middle'
+//		    },
+//
+//		    xAxis: {
+//	  	        categories: Object.values(data.labelSeries)
+//	  	    },
+//		    series: [{
+//		        name: 'positive',
+//		        data: Object.values(data.positiveDataCount)
+//		    }, {
+//		        name: 'neutral',
+//		        data: Object.values(data.neutralDataCount)
+//		    }, {
+//		        name: 'netagive',
+//		        data: Object.values(data.negativeDataCount)
+//		    }
+//		
+//		    ]
+//
+//		});
+// }
  
-  function setDataToBarChart(data){
-	  Highcharts.chart('barChartContainer', {
-  	    title: {
-  	        text: 'sentiments analysis for the query (java)'
-  	    },
-  	    xAxis: {
-  	        categories: Object.values(data.labelSeries)
-  	    },
-  	    labels: {
-  	        items: [{
-  	            html: 'Total',
-  	            style: {
-  	                left: '50px',
-  	                top: '18px',
-  	                color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
-  	            }
-  	        }]
-  	    },
-  	    series: [{
-  	        type: 'column',
-  	        name: 'positive',
-  	        data: Object.values(data.positiveDataCount)
-  	    }, {
-  	        type: 'column',
-  	        name: 'negative',
-  	        data: Object.values(data.negativeDataCount)
-  	    }, {
-  	        type: 'column',
-  	        name: 'neutral',
-  	        data: Object.values(data.neutralDataCount)
-  	    }, {
-  	        type: 'spline',
-  	        name: 'Average',
-  	        data: Object.values(data.averageDataCount),
-  	        marker: {
-  	            lineWidth: 2,
-  	            lineColor: Highcharts.getOptions().colors[3],
-  	            fillColor: 'white'
-  	        }
-  	    }, {
-  	        type: 'pie',
-  	        name: 'Total ',
-  	        data: [{
-  	            name: 'positive',
-  	            y: Object.keys(data.positiveItems).length,
-  	            color: Highcharts.getOptions().colors[0] // Jane's color
-  	        }, {
-  	            name: 'negative',
-  	            y: Object.keys(data.negativeItems).length,
-  	            color: Highcharts.getOptions().colors[1] // John's color
-  	        }, {
-  	            name: 'neutral',
-  	            y: Object.keys(data.neutralItems).length,
-  	            color: Highcharts.getOptions().colors[2] // Joe's color
-  	        }],
-  	        center: [100, 80],
-  	        size: 100,
-  	        showInLegend: false,
-  	        dataLabels: {
-  	            enabled: false
-  	        }
-  	    }]
-  	});	
- }
+ function setDataToBarChart(data){
+  	
+  	  Highcharts.chart('barChartContainer', {
+    	    title: {
+    	       text:  'sentiments analyses of the query ( '+self.params.query+' )'
+    	    },
+    	    xAxis: {
+    	        categories: Object.values(data.labelSeries)
+    	    },
+    	    labels: {
+    	        items: [{
+    	            html: 'Total',
+    	            style: {
+    	                left: '50px',
+    	                top: '18px',
+    	                color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+    	            }
+    	        }]
+    	    },
+    	    series: [{
+    	        type: 'column',
+    	        name: 'Neutral',
+    	        data: Object.values(data.neutralDataCount)
+    	    }, {
+    	        type: 'column',
+    	        name: 'Negative',
+    	        data: Object.values(data.negativeDataCount)
+    	    }, {
+    	        type: 'column',
+    	        name: 'Positive',
+    	        data: Object.values(data.positiveDataCount)
+    	    }, {
+    	        type: 'spline',
+    	        name: 'Average',
+    	        data: Object.values(data.averageDataCount),
+    	        marker: {
+    	            lineWidth: 2,
+    	            lineColor: Highcharts.getOptions().colors[3],
+    	            fillColor: 'white'
+    	        }
+    	    }, {
+    	        type: 'pie',
+    	        name: 'Total ',
+    	        data: [{
+    	            name: 'Neutral',
+    	            y: Object.keys(data.neutralItems).length,
+    	            color: Highcharts.getOptions().colors[0] // Jane's color
+    	        }, {
+    	            name: 'Negative',
+    	            y: Object.keys(data.negativeItems).length,
+    	            color: Highcharts.getOptions().colors[1] // John's color
+    	        }, {
+    	            name: 'Positive',
+    	            y: Object.keys(data.positiveItems).length,
+    	            color: Highcharts.getOptions().colors[2] // Joe's color
+    	        }],
+    	        center: [100, 80],
+    	        size: 100,
+    	        showInLegend: false,
+    	        dataLabels: {
+    	            enabled: false
+    	        }
+    	    }]
+    	});	
+   }
   
   
   
