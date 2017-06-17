@@ -6,6 +6,7 @@ package com.weberfly.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -57,8 +58,9 @@ public  class User implements UserDetails{
     private String  role;
     
     private String fullName;
+    private boolean blocked ;
     
-    
+    private Date dateRegister=new Date();
 	/**
 	 * Description of the property session.
 	 */
@@ -173,6 +175,22 @@ public Session getSession(){
 		this.recivedMessages = recivedMessages;
 	}
 
+
+	public Date getDateRegister() {
+		return dateRegister;
+	}
+
+	public void setDateRegister(Date dateRegister) {
+		this.dateRegister = dateRegister;
+	}
+
+	public boolean isBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
 
 	public void setSendedMessages(List<Message> sendedMessages) {
 		this.sendedMessages = sendedMessages;

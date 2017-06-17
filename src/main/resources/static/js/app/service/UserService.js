@@ -14,6 +14,7 @@ monApp.factory('UserService',
             return factory;
 
             function getAllUsers() {
+            	  CrudEngine.setUrl(urls.USER_SERVICE_API);
             	  return CrudEngine.getAll();
             }
             function getUser(id) {

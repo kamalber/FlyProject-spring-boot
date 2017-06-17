@@ -43,6 +43,9 @@ monApp.controller('UserController',
 	    	);
 	    }
 	    function setStatsToPieChart(data){
+	    	self.positiveCount=data['positive'];
+	    	self.negativeCount=data['negative'];
+	    	self.neutralCount=data['neutral'];
 	    	  // Build the chart
 	    	Highcharts.setOptions({
 	    	    colors:['#058DC7', '#50B432', '#ED561B']
@@ -55,7 +58,7 @@ monApp.controller('UserController',
 	                type: 'pie'
 	            },
 	            title: {
-	                text: 'sentiments analysis '
+	                text: 'user microBlogs sentiments analysis'
 	            },
 	            tooltip: {
 	                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
