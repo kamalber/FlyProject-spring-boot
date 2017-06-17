@@ -1,0 +1,238 @@
+<br><br><br>
+<div class="row">
+<div class="col-md-9 col-sm-12 col-xs-12 col-sm-offset-1">
+	<div class="x_panel text-center">
+		<div class="x_title ">
+			<h2>
+				Form Buttons <small>Sessions</small>
+			</h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-expanded="false"><i
+						class="fa fa-wrench"></i></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Settings 1</a></li>
+						<li><a href="#">Settings 2</a></li>
+					</ul></li>
+				<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+
+			<form class="form-horizontal form-label-left">
+
+				<div class="form-group"></div>
+
+				<div class="row">
+					<div class="col-md-4">
+
+						<button type="file" class="btn btn-primary"
+							ngf-select="uploadFilesPositive($file, $invalidFiles)"
+							accept="/*" ngf-max-height="1000" ngf-max-size="1MB">
+							Select positive data File</button>
+						<br> <br> File:
+						<div style="font: smaller">
+							{{fp.name}} {{errFile.name}} {{errFile.$error}}
+							{{errFile.$errorParam}} <span class="progress"
+								ng-show="fp.progress >= 0">
+								<div style="width: {{fp.progress" ng-bind="fp.progress + '%'"></div>
+							</span>
+						</div>
+						{{errorMsg}}
+					</div>
+					<div class="col-md-4">
+
+						<button type="file" class="btn btn-primary"
+							ngf-select="uploadFilesNegative($file, $invalidFiles)"
+							accept="/*" ngf-max-height="1000" ngf-max-size="1MB">
+							Select negative data File</button>
+						<br> <br> File:
+						<div style="font: smaller">
+							{{fn.name}} {{errFile.name}} {{errFile.$error}}
+							{{errFile.$errorParam}} <span class="progress"
+								ng-show="fn.progress >= 0">
+								<div style="width: {{fn.progress" ng-bind="fn.progress + '%'"></div>
+							</span>
+						</div>
+						{{errorMsg}}
+					</div>
+					<div class="col-md-4">
+						<button type="file" class="btn btn-primary"
+							ngf-select="uploadFilesNeutral($file, $invalidFiles)" accept="/*"
+							ngf-max-height="1000" ngf-max-size="1MB">neutral data
+							File</button>
+						<br> <br> File:
+						<div style="font: smaller">
+							{{ft.name}} {{errFile.name}} {{errFile.$error}}
+							{{errFile.$errorParam}} <span class="progress"
+								ng-show="ft.progress >= 0">
+								<div style="width: {{ft.progress" ng-bind="ft.progress + '%'"></div>
+							</span>
+						</div>
+						{{errorMsg}}
+					</div>
+				</div>
+				<div class="divider-dashed"></div>
+				<button type="button" class="btn btn-success btn-lg"
+					ng-click="ctrl.compareTols()">lancer() !</button>
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+<div class="row ">
+<div class="row"> <div class="col-sm-4 col-md-9 col-xs-3 col-sm-offset-1">
+	<div class="col-sm-4 col-md-12 col-xs-3 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>datumbox sentiments analysis rate</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+
+				<div class="clearfix"></div>
+				<div id="barChartContainer"
+					style="min-width: 70px; height: 500px; margin: 0 auto"></div>
+		</div>
+	</div>	
+
+</div>
+</div>
+</div>
+
+					
+					
+					
+<div class="row ">
+<div class="row"> <div class="col-sm-4 col-md-9 col-xs-3 col-sm-offset-1">
+	<div class="col-sm-4 col-md-6 col-xs-3 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>datumbox sentiments analysis rate</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+
+				<div class="clearfix"></div>
+				<div id="dumaxChart"
+					style="min-width: 70px; height: 300px; margin: 0 auto"></div>
+			</div>
+		</div>
+	</div>	
+	<div class="col-sm-4 col-md-6 col-xs-3 ">
+		<div class="x_panel">
+			<div class="x_title text-center">
+				<h2 class="text-center">Nltk sentiment analysis rate</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+
+				<div class="clearfix"></div>
+				<div id="nltkChart"
+					style="min-width: 70px; height: 300px; margin: 0 auto"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+<div class="row "><div class="col-sm-4 col-md-9 col-xs-3 col-sm-offset-1">
+	<div class="col-sm-4 col-md-6 col-xs-3 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Gate api sentiment analysis rate</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+
+				<div class="clearfix"></div>
+				<div id="gateChart"
+					style="min-width: 70px; height: 300px; margin: 0 auto"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4 col-md-6 col-xs-3">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>tools combining sentiment analysis rate</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+
+				<div class="clearfix"></div>
+				<div id="combainingChart"
+					style="min-width: 70px; height: 300px; margin: 0 auto"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</div></div>
