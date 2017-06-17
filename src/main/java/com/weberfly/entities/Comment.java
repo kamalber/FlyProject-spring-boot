@@ -35,7 +35,7 @@ public class Comment implements Serializable{
 	/**
 	 * Description of the property user.
 	 */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE ,fetch= FetchType.EAGER)
 	private User user ;
 	@ManyToOne
     private Post post ;
