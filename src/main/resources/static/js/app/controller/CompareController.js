@@ -97,7 +97,13 @@ monApp.controller('CompareController',
           	 });
            }
         function setDataToBarChart(data){
-        	var dumaxAvareg=
+        	var nltkAvarage=(data.nltk.Neutral+data.nltk.Positive+data.nltk.Negative)/3;
+        	var dumaxAvarage=(data.dumax.Neutral+data.dumax.Positive+data.dumax.Negative)/3;
+        	var gateAvarage=(data.gate.Neutral+data.gate.Positive+data.gate.Negative)/3;
+        	var combainingAvarage=(data.combaining.Neutral+data.combaining.Positive+data.combaining.Negative)/3;
+//        	Highcharts.setOptions({
+//	    	    colors:['#058DC7', '#50B432', '#ED561B']
+//	    	});
       	  Highcharts.chart('barChartContainer', {
         	    title: {
         	        text: 'sentiments analysis for the query (java)'
@@ -117,20 +123,20 @@ monApp.controller('CompareController',
         	    },
         	    series: [{
         	        type: 'column',
-        	        name: 'positive',
-        	        data: [data.nltk.Positive,data.dumax.Positive,data.gate.Positive,data.combaining.Positive]
+        	        name: 'Neutral',
+        	        data: [data.nltk.Neutral,data.dumax.Neutral,data.gate.Neutral,data.combaining.Neutral]
         	    }, {
         	        type: 'column',
-        	        name: 'negative',
+        	        name: 'Negative',
         	        data: [data.nltk.Negative,data.dumax.Negative,data.gate.Negative,data.combaining.Negative]
         	    }, {
         	        type: 'column',
-        	        name: 'neutral',
-        	        data: [data.nltk.Neutral,data.dumax.Neutral,data.gate.Neutral,data.combaining.Neutral]
-        	    }, {
+        	        name: 'Positive',
+        	        data: [data.nltk.Positive,data.dumax.Positive,data.gate.Positive,data.combaining.Positive]
+        	    },{
         	        type: 'spline',
         	        name: 'Average',
-        	        data: [data.nltk.Positive,data.dumax.Positive,data.gate.Positive,data.combaining.Positive],
+        	        data: [nltkAvarage,dumaxAvarage,gateAvarage,combainingAvarage],
         	        marker: {
         	            lineWidth: 2,
         	            lineColor: Highcharts.getOptions().colors[3],
@@ -145,9 +151,9 @@ monApp.controller('CompareController',
         
         
         function setDataToDumaxChart(data){
-        	Highcharts.setOptions({
-	    	    colors:['#058DC7', '#50B432', '#ED561B']
-	    	});
+//        	Highcharts.setOptions({
+//	    	    colors:['#058DC7', '#50B432', '#ED561B']
+//	    	});
         	Highcharts.chart('dumaxChart', {
 
         	    title: {
@@ -159,22 +165,22 @@ monApp.controller('CompareController',
         	    },
 
         	    xAxis: {
-        	        categories: ['neutral', 'positive', 'negative']
+        	        categories: ['neutral', 'negative', 'positive']
         	    },
 
         	    series: [{
         	        type: 'column',
         	        colorByPoint: true,
-        	        data: [data['Neutral'], data['Positive'], data['Negative']],
+        	        data: [data['Neutral'],data['Negative'],data['Positive']],
         	        showInLegend: false
         	    }]
 
         	});
         }
         function setDataToNltkChart(data){
-        	Highcharts.setOptions({
-	    	    colors:['#058DC7', '#50B432', '#ED561B']
-	    	});
+//        	Highcharts.setOptions({
+//	    	    colors:['#058DC7', '#50B432', '#ED561B']
+//	    	});
         	Highcharts.chart('nltkChart', {
 
         	    title: {
@@ -186,22 +192,22 @@ monApp.controller('CompareController',
         	    },
 
         	    xAxis: {
-        	        categories: ['neutral', 'positive', 'negative']
+        	        categories: ['neutral', 'negative', 'positive']
         	    },
 
         	    series: [{
         	        type: 'column',
         	        colorByPoint: true,
-        	        data: [data['Neutral'], data['Positive'], data['Negative']],
+        	        data: [data['Neutral'],data['Negative'],data['Positive']],
         	        showInLegend: false
         	    }]
 
         	});
         }
         function setDataToGateChart(data){
-        	Highcharts.setOptions({
-	    	    colors:['#058DC7', '#50B432', '#ED561B']
-	    	});
+//        	Highcharts.setOptions({
+//	    	    colors:['#058DC7', '#50B432', '#ED561B']
+//	    	});
         	Highcharts.chart('gateChart', {
 
         	    title: {
@@ -213,22 +219,22 @@ monApp.controller('CompareController',
         	    },
 
         	    xAxis: {
-        	        categories: ['neutral', 'positive', 'negative']
+        	        categories: ['neutral', 'negative', 'positive']
         	    },
 
         	    series: [{
         	        type: 'column',
         	        colorByPoint: true,
-        	        data: [data['Neutral'], data['Positive'], data['Negative']],
+        	        data: [data['Neutral'],data['Negative'],data['Positive']],
         	        showInLegend: false
         	    }]
 
         	});
         }
         function setDataToCombainingChart(data){
-        	Highcharts.setOptions({
-	    	    colors:['#058DC7', '#50B432', '#ED561B']
-	    	});
+//        	Highcharts.setOptions({
+//	    	    colors:['#058DC7', '#50B432', '#ED561B']
+//	    	});
         	Highcharts.chart('combainingChart', {
 
         	    title: {
@@ -240,13 +246,13 @@ monApp.controller('CompareController',
         	    },
 
         	    xAxis: {
-        	        categories: ['neutral', 'positive', 'negative']
+        	        categories: ['neutral', 'negative', 'positive']
         	    },
 
         	    series: [{
         	        type: 'column',
         	        colorByPoint: true,
-        	        data: [data['Neutral'], data['Positive'], data['Negative']],
+        	        data: [data['Neutral'],data['Negative'],data['Positive']],
         	        showInLegend: false
         	    }]
 
