@@ -92,15 +92,17 @@ monApp.config(['$routeProvider','$httpProvider', function($routeProvider, $httpP
 }]);
 
 
-monApp.run( function($rootScope,AuthSession, $location) {
+monApp.run( function($rootScope,AuthSession, $location,$sessionStorage) {
     // register listener to watch route changes
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-//      if (AuthSession.connected == null) {
-//    	  if(current.templateUrl !="/login" &&  current.templateUrl !="/register"){
-//    		  $location.path( "/login" );
-//    	  }
-//        
-//      }         
+      if ($sessionStorage.connected == null) {
+    	  if(current.templateUrl !="/login" &&  current.templateUrl !="/register"){
+    		  $location.path( "/login" );
+    	  }
+        
+      }else{
+    	  $rootScope.connected=$sessionStorage.connected;
+      }         
 
     });
  })

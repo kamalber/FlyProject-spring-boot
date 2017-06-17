@@ -1,10 +1,9 @@
 <!-- Custom Theme Style --> 
 <link href="../../build/css/search.css" rel="stylesheet">
-<div class="container" id="search-view" ng-show="ctrl.searchShow">
+<div class="container " style="color:#000000" id="search-view" ng-show="ctrl.searchShow">
 	<div class="row" style='padding: 140px 100px 0;'>
 		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-			<h2 align="center">GET SENTIMENT ANALYSYS ON A WORD USING
-				DIFFRENTS METHODES</h2>
+			<h2 align="center">GET SENTIMENT ANALYSIS ON A WORD USING DIFFERENT METHODS</h2>
 			<div class="input-group buscador-principal">
 				<input name="search_param" value="all" id="search_param"
 					type="hidden"> <input class="form-control"
@@ -48,7 +47,7 @@
 									value="option" /> <label for="2" class="radio-inline">Twitter
 									source </label>
 							</div>
-							!
+							
 							<div class="col-md-3">
 								<div class="btn-group open">
 									<button data-toggle="dropdown"
@@ -57,9 +56,9 @@
 										Sentiment methode <span class="caret"></span>
 									</button>
 									<ul role="menu" class="dropdown-menu">
-										<li><a data-target="#" ng-click="ctrl.selectSentiMethode(1)">NTLTK</a></li>
+										<li><a data-target="#" ng-click="ctrl.selectSentiMethode(1)">NLTK</a></li>
 										<li><a data-target="#" ng-click="ctrl.selectSentiMethode(2)">gate api</a></li>
-										<li><a data-target="#" ng-click="ctrl.selectSentiMethode(3)">java algo</a></li>
+										<li><a data-target="#" ng-click="ctrl.selectSentiMethode(3)">Datumbox</a></li>
 										<li class="divider"></li>
 										<li><a data-target="#" ng-click="ctrl.selectSentiMethode(4)">combaining</a></li>
 									</ul>
@@ -76,7 +75,7 @@
 									<div class="input-group" moment-picker="ctrl.params.startYear"
 										format="YYYY">
 										<span class="input-group-addon"> <i
-											class="octicon octicon-calendar"></i>
+											class="fa fa-calendar-o"></i>
 										</span> <input class="form-control" placeholder="Select a date"
 											ng-model="ctrl.params.startYear"
 											ng-model-options="{ updateOn: 'blur' }">
@@ -91,7 +90,7 @@
 									<div class="input-group" moment-picker="ctrl.params.endYear"
 										format="YYYY">
 										<span class="input-group-addon"> <i
-											class="octicon octicon-calendar"></i>
+											class="fa fa-calendar-o"></i>
 										</span> <input class="form-control" placeholder="Select a date"
 											ng-model="ctrl.params.endYear"
 											ng-model-options="{ updateOn: 'blur' }">
