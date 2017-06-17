@@ -8,37 +8,35 @@
 			<ul class="nav navbar-nav navbar-right">
 				<div class="navbar-more-overlay"></div>
 				<nav class="navbar navbar-inverse navbar-fixed-top animate">
-	  <div class="container navbar-more visible-xs">
-						<form class="navbar-form navbar-left" role="search">
-							<div class="form-group">
-								<div class="input-group">
-									<input type="text" class="form-control"
-										placeholder="Search for..."> <span
-										class="input-group-btn">
-										<button class="btn btn-default" type="submit">Submit</button>
-									</span>
-								</div>
-							</div>
-						</form>
 
-					</div>
+	 
 					<ul class="nav navbar-nav navbar-right mobile-bar">
-						<li><a href="#"> <span class="menu-icon fa fa-home"></span>
+					<li class="open">
+                  <a href="javascript:;" class="user-profile dropdown-toggle over" data-toggle="dropdown" aria-expanded="true">
+                    <img src="images/{{connected.profile.image}}" alt="">{{connected.fullName}}
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="http://localhost:8080/layout.html#!/profile"> Profile</a></li>
+                   
+                    <li><a href="javascript:;">Help</a></li>
+                    <li><a ng-click="logOut()"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+					<li><a href="http://localhost:8080/layout.html#!/profile"> <span class="menu-icon fa fa-profile"></span>
+								Profile
+						</a></li>
+						<li><a href="http://localhost:8080/layout.html#!/posts"> <span class="menu-icon fa fa-home"></span>
 								Home
 						</a></li>
-						<li><a href="#"> <span class="menu-icon fa fa-info"></span>
-								<span class="hidden-xs">About the Boat</span> <span
-								class="visible-xs">About</span>
+						
+						
+						<li><a href="#"> <span class="menu-icon fa fa-bar-chart"></span>
+								Statistics
 						</a></li>
-						<li class="hidden-xs"><a href="#"> <span
-								class="menu-icon fa fa-picture-o"></span> Photos
-						</a></li>
-						<li><a href="#"> <span class="menu-icon fa fa-ship"></span>
-								Cruises
-						</a></li>
-						<li class="hidden-xs"><a href="#"> <span
-								class="menu-icon fa fa-bell-o"></span> Reservations
-						</a></li>
+<!-- 						<li class="hidden-xs"><a href="#"> <span -->
+<!-- 								class="menu-icon fa fa-bell-o"></span> Reservations -->
+<!-- 						</a></li> -->
 						<li><a href="#"> <span class="menu-icon fa fa-phone"></span>
 								<span class="hidden-xs">Contact Us</span> <span
 								class="visible-xs">Contact</span>
@@ -48,9 +46,30 @@
 						</a></li>
 					</ul>
 
+<ul class="nav navbar-nav navbar-left mobile-bar" style="margin-left: 60;">
+
+	<li>
+							 <form class="navbar-form  ng-pristine ng-valid" role="search" style="margin-left: 80;">
+							<div class="form-group">
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search for..."> <span class="input-group-btn">
+										<button class="btn btn-default" type="submit">Submit</button>
+									</span>
+								</div>
+							</div>
+						</form>
+						</li>
+<li><a href="http://localhost:8080/layout.html#!/posts"> <span class="menu-icon fa fa-home f-5x big-icon"></span>
+								
+						</a></li>
+
+					
+						
+					</ul>
 				</nav>
 			</ul>
 		</nav>
 	</div>
 </div>
 <!-- /top navigation -->
+ </script>
