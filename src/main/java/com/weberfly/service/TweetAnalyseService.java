@@ -56,7 +56,6 @@ public class TweetAnalyseService {
 	@Autowired
 	HttpSession session;
 
-	
 	private static final String TWITTER_CONSUMER_KEY = "ECm1eGhFxR2a0IRHuaX5hxytI";
 	private static final String TWITTER_SECRET_KEY = "jQ1u1TcO6NN4OlGL5SBzIIssqVhe5TfeDkNXq2HBYwRDPgfwOb";
 	private static final String TWITTER_ACCESS_TOKEN = "814239581084286976-RC3zktBH1pJNECZ1LGNlrTDgf398iY1";
@@ -189,27 +188,33 @@ public class TweetAnalyseService {
 	public String getAnalyseByNLTK(String content) throws Exception {
 		content = content.replace(" ", "%20");
 		content = content.replace(":", "%20");
-		String url = "http://localhost:8000/" + this.unicodeSentence(content);
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		// optional default is GET
-		con.setRequestMethod("GET");
-		// add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
-		int responseCode = con.getResponseCode();
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		HttpPost postRequest = new HttpPost("http://localhost:8000/sentiment");
+		JSONObject jsonIn = new JSONObject();
+
+		jsonIn.put("sentence", this.unicodeSentence(content));
+		// System.out.println("size---"+sentences.size());
+		// System.out.println("sentencesNLTK++++"+sentences);
+		StringEntity input = new StringEntity(jsonIn.toString());
+		input.setContentType("application/json");
+		postRequest.setEntity(input);
+		HttpResponse response = httpClient.execute(postRequest);
+
+		if (response.getStatusLine().getStatusCode() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
 		}
-		in.close();
-		// print result
-		System.out.println(response.toString());
-		return response.toString();
+		BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent()), "UTF-8"));
+
+		String output;
+		System.out.println("Output from Server NLTK-S .... \n");
+		output = readLines3(br);
+		// System.out.println("ici---"+output);
+
+		httpClient.getConnectionManager().shutdown();
+		return output;
 	}
 
-	public  String getAnalyseByDumax(String content) throws IOException {
+	public String getAnalyseByDumax(String content) throws IOException {
 		// map of dataset files
 		Map<String, URL> trainingFiles = new HashMap<>();
 		trainingFiles.put("positive", PostService.class.getResource("/datasets/DabbabiData/positive1.csv"));
@@ -244,7 +249,7 @@ public class TweetAnalyseService {
 		JSONObject json = new JSONObject();
 		List<SentencePolarity> sentencesPolarity = new ArrayList<SentencePolarity>();
 		for (String sentence : filtredsentences) {
-			
+
 			DefaultHttpClient httpClient = new DefaultHttpClient();
 			HttpPost postRequest = new HttpPost(
 					"https://cloud-api.gate.ac.uk/process-document/generic-opinion-mining-english?annotations=Sentiment:SentenceSet");
@@ -253,7 +258,8 @@ public class TweetAnalyseService {
 			json.put("text", sentence);
 			StringEntity input = new StringEntity(json.toString());
 			input.setContentType("application/json");
-			postRequest.setHeader("authorization", "Basic Z2Ntb3Q4NTlsd3AxOmo5dXFwZmJlbXpqcmU2cGt6emUy");
+	    	//postRequest.setHeader("authorization", "Basic Z2Ntb3Q4NTlsd3AxOmo5dXFwZmJlbXpqcmU2cGt6emUy");
+			postRequest.setHeader("authorization", "Basic Z2MxNDU3Ymt6NTdwOjZpczB3enE4ODkxbXJkejQ3cGdp");
 			postRequest.setEntity(input);
 			HttpResponse response = httpClient.execute(postRequest);
 			if (response.getStatusLine().getStatusCode() != 200) {
@@ -271,7 +277,7 @@ public class TweetAnalyseService {
 			JSONArray dataJsonArray = obj1.getJSONArray("SentenceSet");
 			JSONObject objsent = dataJsonArray.getJSONObject(0);
 			String sentiment = objsent.getString("polarity");
-			System.out.println(sentiment);
+			
 			sentencePolarity.setPolarity(sentiment);
 			sentencePolarity.setSentence(sentence);
 			sentencesPolarity.add(sentencePolarity);
@@ -281,37 +287,45 @@ public class TweetAnalyseService {
 		return sentencesPolarity;
 	}
 
-	public List<SentencePolarity> getTestAnalyseByCombining(List<String> sentences,String polarity) throws IOException, Exception {
+	public List<SentencePolarity> getTestAnalyseByCombining(List<String> sentences, String polarity)
+			throws IOException, Exception {
 		List<SentencePolarity> sentencesPolarity = new ArrayList<SentencePolarity>();
-		List<SentencePolarity> analyseByDumax=CombainingDataSource.dataSource.get("dumax"+polarity);
-		List<SentencePolarity> analyseByGate=CombainingDataSource.dataSource.get("gate"+polarity);
-		List<SentencePolarity> analyseByNltk = CombainingDataSource.dataSource.get("nltk"+polarity);
-		
+		List<SentencePolarity> analyseByDumax = CombainingDataSource.dataSource.get("dumax" + polarity);
+		List<SentencePolarity> analyseByGate = CombainingDataSource.dataSource.get("gate" + polarity);
+		List<SentencePolarity> analyseByNltk = CombainingDataSource.dataSource.get("nltk" + polarity);
 
 		for (int i = 0; i < sentences.size(); i++) {
 			SentencePolarity sentencePolarity = new SentencePolarity();
 			sentencePolarity.setSentence(sentences.get(i));
-			sentencePolarity.setPolarity(getMaxPolarityByTools(analyseByNltk.get(i).getPolarity(),
-					analyseByDumax.get(i).getPolarity(), analyseByGate.get(i).getPolarity()));
+			sentencePolarity.setPolarity(getMaxPolarityByTools(analyseByGate.get(i).getPolarity(),
+					analyseByDumax.get(i).getPolarity(), analyseByNltk.get(i).getPolarity()));
 			sentencesPolarity.add(sentencePolarity);
 		}
 		return sentencesPolarity;
 	}
 
-	public  String getMaxPolarityByTools(String gate, String dumax, String nltk) {
-		System.out.println(gate +" "+dumax+ " "+nltk);
+	public String getMaxPolarityByTools(String gate, String dumax, String nltk) {
+		
+System.out.println("ntlk "+nltk + " dumax "+dumax+" gate "+gate);
+
 		List<String> sentiments = new ArrayList<String>();
-		sentiments.add(gate);
-		sentiments.add(dumax);
 		sentiments.add(nltk);
+		sentiments.add(dumax);
+		sentiments.add(gate);
+//		if(!gate.equals(nltk) && !gate.equals(dumax) && !dumax.equals(nltk)){
+//			System.out.println(" gate dkhl "+gate);
+//			return gate;
+//		}
+//		
+		System.out.println(" khrj ");
 		Map<String, Long> counts = sentiments.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
 		return Collections.max(counts.entrySet(), Map.Entry.comparingByValue()).getKey();
 	}
 
 	public List<String> getTwittersByKeyWord(String key) throws Exception {
-		System.out.format("begin");
+		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
-		System.out.format("end");
+		
 		List<String> tweetsCollected = new ArrayList<String>();
 		cb.setDebugEnabled(true).setOAuthConsumerKey(TWITTER_CONSUMER_KEY).setOAuthConsumerSecret(TWITTER_SECRET_KEY)
 				.setOAuthAccessToken(TWITTER_ACCESS_TOKEN).setOAuthAccessTokenSecret(TWITTER_ACCESS_TOKEN_SECRET);
@@ -348,11 +362,12 @@ public class TweetAnalyseService {
 		return getTestAnalyseByNLTK(getTwittersByKeyWord(KeyWord));
 	}
 
-//	public List<SentencePolarity> getAnalysisTweetsBycombining(String KeyWord) throws IOException, Exception {
-//		return getTestAnalyseByCombining(getTwittersByKeyWord(KeyWord));
-//	}
+	// public List<SentencePolarity> getAnalysisTweetsBycombining(String
+	// KeyWord) throws IOException, Exception {
+	// return getTestAnalyseByCombining(getTwittersByKeyWord(KeyWord));
+	// }
 
-	private String unicodeSentence(String twitte){
+	private String unicodeSentence(String twitte) {
 		String utf8tweet = "";
 		try {
 			byte[] utf8Bytes = twitte.getBytes("UTF-8");
@@ -368,6 +383,7 @@ public class TweetAnalyseService {
 		utf8tweet = unicodeOutlierMatcher.replaceAll("");
 		return utf8tweet;
 	}
+
 	public List<String> unicodeSentences(List<String> originalSentences) {
 		List<String> unicodeSentences = new ArrayList<>();
 		for (String tweets : originalSentences) {
@@ -391,19 +407,19 @@ public class TweetAnalyseService {
 	}
 
 	public Map<String, Double> getAnalyseRateForEachTools(String method) throws Exception {
-		Date d1=new Date();
+		Date d1 = new Date();
 		System.out.println(d1);
-//		List<String> positive_sentences = readLines2(
-//				PostService.class.getResource("/datasets/DabbabiData/positive_sentences.txt"));
-//		List<String> negative_sentences = readLines2(
-//				PostService.class.getResource("/datasets/DabbabiData/negative_sentences.txt"));
-//		List<String> neutral_sentences = readLines2(
-//				PostService.class.getResource("/datasets/DabbabiData/neutral_sentences.txt"));
+		// List<String> positive_sentences = readLines2(
+		// PostService.class.getResource("/datasets/DabbabiData/positive_sentences.txt"));
+		// List<String> negative_sentences = readLines2(
+		// PostService.class.getResource("/datasets/DabbabiData/negative_sentences.txt"));
+		// List<String> neutral_sentences = readLines2(
+		// PostService.class.getResource("/datasets/DabbabiData/neutral_sentences.txt"));
 
-		List<String> positive_sentences = readLines2((URL)session.getAttribute("positiveData"));
-		List<String> negative_sentences = readLines2((URL)session.getAttribute("negativeData"));
-		List<String> neutral_sentences = readLines2((URL)session.getAttribute("neutralData"));
-		
+		List<String> positive_sentences = readLines2((URL) session.getAttribute("positiveData"));
+		List<String> negative_sentences = readLines2((URL) session.getAttribute("negativeData"));
+		List<String> neutral_sentences = readLines2((URL) session.getAttribute("neutralData"));
+
 		Map<String, Double> analyserates = new HashMap<>();
 		List<SentencePolarity> testByPositives = null;
 		List<SentencePolarity> testByNegatives = null;
@@ -433,11 +449,11 @@ public class TweetAnalyseService {
 			CombainingDataSource.dataSource.put("dumaxNegative", testByNegatives);
 		}
 		if (method == "general") {
-			
-			testByPositives = getTestAnalyseByCombining(positive_sentences,"Positive");
-			testByNegatives = getTestAnalyseByCombining(negative_sentences,"Negative");
-			testByNeutrals = getTestAnalyseByCombining(neutral_sentences,"Neutral");
-			
+
+			testByPositives = getTestAnalyseByCombining(positive_sentences, "Positive");
+			testByNegatives = getTestAnalyseByCombining(negative_sentences, "Negative");
+			testByNeutrals = getTestAnalyseByCombining(neutral_sentences, "Neutral");
+
 		}
 		List<String> polarityPos = new ArrayList<String>();
 		List<String> polarityNeg = new ArrayList<String>();
@@ -462,11 +478,11 @@ public class TweetAnalyseService {
 		analyserates.put("Neutral",
 				(double) Collections.frequency(polarityNeu, "neutral") / (polarityNeu.size()) * 100);
 
-		Date d2=new Date();
-		
+		Date d2 = new Date();
+
 		System.out.println(d2);
 		return analyserates;
-	
+
 	}
 
 	public Map<String, Double> getAnalyseRateForDumax() throws Exception {
@@ -494,11 +510,13 @@ public class TweetAnalyseService {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpPost postRequest = new HttpPost(
 				"https://cloud-api.gate.ac.uk/process-document/generic-opinion-mining-english?annotations=Sentiment:SentenceSet");
-		json.put("text", this.unicodeSentence(content));
-		
+		json.put("text", content);
+
 		StringEntity input = new StringEntity(json.toString());
 		input.setContentType("application/json");
-		postRequest.setHeader("authorization", "Basic Z2Ntb3Q4NTlsd3AxOmo5dXFwZmJlbXpqcmU2cGt6emUy");
+	postRequest.setHeader("authorization", "Basic Z2Ntb3Q4NTlsd3AxOmo5dXFwZmJlbXpqcmU2cGt6emUy");
+	//	postRequest.setHeader("authorization", "Basic Z2M1YzQ5azNvOXJhOjZ6ODQycTloOWZjeGZocmV0bm9u");
+		
 		postRequest.setEntity(input);
 		HttpResponse response = httpClient.execute(postRequest);
 		if (response.getStatusLine().getStatusCode() != 200) {
@@ -516,11 +534,11 @@ public class TweetAnalyseService {
 		return sentiment;
 	}
 
-	//@Async
-	public void collectTwittesAndAnalyseThem(TwitterKeyWord keyWord) throws ClientProtocolException, IOException, Exception {
+	// @Async
+	public void collectTwittesAndAnalyseThem(TwitterKeyWord keyWord)
+			throws ClientProtocolException, IOException, Exception {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
-		
-	
+
 		cb.setDebugEnabled(true).setOAuthConsumerKey(TWITTER_CONSUMER_KEY).setOAuthConsumerSecret(TWITTER_SECRET_KEY)
 				.setOAuthAccessToken(TWITTER_ACCESS_TOKEN).setOAuthAccessTokenSecret(TWITTER_ACCESS_TOKEN_SECRET);
 		TwitterFactory tf = new TwitterFactory(cb.build());
@@ -528,7 +546,7 @@ public class TweetAnalyseService {
 
 		Query query = new Query(keyWord.getWord()).lang("en");
 		query.setCount(10);
-		QueryResult result=null;
+		QueryResult result = null;
 		do {
 			try {
 				result = twitter.search(query);
@@ -536,25 +554,26 @@ public class TweetAnalyseService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            if(result==null){
-            	return;
-            }
-            String dumaxSenti,ntlkSenti,gateSenti,combainingSenti;
+			if (result == null) {
+				return;
+			}
+			String dumaxSenti, ntlkSenti, gateSenti, combainingSenti;
 			List<twitter4j.Status> tweets = result.getTweets();
-			Twitte twitte=null;
+			Twitte twitte = null;
 			for (twitter4j.Status tweet : tweets) {
-				twitte=new Twitte();
+				twitte = new Twitte();
 				twitte.setKeyWord(keyWord);
 				twitte.setText(tweet.getText());
 				twitte.setDate(tweet.getCreatedAt());
-				gateSenti=this.getAnalyseByGateApi(twitte.getText());
+				gateSenti = this.getAnalyseByGateApi(twitte.getText());
 				twitte.setGateSentment(Post.sentiment.valueOf(gateSenti));
-				ntlkSenti=this.getAnalyseByNLTK(twitte.getText());
+				ntlkSenti = this.getAnalyseByNLTK(twitte.getText());
 				twitte.setNltkSentment(Post.sentiment.valueOf(ntlkSenti));
-				dumaxSenti=this.getAnalyseByDumax(twitte.getText());
+				dumaxSenti = this.getAnalyseByDumax(twitte.getText());
 				twitte.setDumaxSentment(Post.sentiment.valueOf(dumaxSenti));
-				combainingSenti=this.getMaxPolarityByTools(gateSenti, dumaxSenti, "positive");
+				combainingSenti = this.getMaxPolarityByTools(gateSenti, dumaxSenti, "positive");
 				twitte.setGeneralSentiment(Post.sentiment.valueOf(combainingSenti));
+
 				TwitteService.save(twitte);
 			}
 		} while ((query = result.nextQuery()) != null);
