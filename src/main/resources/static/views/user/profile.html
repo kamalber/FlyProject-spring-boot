@@ -1,520 +1,503 @@
 <script type="text/javascript">
-$(function() {
-    var start = moment().subtract(29, 'days');
-    var end = moment();
-
-    function cb(start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-    }
-
-    $('#reportrange').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-           'Today': [moment(), moment()],
-           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-           'This Month': [moment().startOf('month'), moment().endOf('month')],
-           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-    }, cb);
-    cb(start, end);
-    console.log(start);
-});
+	
 </script>
 <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>User Report <small>Activity report</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-                      <div class="profile_img">
-                        <div id="crop-avatar">
-                          <!-- Current avatar -->
-                          <img data-toggle="modal" data-target="#imageModal" class="img-responsive avatar-view" src="/images/{{ctrl.connected.profile.image}}" alt="Avatar" title="Change the avatar">
-                        </div>
-                      </div>
-                      <h3></h3>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>
+					User Report <small>Activity report</small>
+				</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false"><i
+							class="fa fa-wrench"></i></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Settings 1</a></li>
+							<li><a href="#">Settings 2</a></li>
+						</ul></li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+					<div class="profile_img">
+						<div id="crop-avatar">
+							<!-- Current avatar -->
+							<img data-toggle="modal" data-target="#imageModal"
+								class="img-responsive avatar-view"
+								src="/images/{{ctrl.connected.profile.image}}" alt="Avatar"
+								title="Change the avatar">
+						</div>
+					</div>
+					<h3></h3>
 
-                      <ul class="list-unstyled user_data">
-                        <li><i class="fa fa-map-marker user-profile-icon"></i> Marrakech, morocco
-                        </li>
+					<ul class="list-unstyled user_data">
+						<li><i class="fa fa-map-marker user-profile-icon"></i>
+							Marrakech, morocco</li>
 
-                         <li>
-                          <i class="fa fa-graduation-cap user-profile-icon"></i> {{ctrl.connected.profile.education}}
-                        </li>
-                        <li>
-                          <i class="fa fa-briefcase user-profile-icon"></i> {{ctrl.connected.profile.employment}}
-                        </li>
+						<li><i class="fa fa-graduation-cap user-profile-icon"></i>
+							{{ctrl.connected.profile.education}}</li>
+						<li><i class="fa fa-briefcase user-profile-icon"></i>
+							{{ctrl.connected.profile.employment}}</li>
 
-                        <li class="m-top-xs">
-                          <i class="fa fa-external-link user-profile-icon"></i>
-                          <a href="www.github.com/kamalber" target="_blank">www.github.com/kamalber</a>
-                        </li>
-                      </ul>
-       <button class="btn btn-success" data-toggle="modal" data-target="#myModal" ng-click="" >
-							<i class="fa fa-edit m-right-xs"  ></i> Edit Profile  </button>
-                      
-                      <br>
+						<li class="m-top-xs"><i
+							class="fa fa-external-link user-profile-icon"></i> <a
+							href="www.github.com/kamalber" target="_blank">www.github.com/kamalber</a>
+						</li>
+					</ul>
+					<button class="btn btn-success" data-toggle="modal"
+						data-target="#myModal" ng-click="">
+						<i class="fa fa-edit m-right-xs"></i> Edit Profile
+					</button>
 
-                      <!-- start skills -->
-                      <h4>My buzzWords list</h4>
-                      <div class="">
-							<!-- colon for left nave bar -->
-							<div class="" >
-								<div class="mini-submenu">
-									<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-								</div>
-								<div class="list-group">
-									<span href="#" class="list-group-item active"> Tags i follow <span class="pull-right" id="slide-submenu"> <i class="fa fa-times"></i>
+					<br>
+
+					<!-- start skills -->
+					<h4>My buzzWords list</h4>
+					<div class="">
+						<!-- colon for left nave bar -->
+						<div class="">
+							<div class="mini-submenu">
+								<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+									class="icon-bar"></span>
+							</div>
+							<div class="list-group">
+								<span href="#" class="list-group-item active"> Tags i
+									follow <span class="pull-right" id="slide-submenu"> <i
+										class="fa fa-times"></i>
+								</span>
+								</span> <a ng-repeat="p in connected.twitterKeyWords" href="#" class="list-group-item"> <i
+										class="fa  fa-tag"></i> {{p.word}}
+									</a>
+							</div>
+						</div>
+					</div>
+					<!-- end of skills -->
+				</div>
+				<div class="col-md-9 col-sm-9 col-xs-12">
+
+					<div class="profile_title">
+					
+						<div class="col-md-4">
+							<div id="reportrange" class="pull-right"
+								style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
+								<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+								<span id="dateRange"></span> <b class="caret"></b>
+							</div>
+
+						</div>
+						<div class="col-md-6">
+							<div class=" form-group pull-left top_search">
+								<div class="input-group">
+									<ui-select ng-model="ctrl.searchParams.post"> <ui-select-match>
+									<span ng-bind="$select.selected.content"></span> </ui-select-match> <ui-select-choices
+										repeat="item in (ctrl.userPosts | filter: $select.search) track by item.id">
+									<div ng-bind-html="item.date | highlight: $select.search"></div>
+									<small> user : {{item.user.fullName}} 
+									</small>
+									<br><small><span ng-bind="item.content"> </span></small>
+									 </ui-select-choices> </ui-select>
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button"
+											ng-click="ctrl.search()">Go!</button>
 									</span>
-									</span> <a href="#" class="list-group-item"> <i class="fa  fa-tag"></i> FarCry
-									</a> <a href="#" class="list-group-item"> <i class="fa  fa-tag"></i> DonaldTrump
-									</a> <a href="#" class="list-group-item"> <i class="fa  fa-tag"></i>
-										java programming language 
-									</a> <a href="#" class="list-group-item"> <i class="fa  fa-tag"></i> Lorem ipsum
-<!-- 										 <span class="badge">14</span> -->
-									</a> 
 								</div>
+							</div>
+						</div>
+					</div>
+					<!-- start of user-activity-graph -->
+					<div id="barChart" style="max-width: 1000px"></div>
+					<!-- end of user-activity-graph -->
 
+					<div class="" role="tabpanel" data-example-id="togglable-tabs">
+						<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+							<li role="presentation" class="active"><a
+								data-target="#tab_content1" id="home-tab" role="tab"
+								data-toggle="tab" aria-expanded="true">Recent posts</a></li>
+							<li role="presentation" class=""><a
+								data-target="#tab_content2" role="tab" id="profile-tab"
+								data-toggle="tab" aria-expanded="false">my MicgoBlogs
+									comments</a></li>
+							<li role="presentation" class=""><a
+								data-target="#tab_content3" role="tab" id="profile-tab2"
+								data-toggle="tab" aria-expanded="false">Profile</a></li>
+						</ul>
+						<div id="myTabContent" class="tab-content">
+							<div role="tabpanel" class="tab-pane fade active in"
+								id="tab_content1" aria-labelledby="home-tab">
+
+								<!-- start recent activity -->
+								<ul class="messages">
+									<li ng-repeat="p in ctrl.userPosts"><img
+										src="images/img.jpg" class="avatar" alt="Avatar">
+										<div class="message_date">
+											<p class="date text-info">{{p.date}}</p>
+
+										</div>
+										<div class="message_wrapper">
+											<h4 class="heading">{{p.title}}</h4>
+											<blockquote class="message">{{p.content}}</blockquote>
+											<br>
+											<p class="url">
+												<span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+												<a href="#"><i class="fa fa-paperclip"></i> User
+													Acceptance Test.doc </a>
+											</p>
+										</div></li>
+
+
+								</ul>
+								<!-- end recent activity -->
 
 							</div>
-	
-						</div>
-                      <!-- end of skills -->
-
-                    </div>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-
-                      <div class="profile_title">
-                        <div class="col-md-6">
-                          <h2>User Activity Report</h2>
-                        </div>
-                        <div class="col-md-6">
-<div id="reportrange" class="pull-right"
- style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
-    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-    <span id="dateRange" ></span> <b class="caret"></b>
-</div>
-
-                        </div>
-                      </div>
-                      <!-- start of user-activity-graph -->
-  <div id="barChart" style="max-width: 1000px"> </div>
-                      <!-- end of user-activity-graph -->
-
-                      <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                          <li role="presentation" class="active"><a data-target="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Recent posts</a>
-                          </li>
-                          <li role="presentation" class=""><a data-target="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">my MicgoBlogs comments</a>
-                          </li>
-                          <li role="presentation" class=""><a data-target="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Profile</a>
-                          </li>
-                        </ul>
-                        <div id="myTabContent" class="tab-content">
-                          <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-
-                            <!-- start recent activity -->
-                            <ul class="messages">
-                              <li ng-repeat="p in ctrl.userPosts">
-                                <img src="images/img.jpg" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <p class="date text-info">{{p.date}}</p>
-                              
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">{{p.title}}</h4>
-                                  <blockquote class="message">{{p.content}}</blockquote>
-                                  <br>
-                                  <p class="url">
-                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                                  </p>
-                                </div>
-                              </li>
-                            
-
-                            </ul>
-                            <!-- end recent activity -->
-
-                          </div>
-                          <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-
-                            <!-- start user projects -->
-                            <table class="data table table-striped no-margin">
-                              <thead>
-                                <tr>
-                                  <th>#</th>
-                                  <th>Project Name</th>
-                                  <th>Client Company</th>
-                                  <th class="hidden-phone">Hours Spent</th>
-                                  <th>Contribution</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>1</td>
-                                  <td>New Company Takeover Review</td>
-                                  <td>Deveint Inc</td>
-                                  <td class="hidden-phone">18</td>
-                                  <td class="vertical-align-mid">
-                                    <div class="progress">
-                                      <div class="progress-bar progress-bar-success" data-transitiongoal="35" aria-valuenow="35" style="width: 35%;"></div>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>2</td>
-                                  <td>New Partner Contracts Consultanci</td>
-                                  <td>Deveint Inc</td>
-                                  <td class="hidden-phone">13</td>
-                                  <td class="vertical-align-mid">
-                                    <div class="progress">
-                                      <div class="progress-bar progress-bar-danger" data-transitiongoal="15" aria-valuenow="15" style="width: 15%;"></div>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>3</td>
-                                  <td>Partners and Inverstors report</td>
-                                  <td>Deveint Inc</td>
-                                  <td class="hidden-phone">30</td>
-                                  <td class="vertical-align-mid">
-                                    <div class="progress">
-                                      <div class="progress-bar progress-bar-success" data-transitiongoal="45" aria-valuenow="45" style="width: 45%;"></div>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>4</td>
-                                  <td>New Company Takeover Review</td>
-                                  <td>Deveint Inc</td>
-                                  <td class="hidden-phone">28</td>
-                                  <td class="vertical-align-mid">
-                                    <div class="progress">
-                                      <div class="progress-bar progress-bar-success" data-transitiongoal="75" aria-valuenow="75" style="width: 75%;"></div>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            <!-- end user projects -->
-
-                          </div>
-                          <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                            <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui
-                              photo booth letterpress, commodo enim craft beer mlkshk </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+							<div role="tabpanel" class="tab-pane fade" id="tab_content2"
+								aria-labelledby="profile-tab">
+<div class="x_panel">
+                <div class="x_title">
+                
+                  <div class="clearfix"></div>
+                </div>
+                <div class="">
+                  <ul class="list-unstyled msg_list">
+                    <li ng-repeat="c in ctrl.postComments">
+                      <a>
+                        <span class="image">
+                          <img src="images/{{c.user.profile.image}}" alt="img">
+                        </span>
+                        <span>
+                          <span>{{c.user.fullName}}</span>
+                          <span class="time">{{c.date}}</span>
+                        </span>
+                        <span class="message">
+                        {{c.text}}
+                        </span>
+                      </a>
+                    </li>
+                 </ul>
                 </div>
               </div>
-            </div>
-            
-            
-            
-<!--             ########################### modal to edit profile ########################### -->
-              
-  
-    <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog" class="col-md-12">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">chart for twittes list </h4>
-        </div>
-        <div class="modal-body">
-         <form class="form-horizontal form-label-left"
-				ng-submit="" name="register" novalidate>
-				<xs-wizard has-save="true" has-breadcrumbs="true"
-					save-text="Submit Order" on-page-change="ctrl.pageChange(state);"
-					on-cancel="ctrl.cancel();" on-save="ctrl.save();"> <xs-wizard-page
-					page-tag="User Info">
-				<div class="pane">
-					<h4>Page 1: User Info</h4>
-
-
-
-					<div class="form-group"
-						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12"
-							for="name">Full Name:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" required class="form-control"
-								ng-model="ctrl.user.name" id="name" name="name">
-						</div>
-					</div>
-
-					<div class="form-group"
-						ng-class="{ 'has-error': register.username.$invalid && register.username.$dirty }">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12"
-							for="ctrl.username">username:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" required class="form-control"
-								ng-model="ctrl.user.username" id="ctrl.username" name="username">
-						</div>
-					</div>
-
-					<div class="form-group"
-						ng-class="{ 'has-error': register.password.$invalid && register.password.$dirty }">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="pwd">Password:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="password" required class="form-control" id="pwd"
-								ng-model="ctrl.user.password" name="password">
-						</div>
-					</div>
-
-					<div class="form-group"
-						ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }">
-						<label for="cpwd"
-							class="control-label col-md-3 col-sm-3 col-xs-12">
-							Confirm Password:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="password" name="confirmPassword" required
-								class="form-control" id="cpwd" ng-model="confirmPassword">
-						</div>
-					</div>
-
-
-
-					<div class="alert alert-warning margin-top-5"
-						ng-show="confirmPassword != ctrl.user.password ">Password
-						Not Matching</div>
-
-					<div class="form-group"
-						ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }">
-						<label for="email"
-							class="control-label col-md-3 col-sm-3 col-xs-12"> Email
-							:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="email" id="email" class="form-control"
-								placeholder="Enter a valid email address" name="email"
-								data-parsley-trigger="change" required=""
-								ng-model="user.profile.email">
-						</div>
-					</div>
-
-
-				</div>
-				</xs-wizard-page> <xs-wizard-page page-tag="User profile">
-				<div class="pane">
-					<h4>Page 2: User profile</h4>
-
-
-
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<div id="gender" class="btn-group" data-toggle="buttons">
-								<label class="btn btn-default" data-toggle-class="btn-primary"
-									data-toggle-passive-class="btn-default"> <input
-									type="radio" name="gender" value="male"> &nbsp; Male
-									&nbsp;
-								</label> <label class="btn btn-primary" data-toggle-class="btn-primary"
-									data-toggle-passive-class="btn-default"> <input
-									type="radio" name="gender" value="female"> Female
-								</label>
+							
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="tab_content3"
+								aria-labelledby="profile-tab">
+								<p>xxFood truck fixie locavore, accusamus mcsweeney's marfa
+									nulla single-origin coffee squid. Exercitation +1 labore velit,
+									blog sartorial PBR leggings next level wes anderson artisan
+									four loko farm-to-table craft beer twee. Qui photo booth
+									letterpress, commodo enim craft beer mlkshk</p>
 							</div>
 						</div>
 					</div>
-
-
-
-
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date
-							Of Birth <span class="required">*</span>
-						</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input id="birthday"
-								class="date-picker form-control col-md-7 col-xs-12"
-								required="required" type="text">
-						</div>
-					</div>
-
-					<div class="form-group"
-						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12"
-							for="work">work history:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" required class="form-control"
-								ng-model="ctrl.user.profile.workHis" id="work" name="work">
-						</div>
-					</div>
-
-					<div class="form-group"
-						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12"
-							for="adresse">adresse:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" required class="form-control"
-								ng-model="ctrl.user.profile.adresse" id="work" name="adresse">
-						</div>
-					</div>
-
-					<div class="form-group"
-						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12"
-							for="Education">Education:</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" required class="form-control"
-								ng-model="ctrl.user.profile.education" id="work"
-								name="Education">
-						</div>
-					</div>
-
 				</div>
-				</xs-wizard-page> 
-			 <xs-wizard-page page-tag="Tags to follow"
-					ng-click="ctrl.loadKeyWords()">
-				<div class="pane">
-					<h4>Page 3: tags to follow</h4>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<div class="x_panel">
-								<div class="x_title_black">
-									<h2>
-										select tags you want to follow <small>tags</small>
-									</h2>
-									<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!--             ########################### modal to edit profile ########################### -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog" class="col-md-12">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">chart for twittes list</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal form-label-left" ng-submit=""
+					name="register" novalidate>
+					<xs-wizard has-save="true" has-breadcrumbs="true"
+						save-text="Submit Order" on-page-change="ctrl.pageChange(state);"
+						on-cancel="ctrl.cancel();" on-save="ctrl.save();"> <xs-wizard-page
+						page-tag="User Info">
+					<div class="pane">
+						<h4>Page 1: User Info</h4>
+
+
+
+						<div class="form-group"
+							ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="name">Full Name:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" required class="form-control"
+									ng-model="ctrl.user.name" id="name" name="name">
+							</div>
+						</div>
+
+						<div class="form-group"
+							ng-class="{ 'has-error': register.username.$invalid && register.username.$dirty }">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="ctrl.username">username:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" required class="form-control"
+									ng-model="ctrl.user.username" id="ctrl.username"
+									name="username">
+							</div>
+						</div>
+
+						<div class="form-group"
+							ng-class="{ 'has-error': register.password.$invalid && register.password.$dirty }">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="pwd">Password:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="password" required class="form-control" id="pwd"
+									ng-model="ctrl.user.password" name="password">
+							</div>
+						</div>
+
+						<div class="form-group"
+							ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }">
+							<label for="cpwd"
+								class="control-label col-md-3 col-sm-3 col-xs-12">
+								Confirm Password:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="password" name="confirmPassword" required
+									class="form-control" id="cpwd" ng-model="confirmPassword">
+							</div>
+						</div>
+
+
+
+						<div class="alert alert-warning margin-top-5"
+							ng-show="confirmPassword != ctrl.user.password ">Password
+							Not Matching</div>
+
+						<div class="form-group"
+							ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }">
+							<label for="email"
+								class="control-label col-md-3 col-sm-3 col-xs-12"> Email
+								:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="email" id="email" class="form-control"
+									placeholder="Enter a valid email address" name="email"
+									data-parsley-trigger="change" required=""
+									ng-model="user.profile.email">
+							</div>
+						</div>
+
+
+					</div>
+					</xs-wizard-page> <xs-wizard-page page-tag="User profile">
+					<div class="pane">
+						<h4>Page 2: User profile</h4>
+
+
+
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<div id="gender" class="btn-group" data-toggle="buttons">
+									<label class="btn btn-default" data-toggle-class="btn-primary"
+										data-toggle-passive-class="btn-default"> <input
+										type="radio" name="gender" value="male"> &nbsp; Male
+										&nbsp;
+									</label> <label class="btn btn-primary" data-toggle-class="btn-primary"
+										data-toggle-passive-class="btn-default"> <input
+										type="radio" name="gender" value="female"> Female
+									</label>
 								</div>
-								<div class="x_content">
+							</div>
+						</div>
 
-									<div class="">
-										<ul class="to_do">
-											<li ng-repeat="u in ctrl.twitterKeWords">
 
-												<p>
-													<input class="magic-checkbox" type="checkbox" name="layout"
-														id="{{u.id}}"> <label for="{{u.id}}"
-														ng-click="ctrl.addKeyWords(u)"> {{u.word}}</label>
 
-												</p>
-											</li>
 
-										</ul>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">Date
+								Of Birth <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input id="birthday"
+									class="date-picker form-control col-md-7 col-xs-12"
+									required="required" type="text">
+							</div>
+						</div>
+
+						<div class="form-group"
+							ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="work">work history:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" required class="form-control"
+									ng-model="ctrl.user.profile.workHis" id="work" name="work">
+							</div>
+						</div>
+
+						<div class="form-group"
+							ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="adresse">adresse:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" required class="form-control"
+									ng-model="ctrl.user.profile.adresse" id="work" name="adresse">
+							</div>
+						</div>
+
+						<div class="form-group"
+							ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="Education">Education:</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" required class="form-control"
+									ng-model="ctrl.user.profile.education" id="work"
+									name="Education">
+							</div>
+						</div>
+
+					</div>
+					</xs-wizard-page> <xs-wizard-page page-tag="Tags to follow"
+						ng-click="ctrl.loadKeyWords()">
+					<div class="pane">
+						<h4>Page 3: tags to follow</h4>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<div class="x_panel">
+									<div class="x_title_black">
+										<h2>
+											select tags you want to follow <small>tags</small>
+										</h2>
+										<div class="clearfix"></div>
+									</div>
+									<div class="x_content">
+
+										<div class="">
+											<ul class="to_do">
+												<li ng-repeat="u in ctrl.twitterKeWords">
+
+													<p>
+														<input class="magic-checkbox" type="checkbox"
+															name="layout" id="{{u.id}}"> <label
+															for="{{u.id}}" ng-click="ctrl.addKeyWords(u)">
+															{{u.word}}</label>
+
+													</p>
+												</li>
+
+											</ul>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				</xs-wizard-page> <xs-wizard-page page-tag="Confirmation">
-				<div class="pane">
-					<h4>Page 4: Confirmation</h4>
-				</div>
-				</xs-wizard-page> </xs-wizard>
-				<br>
-				<div class="alert alert-danger" role="alert" ng-hide="ctrl.error">
-					<span class="glyphicon glyphicon-exclamation-sign"
-						aria-hidden="true"></span> <span class="sr-only">Error:</span>
-					{{ctrl.message}}
-				</div>
-			</form>
-		
-            
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn  btn-warning btn-sm " data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-  
-  
+					</xs-wizard-page> <xs-wizard-page page-tag="Confirmation">
+					<div class="pane">
+						<h4>Page 4: Confirmation</h4>
+					</div>
+					</xs-wizard-page> </xs-wizard>
+					<br>
+					<div class="alert alert-danger" role="alert" ng-hide="ctrl.error">
+						<span class="glyphicon glyphicon-exclamation-sign"
+							aria-hidden="true"></span> <span class="sr-only">Error:</span>
+						{{ctrl.message}}
+					</div>
+				</form>
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn  btn-warning btn-sm "
+					data-dismiss="modal">
+					<i class="fa fa-close"></i> Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
 <!--       ###############  image modal ####################"" -->
-  <div class="modal fade" id="imageModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">upload a new image to your profile </h4>
-        </div>
-        <div class="modal-body">
-         
-					
-									<div>Crop Image and Upload</div>
-								
-										<button ngf-select ng-model="picFile" accept="image/*">
-											Select Picture</button>
-										<div ngf-drop ng-model="picFile" ngf-pattern="image/*"
-											class="cropArea">
-											<img-crop image="picFile  | ngfDataUrl"
-												result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
-											</img-crop>
-										</div>
-										<div>
-											<img ng-src="{{croppedDataUrl}}" />
-										</div>
-										
+<div class="modal fade" id="imageModal" role="dialog">
+	<div class="modal-dialog">
 
-										<span class="progress" ng-show="progress >= 0">
-											<div style="width: {{progress" ng-bind="progress + '%'"></div>
-										</span> <span ng-show="result">Upload Successful</span> <span
-											class="err" ng-show="errorMsg">{{errorMsg}}</span>
-									
-						
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">upload a new image to your profile</h4>
+			</div>
+			<div class="modal-body">
 
-			
-        </div>
-        <div class="modal-footer">
-        <button type="submit" class="btn btn-primary btn-sm " ng-click="uploadImage(croppedDataUrl, picFile.name)" data-dismiss="modal"><i class="fa fa-save"></i> plan</button>
-            <button type="button" class="btn  btn-warning btn-sm " data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-       
-        
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div ng-show="tab === 1"> 
-                 
-  <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels"> chart-series="series"</canvas>
-  <canvas id="bar" class="chart chart-bar" chart-data="ctrl.data" chart-labels="ctrl.labels"> chart-series="series"</canvas>
-  
-  </div>
-             
-  			<div ng-show="tab === 2">
-  			<canvas id="pie" class="chart chart-pie "
-            chart-data="dataPie" chart-labels="labelsPie" chart-options="options">
+
+				<div>Crop Image and Upload</div>
+
+				<button ngf-select ng-model="picFile" accept="image/*">
+					Select Picture</button>
+				<div ngf-drop ng-model="picFile" ngf-pattern="image/*"
+					class="cropArea">
+					<img-crop image="picFile  | ngfDataUrl"
+						result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+					</img-crop>
+				</div>
+				<div>
+					<img ng-src="{{croppedDataUrl}}" />
+				</div>
+
+
+				<span class="progress" ng-show="progress >= 0">
+					<div style="width: {{progress" ng-bind="progress + '%'"></div>
+				</span> <span ng-show="result">Upload Successful</span> <span class="err"
+					ng-show="errorMsg">{{errorMsg}}</span>
+
+
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary btn-sm "
+					ng-click="uploadImage(croppedDataUrl, picFile.name)"
+					data-dismiss="modal">
+					<i class="fa fa-save"></i> plan
+				</button>
+				<button type="button" class="btn  btn-warning btn-sm "
+					data-dismiss="modal">
+					<i class="fa fa-close"></i> Close
+				</button>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div ng-show="tab === 1">
+
+	<canvas id="bar" class="chart chart-bar" chart-data="data"
+		chart-labels="labels"> chart-series="series"</canvas>
+	<canvas id="bar" class="chart chart-bar" chart-data="ctrl.data"
+		chart-labels="ctrl.labels"> chart-series="series"</canvas>
+
+</div>
+
+<div ng-show="tab === 2">
+	<canvas id="pie" class="chart chart-pie " chart-data="dataPie"
+		chart-labels="labelsPie" chart-options="options">
             chart-data="ctrl.dataPie" chart-labels="ctrl.labelsPie" chart-options="options">
-            </canvas> </div>
-  			 
-  			<div ng-show="tab === 3"> 
- 			<canvas id="base" class="chart-bubble" chart-data="bubbleData" chart-series="bubbleSeries" >
- 			<canvas id="base" class="chart-bubble" chart-data="ctrl.bubbleData" chart-series="ctrl.bubbleSeries" >
+            </canvas>
+</div>
+
+<div ng-show="tab === 3">
+	<canvas id="base" class="chart-bubble" chart-data="bubbleData"
+		chart-series="bubbleSeries">
+ 			<canvas id="base" class="chart-bubble" chart-data="ctrl.bubbleData"
+			chart-series="ctrl.bubbleSeries">
               </canvas> 
-  			</div>
-  
+  			
+
+</div>

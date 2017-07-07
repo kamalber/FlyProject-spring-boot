@@ -1,22 +1,95 @@
-<div class=" col-md-4 col-md-offset-4">
-	<div class="panel panel-default">
-		<div class="panel-heading">Login</div>
-		<div class="panel-body">
-			<div class="col-md-12">
-				<form ng-submit="ctrl.login()">
-					<div class="form-group">
-						<label for="username">Username:</label> <input type="txt"
-							class="form-control" ng-model="username" id="username">
-					</div>
-					<div class="form-group">
-						<label for="pwd">Password:</label> <input type="password"
-							class="form-control" id="pwd" ng-model="password">
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-					<button class="btn btn-default" ng-click="ctrl.registerRedirect()">Register</button>
-					<div class="alert alert-error margin-top-5" ng-show="message">{{message}}</div>
-				</form>
+<!-- <div class=" col-md-4 col-md-offset-4"> -->
+<!-- 	<div class="panel panel-default"> -->
+<!-- 		<div class="panel-heading">Login</div> -->
+<!-- 		<div class="panel-body"> -->
+<!-- 			<div class="col-md-12"> -->
+<!-- 				<form ng-submit="ctrl.login()"> -->
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="username">Username:</label> <input type="txt" -->
+<!-- 							class="form-control" ng-model="username" id="username"> -->
+<!-- 					</div> -->
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="pwd">Password:</label> <input type="password" -->
+<!-- 							class="form-control" id="pwd" ng-model="password"> -->
+<!-- 					</div> -->
+<!-- 					<button type="submit" class="btn btn-default">Submit</button> -->
+<!-- 					<button class="btn btn-default" ng-click="ctrl.registerRedirect()">Register</button> -->
+<!-- 					<div class="alert alert-error margin-top-5" ng-show="message">{{message}}</div> -->
+<!-- 				</form> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+<br>
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap Login Form Template</title>
+
+<!-- CSS -->
+<link rel="stylesheet"
+	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+<link rel="stylesheet"
+	href="assets/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/form-elements.css">
+<link rel="stylesheet" href="assets/css/style.css">
+
+
+<!-- Favicon and touch icons -->
+<link rel="shortcut icon" href="assets/ico/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+
+
+
+
+
+
+<div class="row ">
+	<div class="col-sm-6 col-sm-offset-3 form-box">
+		<div class="form-top">
+			<div class="form-top-left">
+				<h3>Login to our site</h3>
+				<p>Enter your username and password to log on:</p>
 			</div>
+			<div class="form-top-right">
+				<i class="fa fa-key"></i>
+			</div>
+		</div>
+		<div class="form-bottom">
+			<form ng-submit="ctrl.login()" method="post" class="login-form">
+				<div class="form-group">
+					<label class="sr-only" for="form-username">Username</label> <input
+						type="text" name="form-username" placeholder="Username..."
+						class="form-username form-control" ng-model="username" id="form-username">
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="form-password">Password</label> <input
+						type="password" name="form-password" placeholder="Password..." ng-model="password"
+						class="form-password form-control"   id="form-password">
+				</div>
+				<button type="submit" class="btn" >Sign in!</button>
+				<div class="alert alert-error margin-top-5" ng-show="message">{{message}}</div>
+			</form>
 		</div>
 	</div>
 </div>
+
+
+
+
+
+<script src="assets/js/jquery.backstretch.min.js"></script>
+<script src="assets/js/scripts.js"></script>
+
+
+

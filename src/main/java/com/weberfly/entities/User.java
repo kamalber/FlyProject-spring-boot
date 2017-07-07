@@ -204,6 +204,10 @@ public Session getSession(){
 	
 
 
+	public List<TwitterKeyWord> getTwitterKeyWords() {
+		return twitterKeyWords;
+	}
+
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
 	}

@@ -1,14 +1,52 @@
-<!-- 	################################################################################################## -->
-<div class="col-md-10  col-sm-10 col-xs-10 col-sm-offset-1">
-	<div class="x_panel">
-		<div class="x_title_black">
-			<h2>
-				user registration <small>register for new account </small>
-			</h2>
-			<div class="clearfix"></div>
+<style>
+kamal {
+	color: black;
+	background-color: white;
+	background-image: url(assets/img/backgrounds/1.jpg);
+}
+</style>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap Login Form Template</title>
+
+<!-- CSS -->
+<link rel="stylesheet"
+	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+<!-- <link rel="stylesheet" -->
+<!-- 	href="assets/font-awesome/css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="assets/css/form-register.css">
+<link rel="stylesheet" href="assets/css/style-register.css">
+
+
+<!-- Favicon and touch icons -->
+<link rel="shortcut icon" href="assets/ico/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+
+
+<div class="row kamal">
+	<div class="col-sm-8 col-sm-offset-2 form-box">
+		<div class="form-top">
+			<div class="form-top-left">
+				<h3>register for new account</h3>
+				
+			</div>
+			<div class="form-top-right">
+				<i class="fa fa-key"></i>
+			</div>
 		</div>
-		<div class="x_content">
-			<!-- Smart Wizard -->
+		<div class="form-bottom">
+			
+				<!-- Smart Wizard -->
 			<form class="form-horizontal form-label-left"
 				ng-submit="" name="register" novalidate>
 				<xs-wizard has-save="true" has-breadcrumbs="true"
@@ -60,22 +98,14 @@
 						</div>
 					</div>
 
-
-
-					<div class="alert alert-warning margin-top-5"
-						ng-show="confirmPassword != ctrl.user.password ">Password
-						Not Matching</div>
-
 					<div class="form-group"
-						ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }">
+						ng-class="{ 'has-error': register.email.$invalid && register.email.$dirty }">
 						<label for="email"
-							class="control-label col-md-3 col-sm-3 col-xs-12"> Email
-							:</label>
+							class="control-label col-md-3 col-sm-3 col-xs-12"> Email:</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="email" id="email" class="form-control"
+							<input type="text" id="email" class="form-control"
 								placeholder="Enter a valid email address" name="email"
-								data-parsley-trigger="change" required=""
-								ng-model="user.profile.email">
+								data-parsley-trigger="change" required ng-model="user.profile.email">
 						</div>
 					</div>
 
@@ -160,27 +190,38 @@
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title_black">
-									<h2>
+									<b>
 										select tags you want to follow <small>tags</small>
-									</h2>
+									</b>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
 
-									<div class="">
+<div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
+                  
+                      <div class="panel" ng-repeat="c in ctrl.categorys">
+                        <a ng-click="ctrl.loadKeyWord(c)" class="panel-heading collapsed" role="tab" id="headingThree1" data-toggle="collapse" data-parent="#accordion1" data-target="#{{c.id}}" aria-expanded="false" aria-controls="collapseThree">
+                         <h4 class="panel-title" style="color: #175163;">{{c.title}}</h4>
+                        </a>
+                        <div id="{{c.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                          <div class="panel-body">
+                            <div class="">
 										<ul class="to_do">
 											<li ng-repeat="u in ctrl.twitterKeWords">
-
 												<p>
 													<input class="magic-checkbox" type="checkbox" name="layout"
 														id="{{u.id}}"> <label for="{{u.id}}"
 														ng-click="ctrl.addKeyWords(u)"> {{u.word}}</label>
-
 												</p>
 											</li>
 
 										</ul>
 									</div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+						
 								</div>
 							</div>
 						</div>
@@ -198,7 +239,216 @@
 					{{ctrl.message}}
 				</div>
 			</form>
+			
 		</div>
 	</div>
 </div>
+
+<!-- <div class="col-md-8  col-sm-10 col-xs-10 col-md-offset-2"> -->
+<!-- 	<div class="x_panel"> -->
+<!-- 		<div class="x_title_black"> -->
+<!-- 			<h2> -->
+<!-- 				user registration <small>register for new account </small> -->
+<!-- 			</h2> -->
+<!-- 			<div class="clearfix"></div> -->
+<!-- 		</div> -->
+<!-- 		<div class="x_content"> -->
+<!-- 			<!-- Smart Wizard --> -->
+<!-- 			<form class="form-horizontal form-label-left" -->
+<!-- 				ng-submit="" name="register" novalidate> -->
+<!-- 				<xs-wizard has-save="true" has-breadcrumbs="true" -->
+<!-- 					save-text="Submit Order" on-page-change="ctrl.pageChange(state);" -->
+<!-- 					on-cancel="ctrl.cancel();" on-save="ctrl.save();"> <xs-wizard-page -->
+<!-- 					page-tag="User Info"> -->
+<!-- 				<div class="pane"> -->
+<!-- 					<h4>Page 1: User Info</h4> -->
+
+
+
+<!-- 					<div class="form-group" -->
+<!-- 						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }"> -->
+<!-- 						<label class="control-label col-md-3 col-sm-3 col-xs-12" -->
+<!-- 							for="name">Full Name:</label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<input type="text" required class="form-control" -->
+<!-- 								ng-model="ctrl.user.name" id="name" name="name"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="form-group" -->
+<!-- 						ng-class="{ 'has-error': register.username.$invalid && register.username.$dirty }"> -->
+<!-- 						<label class="control-label col-md-3 col-sm-3 col-xs-12" -->
+<!-- 							for="ctrl.username">username:</label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<input type="text" required class="form-control" -->
+<!-- 								ng-model="ctrl.user.username" id="ctrl.username" name="username"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="form-group" -->
+<!-- 						ng-class="{ 'has-error': register.password.$invalid && register.password.$dirty }"> -->
+<!-- 						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="pwd">Password:</label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<input type="password" required class="form-control" id="pwd" -->
+<!-- 								ng-model="ctrl.user.password" name="password"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="form-group" -->
+<!-- 						ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }"> -->
+<!-- 						<label for="cpwd" -->
+<!-- 							class="control-label col-md-3 col-sm-3 col-xs-12"> -->
+<!-- 							Confirm Password:</label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<input type="password" name="confirmPassword" required -->
+<!-- 								class="form-control" id="cpwd" ng-model="confirmPassword"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+
+
+
+<!-- 					<div class="alert alert-warning margin-top-5" -->
+<!-- 						ng-show="confirmPassword != ctrl.user.password ">Password -->
+<!-- 						Not Matching</div> -->
+
+<!-- 					<div class="form-group" -->
+<!-- 						ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }"> -->
+<!-- 						<label for="email" -->
+<!-- 							class="control-label col-md-3 col-sm-3 col-xs-12"> Email -->
+<!-- 							:</label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<input type="email" id="email" class="form-control" -->
+<!-- 								placeholder="Enter a valid email address" name="email" -->
+<!-- 								data-parsley-trigger="change" required="" -->
+<!-- 								ng-model="user.profile.email"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+
+
+<!-- 				</div> -->
+<!-- 				</xs-wizard-page> <xs-wizard-page page-tag="User profile"> -->
+<!-- 				<div class="pane"> -->
+<!-- 					<h4>Page 2: User profile</h4> -->
+
+
+
+<!-- 					<div class="form-group"> -->
+<!-- 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<div id="gender" class="btn-group" data-toggle="buttons"> -->
+<!-- 								<label class="btn btn-default" data-toggle-class="btn-primary" -->
+<!-- 									data-toggle-passive-class="btn-default"> <input -->
+<!-- 									type="radio" name="gender" value="male"> &nbsp; Male -->
+<!-- 									&nbsp; -->
+<!-- 								</label> <label class="btn btn-primary" data-toggle-class="btn-primary" -->
+<!-- 									data-toggle-passive-class="btn-default"> <input -->
+<!-- 									type="radio" name="gender" value="female"> Female -->
+<!-- 								</label> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+
+
+
+
+<!-- 					<div class="form-group"> -->
+<!-- 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Date -->
+<!-- 							Of Birth <span class="required">*</span> -->
+<!-- 						</label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<input id="birthday" -->
+<!-- 								class="date-picker form-control col-md-7 col-xs-12" -->
+<!-- 								required="required" type="text"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="form-group" -->
+<!-- 						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }"> -->
+<!-- 						<label class="control-label col-md-3 col-sm-3 col-xs-12" -->
+<!-- 							for="work">work history:</label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<input type="text" required class="form-control" -->
+<!-- 								ng-model="ctrl.user.profile.workHis" id="work" name="work"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="form-group" -->
+<!-- 						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }"> -->
+<!-- 						<label class="control-label col-md-3 col-sm-3 col-xs-12" -->
+<!-- 							for="adresse">adresse:</label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<input type="text" required class="form-control" -->
+<!-- 								ng-model="ctrl.user.profile.adresse" id="work" name="adresse"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="form-group" -->
+<!-- 						ng-class="{ 'has-error': register.name.$invalid && register.name.$dirty }"> -->
+<!-- 						<label class="control-label col-md-3 col-sm-3 col-xs-12" -->
+<!-- 							for="Education">Education:</label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<input type="text" required class="form-control" -->
+<!-- 								ng-model="ctrl.user.profile.education" id="work" -->
+<!-- 								name="Education"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+
+<!-- 				</div> -->
+<!-- 				</xs-wizard-page>  -->
+				
+<!-- 				 <xs-wizard-page page-tag="Tags to follow" -->
+<!-- 					ng-click="ctrl.loadKeyWords()"> -->
+<!-- 				<div class="pane"> -->
+<!-- 					<h4>Page 3: tags to follow</h4> -->
+<!-- 					<div class="form-group"> -->
+<!-- 						<label class="control-label col-md-3 col-sm-3 col-xs-12"></label> -->
+<!-- 						<div class="col-md-6 col-sm-6 col-xs-12"> -->
+<!-- 							<div class="x_panel"> -->
+<!-- 								<div class="x_title_black"> -->
+<!-- 									<h2> -->
+<!-- 										select tags you want to follow <small>tags</small> -->
+<!-- 									</h2> -->
+<!-- 									<div class="clearfix"></div> -->
+<!-- 								</div> -->
+<!-- 								<div class="x_content"> -->
+
+<!-- 									<div class=""> -->
+<!-- 										<ul class="to_do"> -->
+<!-- 											<li ng-repeat="u in ctrl.twitterKeWords"> -->
+
+<!-- 												<p> -->
+<!-- 													<input class="magic-checkbox" type="checkbox" name="layout" -->
+<!-- 														id="{{u.id}}"> <label for="{{u.id}}" -->
+<!-- 														ng-click="ctrl.addKeyWords(u)"> {{u.word}}</label> -->
+
+<!-- 												</p> -->
+<!-- 											</li> -->
+
+<!-- 										</ul> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				</xs-wizard-page> <xs-wizard-page page-tag="Confirmation"> -->
+<!-- 				<div class="pane"> -->
+<!-- 					<h4>Page 4: Confirmation</h4> -->
+<!-- 				</div> -->
+<!-- 				</xs-wizard-page> </xs-wizard> -->
+<!-- 				<br> -->
+<!-- 				<div class="alert alert-danger" role="alert" ng-hide="ctrl.error"> -->
+<!-- 					<span class="glyphicon glyphicon-exclamation-sign" -->
+<!-- 						aria-hidden="true"></span> <span class="sr-only">Error:</span> -->
+<!-- 					{{ctrl.message}} -->
+<!-- 				</div> -->
+<!-- 			</form> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+
+
+
+<script src="assets/js/jquery.backstretch.min.js"></script>
+<script src="assets/js/scripts.js"></script>
 
