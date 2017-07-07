@@ -71,7 +71,7 @@ public class Category implements Serializable{
 	public void setKeyWords(List<TwitterKeyWord> keyWords) {
 		this.keyWords = keyWords;
 	}
-	  
+
 
 
 

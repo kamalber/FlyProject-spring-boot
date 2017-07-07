@@ -11,7 +11,8 @@ monApp.factory('TwitterService',
                      create: createKeyWord,
                      update: updateKeyWord,
                      remove: removeKeyWord,
-                     loadAllCategory:loadAllCategory
+                     loadAllCategory:loadAllCategory,
+                     findByCategory:findByCategory
                      
                
             };
@@ -76,7 +77,22 @@ monApp.factory('TwitterService',
                $http.post(urls.TWITTER_KEY_WORD_SERVICE_API+"planTask",twitterkeyWord)
                    .then(
                        function (response) { 
-                           deferred.resolve(response);
+                           deferred.resolve(response.data);
+                       },
+                       function (errResponse) {
+                           
+                           deferred.reject(errResponse);
+                       }
+                   );
+               return deferred.promise;
+           
+           }
+           function findByCategory(category){
+               var deferred = $q.defer();
+               $http.post(urls.TWITTER_KEY_WORD_SERVICE_API+"findByCategory",category)
+                   .then(
+                       function (response) { 
+                           deferred.resolve(response.data);
                        },
                        function (errResponse) {
                            

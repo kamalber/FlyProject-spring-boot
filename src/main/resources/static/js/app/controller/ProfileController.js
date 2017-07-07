@@ -1,20 +1,26 @@
 monApp.controller('ProfileController',
-    ['$rootScope','TwitterService','PostService','AcountService','AuthSession','Upload','$timeout','$scope','$location','$sessionStorage',
-     function($rootScope,TwitterService,PostService,AcountService,AuthSession,Upload,$timeout,$scope,$location,$sessionStorage) {
+    ['$rootScope','TwitterService','PostService','CommentService','AcountService','AuthSession','Upload','$timeout','$scope','$location','$sessionStorage',
+     function($rootScope,TwitterService,PostService,CommentService,AcountService,
+    		 AuthSession,Upload,$timeout,$scope,$location,$sessionStorage) {
     	var self=this;
 		self.user={// this is the parameters object that contain the search criteria
     			'username':'',
     			'password':'',
     	};
+		
 		self.error=true;
 		self.dateRange={};
+		self.searchParams={};
+		initCommentsGraphe();
+		self.postComments=[];
 		self.connected=$sessionStorage.connected;
         self.addKeyWords = addKeyWordToList;
         self.twitterKeWords=[];
         self.userPosts=[];
         loadUserPosts();
         loadKeyWords();
-        getMyPostCommentsPlarity();
+        self.search=getMyPostCommentsPolarity;
+        intitDate();
 /*       -- variable             */
         var keyWordList=[];
         
@@ -48,6 +54,36 @@ monApp.controller('ProfileController',
             // state is an object describing page context
             //{state: { previousPage: 2, currentPage: 3 }};
         };
+        
+         function getCommentPolarity(){
+        	 
+         }
+        function intitDate() {
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                self.searchParams.startDate=start.format('DD/MM/YYYY');
+                self.searchParams.endDate=end.format('DD/MM/YYYY');
+              
+            }
+
+            $('#reportrange').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                   'Today': [moment(), moment()],
+                   'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                   'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                   'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                   'This Month': [moment().startOf('month'), moment().endOf('month')],
+                   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+            cb(start, end);
+           
+        }
         
 	      function register(){
 	    	  console.log("about to register");
@@ -95,35 +131,60 @@ monApp.controller('ProfileController',
 	    	  },
 	    	  function(errorMessage){
 	    		  $scope.message = 'Failed load twitter key words! '+errorMessage;
-	    		 
 	    	  }
 	       );
 	    	  
 	      }
 
-	    function  getMyPostCommentsPlarity(){
-	    	setDataToBarChart("k");
-//	    	  PostService.myPostCommentsPlartiy()
-//	    	  .then(function(res){
-//	    		  setDataToBarChart(data);
-//	    	  },
-//	    	  function(errorMessage){
-//	    		  $scope.message = 'Failed load twitter key words! '+errorMessage;
-//	    		 
-//	    	  }
-//	       );
-//	    	  
+	    function initCommentsGraphe(){
+	    	CommentService.getCommentsTotalPolarity()
+	    	  .then(function(data){
+	    		  console.log(data);
+	    		  setDataToBarChart(data);
+	    	  },
+	    	  function(errorMessage){
+	    		  $scope.message = 'Failed load comments stats ! '+errorMessage;
+	    		  self.postComments=null;
+	    		 
+	    	  }
+	       );	
+	    }
+	    
+function  getCommentsForPost(post){
+	    	CommentService.getCommentsByPost(post)
+	    	  .then(function(data){
+	    		  self.postComments=data;
+	    		  console.log(data);
+	    	  },
+	    	  function(errorMessage){
+	    		  $scope.message = 'Failed load comments stats ! '+errorMessage;
+	    		  self.postComments=null;
+	    		 
+	    	  }
+	       );
+	    	  
+	      }
+	    function  getMyPostCommentsPolarity(){	
+	    	CommentService.getCommentsPolarityByDate(self.searchParams)
+	    	  .then(function(data){
+	    		  setDataToBarChart(data);
+	    		  getCommentsForPost(self.searchParams.post);
+	    	  },
+	    	  function(errorMessage){
+	    		  $scope.message = 'Failed load comments stats ! '+errorMessage;
+	    		 
+	    	  }
+	       );
+	    	  
 	      }
 	    
 	    function setDataToBarChart(data){
-	    	
-	    	
 	  	  Highcharts.chart('barChart', {
 	    	    title: {
 	    	        text: 'my posts comments sentiment polarity'
 	    	    },
 	    	    xAxis: {
-	    	        categories: ["01/05/2017","02/05/2017","03/05/2017","04/05/2017","05/05/2017"]
+	    	        categories: data.labelSeries
 	    	    },
 	    	    labels: {
 	    	        items: [{
@@ -139,22 +200,22 @@ monApp.controller('ProfileController',
 	    	       {
 	    	        type: 'column',
 	    	        name: 'Neutral',
-	    	        data: [4,2,5,2],
+	    	        data: data.neutralDataCount,
 	    	        //color: '#646161'
 	    	    }, {
 	    	        type: 'column',
 	    	        name: 'Negative',
-	    	        data: [2,4,1,5],
+	    	        data: data.negativeDataCount,
 	    	        //color: '#FF976D',
 	    	    }, {
 	    	        type: 'column',
 	    	        name: 'Positive',
-	    	        data: [8,6,7,10],
+	    	        data: data.positiveDataCount,
 	    	        //color: '#97F88F',
 	    	    }, {
 	      	        type: 'spline',
 	      	        name: 'Average',
-	      	        data: [4.66,4,4.33,5.66],
+	      	        data: data.averageDataCount,
 	      	        marker: {
 	      	            lineWidth: 2,
 	      	            lineColor: Highcharts.getOptions().colors[3],
@@ -165,15 +226,15 @@ monApp.controller('ProfileController',
 	    	        name: 'Total ',
 	    	        data: [{
 	    	            name: 'Neutral',
-	    	            y: 13,
+	    	            y: data.neutralCount,
 	    	            color: Highcharts.getOptions().colors[0] // Jane's color
 	    	        }, {
 	    	            name: 'Negative',
-	    	            y: 12,
+	    	            y: data.negativeCount,
 	    	            color: Highcharts.getOptions().colors[1] // John's color
 	    	        }, {
 	    	            name: 'Positive',
-	    	            y: 31,
+	    	            y: data.positiveCount,
 	    	            color: Highcharts.getOptions().colors[2] // Joe's color
 	    	        }],
 	    	        center: [100, 80],

@@ -1,6 +1,8 @@
 monApp.controller('AcountController',
-    ['$rootScope','TwitterService','AcountService','AuthSession','Upload', '$timeout','$scope','$location','$http','$sessionStorage', 
-     function($rootScope,TwitterService,AcountService,AuthSession,Upload,$timeout,$scope,$location,$http,$sessionStorage) {
+    ['$rootScope','TwitterService','AcountService','AuthSession','Upload',
+     '$timeout','$scope','$location','$http','$sessionStorage','$window', 
+     function($rootScope,TwitterService,AcountService,AuthSession,Upload,
+    		 $timeout,$scope,$location,$http,$sessionStorage,$window) {
     	var self=this;
 		self.user={// this is the parameters object that contain the search criteria
     			'username':'',
@@ -8,11 +10,13 @@ monApp.controller('AcountController',
     	};
 		self.error=true;
         self.login = login;
+        
+        loadAllCategory();
 
         self.register = register;
         self.addKeyWords = addKeyWordToList;
         self.twitterKeWords=[];
-        loadKeyWords();
+        self.loadKeyWord=loadKeyWords;
         $rootScope.logOut=logOut;
 /*       -- variable             */
         var keyWordList=[];
@@ -66,7 +70,12 @@ monApp.controller('AcountController',
 	         					// setting the same header value for all request calling from
 	         					// this application
 	         					$http.defaults.headers.common['Authorization'] = 'Basic ' + base64Credential;
-	         					$location.path( "/tweetStats" );
+	         					if($sessionStorage.connected.role=="USER"){
+	         						$location.path( "/posts");
+	         					}else{
+	         						$location.path( "/user");
+	         					}
+	         					
 	         				} else {
 	         					$scope.message = 'Authetication Failed !';
 	         				}
@@ -81,6 +90,7 @@ monApp.controller('AcountController',
 	    	   console.log("log out");
 	    	  $sessionStorage.connected=null;
 	    	  $location.path( "/login" );
+	    	  $window.location.reload();
 	      }
 	      function registerRedirect(){
 	    	  $location.path( "/register" );	
@@ -109,17 +119,27 @@ monApp.controller('AcountController',
 	    	 }
 	    	 console.log(keyWordList);
 	      }
-	    function  loadKeyWords(){
-	    	  TwitterService.getTwitterKeyWord()
+	    function  loadKeyWords(Category){
+	    	  TwitterService.findByCategory(Category)
 	    	  .then(function(res){
 	    	  self.twitterKeWords=res;
+	    	  console.log(res);
 	    	  },
 	    	  function(errorMessage){
 	    		  $scope.message = 'Failed load twitter key words! '+errorMessage;
-	    		 
+	    		  self.twitterKeWords=null;
 	    	  }
 	       );
 	    	  
 	      }
-	      
+	   function loadAllCategory(){
+		   TwitterService.loadAllCategory()
+	    	  .then(function(res){
+	    	  self.categorys=res;
+	    	  },
+	    	  function(errorMessage){
+	    		  $scope.message = 'Failed load twitter key words! '+errorMessage;
+	    	  }
+	       );
+	    }
 }]);

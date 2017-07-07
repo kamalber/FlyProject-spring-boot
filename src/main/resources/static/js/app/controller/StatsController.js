@@ -1,5 +1,5 @@
 monApp.controller('StatsController',
-    ['StatsService','$scope',  function(StatsService,$scope) {
+    ['StatsService','$scope','$location',  function(StatsService,$scope,$location) {
     	var self=this;
     	// directvies to hide/show
     	self.searchShow=true;
@@ -9,6 +9,8 @@ monApp.controller('StatsController',
     	// the principale function 
     	self.search=getAnalysedPostStatsWithStats;
     	self.initMap=mappy;
+    	self.redirectToTwitter=redirectToTwitter;
+    	self.redirectToPlatfomre=redirectToPlatfomre;
 		self.params={// this is the parameters object that contain the search criteria
     			'query':'',
     			'startYear': 0,
@@ -16,7 +18,12 @@ monApp.controller('StatsController',
     			 'month':0,
     			'sentimentMethode':1
     	};
-
+		function redirectToTwitter(){
+			$location.path( "/tweetStats");
+		}
+		function redirectToPlatfomre(){
+			$location.path( "/stat");
+		}
 		function selectSentiMethode(sentiId){
 			self.params.sentimentMethode=sentiId;
 		}
@@ -209,7 +216,11 @@ monApp.controller('StatsController',
 		            position: new google.maps.LatLng(info.location.latitude, info.location.longitude),
 		            title: info.title
 		        });
-		      marker.content = '<div class="infoWindowContent">' + info.content + '</div>';
+		        
+
+		      
+		        
+		        marker.content = '<div class="infoWindowContent">' + contentString + '</div>';
 		        
 		        google.maps.event.addListener(marker, 'click', function(){
 		            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
@@ -221,12 +232,23 @@ monApp.controller('StatsController',
 		    }  
 		    
 		    var createSpiderMarker = function (info,iconUrl){
+		    	  var contentString = '<div id="content" class="">'+
+		            '<div id="siteNotice">'+
+		            '</div>'+
+		            '<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"'+
+					'aria-expanded="false"> <img src="images/'+info.user.profile.image+'"'+
+					'alt="">'+info.user.fullName+'</a>'+     
+		            '<div id="bodyContent">'+
+		            '<p>'+info.content+ '</p>'+
+		            '<strong> posted on '+ info.date+'</strong></p>'+
+		            '</div>'+
+		            '</div>';
 		    		    var marker = new google.maps.Marker({ 
 		    		    	 icon: iconUrl,
 		    		    	 position: new google.maps.LatLng(info.location.latitude, info.location.longitude)
 		    		    	});  // markerData works here as a LatLngLiteral
 		    		    google.maps.event.addListener(marker, 'spider_click', function(e) {// 'spider_click', not plain 'click'
-		    		    	infoWindow.setContent(info.content);
+		    		    	infoWindow.setContent(contentString);
 		    		    	infoWindow.open($scope.map, marker);
 		    		    });
 		    		    oms.addMarker(marker);  // adds the marker to the spiderfier _and_ the map

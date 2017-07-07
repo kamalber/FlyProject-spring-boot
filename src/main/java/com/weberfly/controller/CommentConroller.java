@@ -21,6 +21,8 @@ import com.weberfly.entities.Post;
 import com.weberfly.entities.Publication;
 import com.weberfly.service.CommentService;
 import com.weberfly.service.PostService;
+import com.weberfly.util.CommentSentimentStats;
+import com.weberfly.util.CustomCommentsParams;
 import com.weberfly.util.CustomErrorType;
 @RestController
 public class CommentConroller {
@@ -67,7 +69,31 @@ public class CommentConroller {
 		return new ResponseEntity<Comment>(item, HttpStatus.CREATED);
 	}
 
+//	-------------------- get post comments by post --------------------
+	@RequestMapping(value = "/comments/commentsByPost", method = RequestMethod.POST)
+	public ResponseEntity<?> getCommentByPost(@RequestBody Post post) {
+		 
+		List<Comment> stats =commentService.findByPost(post);
+
+		if (stats== null||stats.isEmpty()) {
+			logger.error("no comments to collect ");
+			return new ResponseEntity(new CustomErrorType("no comments for this post"), HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(stats, HttpStatus.OK);
+	}
 	
+//	-------------------- get user post  comments  --------------------
+	@RequestMapping(value = "/comments/commentTotalPolarity", method = RequestMethod.POST)
+	public ResponseEntity<?> getCommentTotalPlarit() {
+		
+		CommentSentimentStats stats=commentService.getSentimentByUserPost();
+
+		if (stats== null||stats.getAverageDataCount().isEmpty()) {
+			logger.error("no stats to collect ");
+			return new ResponseEntity(new CustomErrorType("no comments for this post"), HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(stats, HttpStatus.OK);
+	}
 
 //	-------------------- get post comments sentiment --------------------
 	@RequestMapping(value = "/comments/commentPolarity", method = RequestMethod.POST)
@@ -82,4 +108,15 @@ public class CommentConroller {
 		return new ResponseEntity<>(stats, HttpStatus.OK);
 	}
 	
+	//------------------ get post comments polarity by date ------------------------------
+	
+	@RequestMapping(value = "/comments/commentPolarityByDate", method = RequestMethod.POST)
+	public ResponseEntity<?> getCommentSentimentByDate(@RequestBody CustomCommentsParams params) {
+		CommentSentimentStats stats=commentService.getSentimentByPostAndDate(params);
+		if (stats== null||stats.getAverageDataCount().isEmpty()) {
+			logger.error("no stats to collect ");
+			return new ResponseEntity(new CustomErrorType("no comments for this post"), HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(stats, HttpStatus.OK);
+	}
 }

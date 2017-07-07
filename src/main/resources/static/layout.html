@@ -33,116 +33,33 @@
 
 </head>
 
-<body class="nav-md" ng-app="monApp">
+<body  ng-app="monApp">
+
+<div   ng-class="{ 'nav-sm' : connected.role == 'ADMIN','nav-md' : connected.role != 'ADMIN'}">
+
 	<div class="container body">
 		<div class="main_container">
 
+
+            <ng-include  src="'geust_header.html'"></ng-include>
 
 			<!-- <header> admin  top navigation -->
 			<ng-include ng-if="connected.role == 'ADMIN'" src="'header_admin.html'"></ng-include>
 			<!-- <header> user top navigation -->
 			<ng-include ng-if="connected.role == 'USER'" src="'header.html'"></ng-include>
 			<!-- <header> geust  top navigation -->
-		   <ng-include ng-if="connected == 'null'" src="'header_geust.html'"></ng-include>
+		   
 			
 <!-- 			<ng-include src="'header_admin.html'"></ng-include> -->
 			
-<!-- 						<div class="col-md-3 left_col"  style="position: fixed; width: 20.5%> -->
-<!--           <div class="left_col scroll-view" > -->
-<!--             <div class="navbar nav_title" style="border: 0;"> -->
-<!--               <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a> -->
-<!--             </div> -->
-
-<!--             <div class="clearfix"></div> -->
-
-<!--             menu profile quick info -->
-<!--             <div class="profile clearfix"> -->
-<!--               <div class="profile_pic"> -->
-<!--                 <img src="images/img.jpg" alt="..." class="img-circle profile_img"> -->
-<!--               </div> -->
-<!--               <div class="profile_info"> -->
-<!--                 <span>Welcome,</span> -->
-<!--                 <h2>John Doe</h2> -->
-<!--               </div> -->
-<!--             </div> -->
-<!--             /menu profile quick info -->
-
-<!--             <br> -->
-
-<!--             sidebar menu -->
-<!--             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu"> -->
-<!--               <div class="menu_section active"> -->
-<!--                 <h3>General</h3> -->
-<!--                 <ul class="nav side-menu" style=""> -->
-<!--                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a> -->
-                  
-<!--                   </li> -->
-<!--                   <li><a><i class="fa fa-users"></i> Users <span class="fa fa-users"></span></a> -->
-                  
-<!--                   </li> -->
-<!--                <li><a><i class="fa fa-th-list"></i>BuzzWords<span class="fa fa-th-list"></span></a> -->
-<!--                     <ul class="nav child_menu"> -->
-<!--                       <li><a href="chartjs.html"><strong>Category</strong></a></li> -->
-<!--                       <li><a href="chartjs2.html">MicroBlogs</a></li> -->
-                      
-<!--                     </ul> -->
-<!--                   </li> -->
-<!--                   <li><a><i class="fa fa-bar-chart-o"></i> statistics <span class="fa fa-chevron-down"></span></a> -->
-<!--                     <ul class="nav child_menu"> -->
-<!--                       <li><a href="chartjs.html">Tweets</a></li> -->
-<!--                       <li><a href="chartjs2.html">MicroBlogs</a></li> -->
-                      
-<!--                     </ul> -->
-<!--                   </li> -->
-<!--                   <li><a><i class="fa fa-line-chart"></i>Tools comparison <span class="fa fa-line-chart"></span></a> -->
-                    
-<!--                   </li> -->
-<!--                 </ul> -->
-<!--               </div> -->
-             
-
-<!--             </div> -->
-<!--             /sidebar menu -->
-
-<!--             /menu footer buttons -->
-<!--             <div class="sidebar-footer hidden-small"> -->
-<!--               <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings"> -->
-<!--                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
-<!--               </a> -->
-<!--               <a data-toggle="tooltip" data-placement="top" title="" data-original-title="FullScreen"> -->
-<!--                 <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> -->
-<!--               </a> -->
-<!--               <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Lock"> -->
-<!--                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> -->
-<!--               </a> -->
-<!--               <a data-toggle="tooltip" data-placement="top" title="" href="login.html" data-original-title="Logout"> -->
-<!--                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span> -->
-<!--               </a> -->
-<!--             </div> -->
-<!--             /menu footer buttons -->
-<!--           </div> -->
-       
-			
+<!-- 			<ng-include ng-if="connected.role == 'ADMIN'" src="'header_admin.html'"></ng-include> -->
+					
 			
 <!-- 			<ng-include src="'menuLeft_admin.html'"></ng-include> -->
 	<!-- page content -->
-			<div class="right_col" role="main" style="min-height: 266px;">
+			<div  ng-class="{ 'right_col' : connected.role == 'USER' || connected.role == 'ADMIN'}"  role="main" style="min-height: 266px;">
 				<div class="">
-
-
-					<!--           <div class="row" > -->
-					<!--             <div class="col-lg-12" > -->
-
-					<!--                 <ol class="breadcrumb" style="background-color:#ffffff;"> -->
-					<!--                     <li><a href="index.html">Home</a> -->
-					<!--                     </li> -->
-					<!--                     <li class="active">Blog Home One</li> -->
-					<!--                 </ol> -->
-					<!--               </div> -->
-					<!--           </div> -->
-
 					<div class="clearfix"></div>
-
 					<div class="row">
 
 
@@ -356,7 +273,7 @@
 		})
 	</script>
 
-
+</div>
 
 </body>
 </html>

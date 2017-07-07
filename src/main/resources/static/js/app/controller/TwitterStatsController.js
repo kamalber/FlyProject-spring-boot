@@ -1,7 +1,11 @@
 monApp.controller('TwitterStatsController',
-    ['$rootScope','TwitterService','AuthSession','$scope','$location','$http',  function($rootScope,TwitterService,AuthSession,$scope,$location,$http) {
+    ['$rootScope','TwitterService','AuthSession','$scope','$location','$http','$location',  function($rootScope,TwitterService,AuthSession,$scope,$location,$http,$location) {
     	var self=this;
 		self.keyWordList=[];
+		self.statShow=false;
+		self.searchShow=true;
+		self.hightchart=false;
+		
 		self.params={// this is the parameters object that contain the search criteria
     			'query':'',
     			'startYear':0,
@@ -12,6 +16,8 @@ monApp.controller('TwitterStatsController',
 		self.selectKeyWord=selectKeyWord;
 		self.search=getAnalysedTwitteStatsWithStats;
 		self.selectSentiMethode=selectSentiMethode;
+		self.redirectToPlatfomre=redirectToPlatfomre;
+		self.redirectToTwitter=redirectToTwitter;
 		self.error=true;
         self.successMessage = '';
         self.errorMessage = '';
@@ -37,7 +43,13 @@ monApp.controller('TwitterStatsController',
         	  label: 'bLabel',
         	  subItem: { name: 'bSubItem' }
         	}];
-     
+    	function redirectToTwitter(){
+			$location.path( "/tweetStats");
+		}
+		function redirectToPlatfomre(){
+			$location.path( "/stat");
+		}
+		
         function selectSentiMethode(sentiId){
 			self.params.sentimentMethode=sentiId;
 		}
@@ -53,11 +65,15 @@ monApp.controller('TwitterStatsController',
         		      function(data){
         		      setDataToBarChart(data); 
         		      //setDataToLineChart(data);
+        		      
         		      self.positiveTweets=data.positiveItems;
         		      self.negativeTweets=data.negativeItems;
         		      self.neutralTweets=data.neutralItems;
         		      self.barChartShow=true;
-        		      
+        		      self.searchShow=false;
+        		      self.statShow=true;
+        		      self.hightchart=true;
+        		    
         	     	 },function(erroResponse){
         			 console.error('the llist is empty');
         	         self.errorMessage = 'Error while cretriving data : ' + errResponse.data.errorMessage;

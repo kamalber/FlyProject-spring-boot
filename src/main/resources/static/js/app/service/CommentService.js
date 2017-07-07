@@ -5,6 +5,9 @@ monApp.factory('CommentService',
             var factory = {
                 getAll: getAll,
                 getCommentsPolarity:getCommentsPolarity,
+                getCommentsPolarityByDate:getCommentsPolarityByDate,
+                getCommentsByPost:getCommentsByPost,
+                getCommentsTotalPolarity:getCommentsTotalPolarity,
                 get: get,
                 create: create
                 
@@ -31,6 +34,19 @@ monApp.factory('CommentService',
             	return CrudEngine.create(comment);
             }
             
+            function getCommentsByPost(post){
+            	var deferred = $q.defer();
+            	$http.post(urls.COMMENT_SERVICE_API+ "commentsByPost", post)
+            			.then(function(response) {
+            				
+            				deferred.resolve(response.data);
+            			}, function(errResponse) {
+            			
+            				deferred.reject(errResponse);
+            			});
+            	return deferred.promise;
+            }
+            
             function getCommentsPolarity(post){
             	var deferred = $q.defer();
             	$http.post(urls.COMMENT_SERVICE_API+ "commentPolarity", post)
@@ -44,6 +60,30 @@ monApp.factory('CommentService',
             	return deferred.promise;
             }
                     
-
+            function getCommentsPolarityByDate(params){
+            	var deferred = $q.defer();
+            	$http.post(urls.COMMENT_SERVICE_API+ "commentPolarityByDate", params)
+            			.then(function(response) {
+            				console.log('Fetched successfully  stats ');
+            				deferred.resolve(response.data);
+            			}, function(errResponse) {
+            				console.error('Error while loading  stats');
+            				deferred.reject(errResponse);
+            			});
+            	return deferred.promise;
+            }
+            
+            function getCommentsTotalPolarity(){
+            	var deferred = $q.defer();
+            	$http.post(urls.COMMENT_SERVICE_API+ "commentTotalPolarity")
+            			.then(function(response) {
+            				console.log('Fetched successfully user post comments ');
+            				deferred.resolve(response.data);
+            			}, function(errResponse) {
+            				console.error('Error while  user post comments ');
+            				deferred.reject(errResponse);
+            			});
+            	return deferred.promise;
+            }
         }
     ]);

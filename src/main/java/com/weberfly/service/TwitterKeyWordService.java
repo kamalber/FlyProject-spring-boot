@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.weberfly.dao.CategoryItemRepository;
 import com.weberfly.dao.TwitterKeyWordRepository;
+import com.weberfly.entities.Category;
 import com.weberfly.entities.CategoryItem;
 import com.weberfly.entities.TwitterKeyWord;
 
@@ -31,5 +32,10 @@ public class TwitterKeyWordService {
 	public void delete(Long id){
 		twitsRepository.delete(id);
 	}
-	
+	public String getCateoryTitre(TwitterKeyWord key){
+		return twitsRepository.findByKeyWord(key.getId());
+	}
+	public List<TwitterKeyWord> findByCategory(Category c){
+		return twitsRepository.findByCategory(c);
+	}
 }

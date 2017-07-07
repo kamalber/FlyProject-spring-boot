@@ -97,7 +97,7 @@ monApp.run( function($rootScope,AuthSession, $location,$sessionStorage) {
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
       if ($sessionStorage.connected == null) {
     	  if(current.templateUrl !="/login" &&  current.templateUrl !="/register"){
-    		  $location.path( "/login" );
+    		//  $location.path( "/login" );
     	  }
         
       }else{

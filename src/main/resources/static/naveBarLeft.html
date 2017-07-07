@@ -11,16 +11,10 @@
 										class="pull-right" id="slide-submenu"> <i
 											class="fa fa-times"></i>
 									</span>
-									</span> <a href="#" class="list-group-item"> <i
-										class="fa  fa-tag"></i> FarCry
-									</a> <a href="#" class="list-group-item"> <i
-										class="fa  fa-tag"></i> DonaldTrump
-									</a> <a href="#" class="list-group-item"> <i class="fa  fa-tag"></i>
-										java programming language 
-									</a> <a href="#" class="list-group-item"> <i
-										class="fa  fa-tag"></i> Lorem ipsum
-<!-- 										 <span class="badge">14</span> -->
-									</a> 
+									</span> 
+									<a ng-repeat="p in connected.twitterKeyWords" href="#" class="list-group-item"> <i
+										class="fa  fa-tag"></i> {{p.word}}
+									</a>
 								</div>
 
 

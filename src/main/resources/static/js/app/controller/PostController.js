@@ -169,9 +169,7 @@ monApp.controller('PostController',
                 );
         }
         function setStatsToBarChart(data){
-        	Highcharts.setOptions({
-	    	    colors:['#058DC7', '#50B432', '#ED561B','#00000']
-	    	});
+        
         	Highcharts.chart('barChartContainer', {
 
         		title: {
@@ -183,13 +181,13 @@ monApp.controller('PostController',
         	    },
 
         	    xAxis: {
-        	        categories: ['neutral', 'positive', 'negative']
+        	        categories: ['neutral','negative','positive']
         	    },
 
         	    series: [{
         	        type: 'column',
         	        colorByPoint: true,
-        	        data: [data['neutral'], data['positive'], data['negative']],
+        	        data: [data['neutral'], data['negative'], data['positive']],
         	        showInLegend: false
         	    }]
 
@@ -197,9 +195,9 @@ monApp.controller('PostController',
         }
         function setStatsToPieChart(data){
 	    	  // Build the chart
-	    	Highcharts.setOptions({
-	    	    colors:['#058DC7', '#50B432', '#ED561B']
-	    	});
+//	    	Highcharts.setOptions({
+//	    	    colors:['#058DC7', '#50B432', '#ED561B']
+//	    	});
 	        Highcharts.chart('pieChartContainer', {
 	            chart: {
 	                plotBackgroundColor: null,
@@ -228,13 +226,17 @@ monApp.controller('PostController',
 	                colorByPoint: true,
 	                data: [{
 	                    name: 'neutral',
-	                    y: data['neutral']
+	                    y: data['neutral'],
+	                    color: '#058DC7', // Je force la couleur en no
+	                
 	                    },
 	                     { name: 'Positive',
-	                    y:  data['positive']
+	                    y:  data['positive'],
+	                    color: '#50B432', 
 	                   },
 	                    { name: 'negative',
-		                    y: data['negative']
+		                    y: data['negative'],
+		                    color: '#ED561B', 
 	                    }]
 	            }]
 	        });

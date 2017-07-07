@@ -108,7 +108,8 @@ monApp.controller('TwitterController',
             TwitterService.get(id).then(
                 function (keyWord) {
                     self.keyWord  = keyWord ;
-                    console.log(keyWord);
+                  ;
+                    console.log(keyWord.stat);
                 },
                 function (errResponse) {
                     console.error('Error while removing category ' + id + ', Error :' + errResponse.data);
@@ -165,8 +166,10 @@ monApp.controller('TwitterController',
 	    function planScheduledTask(){
 	    	console.log("kk");
 	    	TwitterService.planScheduledTask(self.keyWord)
-	    	.then(function(res){
-	    		console.log(res);
+	    	.then(function(keyWord){
+	    		
+	    		  var index=self.twitterKeyWordList.findIndex((obj => obj.id == id));
+                  self.twitterKeyWordList[index]=keyWord
 	    	},
 	    	function(errorMessage){
 	    		

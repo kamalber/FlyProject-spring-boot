@@ -8,6 +8,7 @@ monApp.controller('CompareController',
         self.errorMessage = '';
         self.done = false;
         self.compareTols=compareTols;
+        self.statsShow=false;
 
      
         $scope.uploadFilesPositive = function(file, errFiles) {
@@ -86,6 +87,7 @@ monApp.controller('CompareController',
           	 .then(
           	      function(data){
           	    	setDataToBarChart(data);
+          	    	statsShow=true;
           	      setDataToDumaxChart(data.dumax); 
         	      setDataToNltkChart(data.nltk);
           	      setDataToGateChart(data.gate);

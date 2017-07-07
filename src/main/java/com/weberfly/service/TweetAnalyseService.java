@@ -27,6 +27,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -258,12 +259,12 @@ public class TweetAnalyseService {
 			json.put("text", sentence);
 			StringEntity input = new StringEntity(json.toString());
 			input.setContentType("application/json");
-	    	//postRequest.setHeader("authorization", "Basic Z2Ntb3Q4NTlsd3AxOmo5dXFwZmJlbXpqcmU2cGt6emUy");
-			postRequest.setHeader("authorization", "Basic Z2MxNDU3Ymt6NTdwOjZpczB3enE4ODkxbXJkejQ3cGdp");
+	    	postRequest.setHeader("authorization", "Basic Z2NkcGhhdnc2eDAwOmd2Mm96OWdjbWc3dTZrNGh4Y2ky");
+			//
 			postRequest.setEntity(input);
 			HttpResponse response = httpClient.execute(postRequest);
 			if (response.getStatusLine().getStatusCode() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().toString());
+				postRequest.setHeader("authorization", "Basic Z2MxNDU3Ymt6NTdwOjZpczB3enE4ODkxbXJkejQ3cGdp");
 			}
 			BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
 
@@ -565,7 +566,7 @@ System.out.println("ntlk "+nltk + " dumax "+dumax+" gate "+gate);
 				twitte.setKeyWord(keyWord);
 				twitte.setText(tweet.getText());
 				twitte.setDate(tweet.getCreatedAt());
-				gateSenti = this.getAnalyseByGateApi(twitte.getText());
+				gateSenti = this.getAnalyseTwitteByGateApi(twitte.getText());
 				twitte.setGateSentment(Post.sentiment.valueOf(gateSenti));
 				ntlkSenti = this.getAnalyseByNLTK(twitte.getText());
 				twitte.setNltkSentment(Post.sentiment.valueOf(ntlkSenti));
@@ -578,6 +579,35 @@ System.out.println("ntlk "+nltk + " dumax "+dumax+" gate "+gate);
 			}
 		} while ((query = result.nextQuery()) != null);
 		// System.exit(0);
+	}
+
+	private String getAnalyseTwitteByGateApi(String content) throws JSONException, ClientProtocolException, IOException {
+		JSONObject json = new JSONObject();
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		HttpPost postRequest = new HttpPost(
+				"https://cloud-api.gate.ac.uk/process-document/generic-opinion-mining-english?annotations=Sentiment:SentenceSet");
+		json.put("text", content);
+
+		StringEntity input = new StringEntity(json.toString());
+		input.setContentType("application/json");
+	postRequest.setHeader("authorization", "Basic Z2MxNDU3Ymt6NTdwOjZpczB3enE4ODkxbXJkejQ3cGdp");
+		
+		
+		postRequest.setEntity(input);
+		HttpResponse response = httpClient.execute(postRequest);
+		if (response.getStatusLine().getStatusCode() != 200) {
+			postRequest.setHeader("authorization", "Basic Z2M1YzQ5azNvOXJhOjZ6ODQycTloOWZjeGZocmV0bm9u");
+		}
+		BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
+		String output;
+		output = br.readLine();
+		JSONObject fulljson = new JSONObject(output);
+		JSONObject obj1 = fulljson.getJSONObject("entities");
+		JSONArray dataJsonArray = obj1.getJSONArray("SentenceSet");
+		JSONObject objsent = dataJsonArray.getJSONObject(0);
+		String sentiment = objsent.getString("polarity");
+		httpClient.getConnectionManager().shutdown();
+		return sentiment;
 	}
 
 }

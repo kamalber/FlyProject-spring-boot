@@ -1,7 +1,13 @@
 package com.weberfly.service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +22,8 @@ import com.weberfly.entities.Comment;
 import com.weberfly.entities.Post;
 import com.weberfly.entities.Publication;
 import com.weberfly.entities.User;
+import com.weberfly.util.CommentSentimentStats;
+import com.weberfly.util.CustomCommentsParams;
 
 @Service
 public class CommentService {
@@ -103,4 +111,94 @@ public class CommentService {
 		return stats;
 
 	}
+
+	private Date getFormatedDate(String dateString) {
+		 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	        String dateInString = "07/06/2013";
+		Date date = new Date();
+		try {
+			date = formatter.parse(dateString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return date;
+	}
+	public List<Comment> findByPost(Post p){
+		return commentRepository.findByPost(p);
+	}
+
+	
+	public CommentSentimentStats getSentimentByUserPost(){
+		User u = (User) session.getAttribute("connected");
+		CommentSentimentStats stats = new CommentSentimentStats();
+		
+		Long positive = commentRepository.countSentimentByUserPosts(u, Post.sentiment.positive);
+		Long neutral = commentRepository.countSentimentByUserPosts(u, Post.sentiment.neutral);
+		Long negative = commentRepository.countSentimentByUserPosts(u ,Post.sentiment.negative);
+		System.out.println(positive+" "+negative+" "+neutral);
+		stats.getLabelSeries().add("all dates");
+		stats.getLabelSeries().add("all dates");
+		stats.getLabelSeries().add("all dates");
+		stats.getPositiveDataCount().add(positive);
+		stats.getNeutralDataCount().add(neutral);
+		stats.getNegativeDataCount().add(negative);
+		stats.getAverageDataCount().add((float) ((positive + negative + neutral) / 3));
+		stats.setNegativeCount();
+		stats.setNeutralCount();
+		stats.setPositiveCount();
+		return stats;
+	}
+	
+	public CommentSentimentStats getSentimentByPostAndDate(CustomCommentsParams params) {
+		CommentSentimentStats stats = new CommentSentimentStats();
+
+		List<Date> dates = dateInterval(getFormatedDate(params.getStartDate()), getFormatedDate(params.getEndDate()));
+		for (Date current : dates) {
+			SimpleDateFormat sdfr = new SimpleDateFormat("dd/MMM/yyyy");
+			stats.getLabelSeries().add(sdfr.format(current));
+			Long positive = commentRepository.countSentimentByPostAndDate(params.getPost(), Post.sentiment.positive,
+					current,getEndDateFromDate(current));
+			
+			Long neutral = commentRepository.countSentimentByPostAndDate(params.getPost(), Post.sentiment.neutral,
+					current,getEndDateFromDate(current));
+			Long negative = commentRepository.countSentimentByPostAndDate(params.getPost(), Post.sentiment.negative,
+					current,getEndDateFromDate(current));
+			System.out.println(positive+" "+negative+" "+neutral);
+			stats.getPositiveDataCount().add(positive);
+			stats.getNeutralDataCount().add(neutral);
+			stats.getNegativeDataCount().add(negative);
+			stats.getAverageDataCount().add((float) ((positive + negative + neutral) / 3));
+			stats.setNegativeCount();
+			stats.setNeutralCount();
+			stats.setPositiveCount();
+		}
+		return stats;
+
+	}
+
+	private  List<Date> dateInterval(Date initial, Date end) {
+		List<Date> dates = new ArrayList<Date>();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(initial);
+
+		while (calendar.getTime().before(end)) {
+			Date result = calendar.getTime();
+			dates.add(result);
+			calendar.add(Calendar.DATE, 1);
+			System.out.println(result+ " end "+getEndDateFromDate(result));
+		}
+
+		return dates;
+	}
+	private Date getEndDateFromDate(Date date) {
+		Calendar now = Calendar.getInstance();
+		now.setTime(date);
+		now.set(Calendar.HOUR_OF_DAY, 23);
+		now.set(Calendar.MINUTE,59);
+		date = now.getTime();
+		return date;
+	}
+
+	
 }

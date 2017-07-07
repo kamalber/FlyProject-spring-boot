@@ -21,7 +21,7 @@ monApp.factory('PostService', [
 
 			function getAll() {
 				console.log('About to load all posts2');
-
+				CrudEngine.setUrl(urls.POST_SERVICE_API);
 				return CrudEngine.getAll();
 			}
 
@@ -31,10 +31,12 @@ monApp.factory('PostService', [
 			}
 
 			function create(post) {
+				CrudEngine.setUrl(urls.POST_SERVICE_API);
 				return CrudEngine.create(post);
 			}
 
 			function findByUser() {
+				CrudEngine.setUrl(urls.POST_SERVICE_API);
 				var deferred = $q.defer();
 				$http.get(urls.POST_SERVICE_API + "findByUser").then(
 						function(response) {
@@ -48,6 +50,7 @@ monApp.factory('PostService', [
 			}
 
 			function getPostCommentsPlarityByUser() {
+				CrudEngine.setUrl(urls.POST_SERVICE_API);
 				var deferred = $q.defer();
 				$http.get(urls.POST_SERVICE_API + "userStats").then(
 						function(response) {

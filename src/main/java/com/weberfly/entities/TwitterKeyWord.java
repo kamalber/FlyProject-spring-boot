@@ -18,6 +18,9 @@ import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.weberfly.dao.TwitterKeyWordRepository;
+import com.weberfly.service.TwitterKeyWordService;
+
 @Entity
 @Table(name = "TwitterKeyWord")
 public class TwitterKeyWord {
@@ -111,9 +114,7 @@ public class TwitterKeyWord {
 		this.threadPlaningDescription = threadPlaningDescription;
 	}
 	
-	public Category getCategory() {
-		return category;
-	}
+
 
 	public void setCategory(Category category) {
 		this.category = category;
@@ -125,6 +126,11 @@ public class TwitterKeyWord {
 
 	public void setDateCreation(Date dateCreation) {
 		this.dateCreation = dateCreation;
+	}
+
+
+	public Category getCategory() {
+		return this.category;
 	}
 
 	@Override
